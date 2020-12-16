@@ -19,25 +19,28 @@ public class ApplyButton : MonoBehaviour
     {
         
     }
-    public void OnClick()
+    public void SaveButton()
     {
-        
-        LoadItem(name.GetComponent<Text>().text);
+        item = new Item();
+        LoadItem();
         item.ItemName = name.GetComponent<Text>().text;
         item.craftability = true;
-        if (goodFeature.GetComponent<Text>().text!=null)
+        if (goodFeature.GetComponent<Text>().text!="")
         {
             item.AddGoodFeature(goodFeature.GetComponent<Text>().text);
         } 
-        if (badFeature.GetComponent<Text>().text!=null)
+        if (badFeature.GetComponent<Text>().text!="")
         {
             item.AddBadFeature(badFeature.GetComponent<Text>().text);
         }
         SaveItem(name.GetComponent<Text>().text);
     }
 
-    void LoadItem(string itemName)
+    
+    public void LoadItem()
     {
+        string itemName = name.GetComponent<Text>().text;
+
         if (File.Exists(Application.persistentDataPath
     + "/Items/" + itemName + ".dat"))
         {
@@ -53,12 +56,12 @@ public class ApplyButton : MonoBehaviour
             item.itemQuality = savedItem.itemQuality;
             item.SetGoodFeatures(savedItem.good);
             item.SetBadFeatures(savedItem.bad);
-            Debug.Log(item.ItemName + "'s game data loaded!");
+            Debug.Log(item.ItemName + "'s game data loaded! =====================================");
             Show(item.GetGoodFeatures());
             Show(item.GetBadFeatures());
         }
         else
-            Debug.LogError("There is no save data!");
+            Debug.Log("There is no save data for " + itemName + "!");
     }
 
     void Show(List<string> list)
