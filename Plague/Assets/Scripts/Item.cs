@@ -13,11 +13,14 @@ public class Item : MonoBehaviour
 
     public int itemQuality = 100;
 
-    List<string> good = new List<string>();
-    List<string> bad = new List<string>();
+    public List<string> good = new List<string>();
+    public List<string> bad = new List<string>();
 
-    
 
+    public void Start()
+    {
+        
+    }
     public List<string> GetGoodFeatures()
     {
         return good;
