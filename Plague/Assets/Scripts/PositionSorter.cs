@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class PositionSorter : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    private int sortingOrderBase = 5000;
+    [SerializeField]
+    private int offset = 0;
+    private Renderer renderer;
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        
+        renderer = gameObject.GetComponent<Renderer>();
+    }
+   
+
+    void LateUpdate()
+    {
+        renderer.sortingOrder = (int)(sortingOrderBase - transform.position.y - offset); 
     }
 }

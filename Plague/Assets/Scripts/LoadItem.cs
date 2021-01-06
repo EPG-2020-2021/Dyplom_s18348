@@ -36,15 +36,15 @@ public class LoadItem : MonoBehaviour
             item.itemQuality = savedItem.itemQuality;
             item.SetGoodFeatures(savedItem.good);
             item.SetBadFeatures(savedItem.bad);
-            //if(Resources.Load<Sprite>("ItemPictures/" + item.ItemName) != null)
-           // {
+            if(Resources.Load<Sprite>("ItemPictures/" + item.ItemName) != null)
+            {
                 sr.sprite = Resources.Load<Sprite>("ItemPictures/" + item.ItemName);
-          //  }
-         //   else
-         //   {
-         //       Debug.LogError("Image not found");
-         //       sr.sprite = Resources.Load<Sprite>("ItemPictures/Test" );
-         //   }
+            }
+            else
+            {
+                Debug.LogError("Image not found");
+                sr.sprite = Resources.Load<Sprite>("ItemPictures/Test" );
+            }
             
             
         }
