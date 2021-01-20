@@ -13,7 +13,7 @@ public class LoadItem : MonoBehaviour
     void Start()
     {
         item = GetComponent<Item>();
-        sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        sr = transform.GetComponent<SpriteRenderer>();
         Load();
     }
 

@@ -13,13 +13,15 @@ public class Item : MonoBehaviour
 
     public int itemQuality = 100;
 
+    public SpriteRenderer icon;
+
     public List<string> good = new List<string>();
     public List<string> bad = new List<string>();
 
 
     public void Start()
     {
-        
+        icon = GetComponent<SpriteRenderer>();
     }
     public List<string> GetGoodFeatures()
     {
