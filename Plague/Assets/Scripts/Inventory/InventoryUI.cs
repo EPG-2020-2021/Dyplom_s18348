@@ -10,11 +10,20 @@ public class InventoryUI : MonoBehaviour
     InventorySlot[] slots;
 
     Inventory inventory;
+    GameObject UIInventory;
 
     // Start is called before the first frame update
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            UIInventory.SetActive(!UIInventory.activeSelf);
+        }
+    }
     void Start()
     {
-
+        UIInventory = transform.GetChild(0).gameObject;
         inventory = Inventory.instance;
         inventory.onItemChangedCallback += UpdateUI;
 

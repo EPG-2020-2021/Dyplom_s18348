@@ -35,7 +35,10 @@ public class Interaction : MonoBehaviour
 
     public virtual void Interact()
     {
+
         Inventory.instance.Add(item);
+        item.DestroySelf();
+    
     }
 
 }

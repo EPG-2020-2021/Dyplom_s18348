@@ -48,6 +48,12 @@ public class Item : MonoBehaviour
         bad.Add(feature);
     }
 
+    public void DestroySelf()
+    {
+        transform.gameObject.active = false;
+        
+    }
+
 }
 
 [Serializable]
