@@ -1939,9 +1939,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc35f0207688bc84dbfa3bd6ecea07b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: {fileID: 971854920}
-  goodFeature: {fileID: 500183629}
-  badFeature: {fileID: 845460160}
+  name: {fileID: 2023922805}
+  goodFeature: {fileID: 458169706}
+  badFeature: {fileID: 41913080}
 --- !u!1 &1677715428
 GameObject:
   m_ObjectHideFlags: 0

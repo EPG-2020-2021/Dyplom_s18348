@@ -11,7 +11,7 @@ public class Item : MonoBehaviour
 
     public bool craftability;
 
-    public int itemQuality = 100;
+    public int itemQuality = 0;
 
     public SpriteRenderer icon;
 
@@ -41,6 +41,7 @@ public class Item : MonoBehaviour
     }
     public void AddGoodFeature(string feature)
     {
+       // Debug.Log(feature);
         good.Add(feature);
     }
     public void AddBadFeature(string feature)

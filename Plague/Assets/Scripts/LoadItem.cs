@@ -33,7 +33,7 @@ public class LoadItem : MonoBehaviour
             file.Close();
             item.ItemName = savedItem.ItemName;
             item.craftability = savedItem.craftability;
-            item.itemQuality = savedItem.itemQuality;
+            //item.itemQuality = savedItem.itemQuality;
             item.SetGoodFeatures(savedItem.good);
             item.SetBadFeatures(savedItem.bad);
             if(Resources.Load<Sprite>("ItemPictures/" + item.ItemName) != null)

@@ -23,23 +23,23 @@ public class ApplyButton : MonoBehaviour
     {
         item = new Item();
         LoadItem();
-        item.ItemName = name.GetComponent<Text>().text;
+        item.ItemName = name.GetComponent<InputField>().text;
         item.craftability = true;
-        if (goodFeature.GetComponent<Text>().text!="")
+        if (goodFeature.GetComponent<InputField>().text!="")
         {
-            item.AddGoodFeature(goodFeature.GetComponent<Text>().text);
+            item.AddGoodFeature(goodFeature.GetComponent<InputField>().text);
         } 
-        if (badFeature.GetComponent<Text>().text!="")
+        if (badFeature.GetComponent<InputField>().text!="")
         {
-            item.AddBadFeature(badFeature.GetComponent<Text>().text);
+            item.AddBadFeature(badFeature.GetComponent<InputField>().text);
         }
-        SaveItem(name.GetComponent<Text>().text);
+        SaveItem(name.GetComponent<InputField>().text);
     }
 
     
     public void LoadItem()
     {
-        string itemName = name.GetComponent<Text>().text;
+        string itemName = name.GetComponent<InputField>().text;
 
         if (File.Exists(Application.persistentDataPath
     + "/Items/" + itemName + ".dat"))
