@@ -1614,6 +1614,14 @@ PrefabInstance:
       propertyPath: itemQuality
       value: 86
       objectReference: {fileID: 0}
+    - target: {fileID: 5883891722332408263, guid: 37aca6b999c92bb448e8dbab4ff8399f, type: 3}
+      propertyPath: craftability
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5883891722332408263, guid: 37aca6b999c92bb448e8dbab4ff8399f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5883891722332408266, guid: 37aca6b999c92bb448e8dbab4ff8399f, type: 3}
       propertyPath: m_Name
       value: Craft Item (1)

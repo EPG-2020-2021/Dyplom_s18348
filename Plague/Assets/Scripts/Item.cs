@@ -8,6 +8,8 @@ public class Item : MonoBehaviour
 {
 
     public string ItemName;
+    public enum enumName { Test, Test2 };
+    
 
     public bool craftability;
 
