@@ -16,14 +16,16 @@ public class LanguageManager : MonoBehaviour
         if (!isLoaded) 
         {
             language = Application.systemLanguage;
-            Debug.Log(language.ToString());
+            
         }
 
         path = Application.dataPath + "/Languages/" + language.ToString() + "/";
+        Debug.Log("LanguageManager - Start");
     }
 
     public static void QuestTranslation(Quest obj)
     {
+        Debug.Log(path);
         string savedData = File.ReadAllText(path + obj.key + ".txt");
         QuestSave loaded = JsonUtility.FromJson<QuestSave>(savedData);
 

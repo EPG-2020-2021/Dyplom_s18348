@@ -7,10 +7,14 @@ using UnityEngine.UI;
 
 public class Quest : MonoBehaviour
 {
-    [HideInInspector]
+    QuestManager questManager;
+
+    //[HideInInspector]
     public string key;
 
     public string name;
+    string questOwnersType;
+    public string questOwnersName;
 
     List<Quest> ListToUnlock = new List<Quest>();
 
@@ -20,14 +24,20 @@ public class Quest : MonoBehaviour
     public string questDescription = null;
 
     private bool isDone;
+    private bool isItemFounded;
+    private bool doesActionsDone;
 
     private bool unlocked = false;
+    public bool picked = false;
 
     public Item questItem;
+    public Item placeForItem;
 
 
     void Awake()
     {
+        isItemFounded = !itemSearching;
+        doesActionsDone = !actionsCompliting;
         //key = "Test quest";
         QuestSave save = new QuestSave();
         //Save();
@@ -35,9 +45,12 @@ public class Quest : MonoBehaviour
 
     void Start()
     {
+        questManager = FindObjectOfType<QuestManager>();
         LanguageManager.QuestTranslation(gameObject.GetComponent<Quest>());
 
-        if(itemSearching)
+        questOwnersType = gameObject.GetComponent<DropDown>().GetType();
+
+        if (itemSearching)
         {
             questItem = new Item();
         }
@@ -78,12 +91,37 @@ public class Quest : MonoBehaviour
         if (unlocked)
         {
             //Actions to publish this current quest;
+
         }
 
     }
 
-    //---------Getters--------------
+    private void FixedUpdate()
+    {
+        if (picked)
+        {
+            if (itemSearching)
+            {
+                if (placeForItem.gameObject == questItem.gameObject)
+                {
+                    isItemFounded = true;
+                }
+            }
+            if (isItemFounded && doesActionsDone)
+            {
+                isDone = true;
+                questManager.EndQuest(gameObject.GetComponent<Quest>());
+                //Destroy(gameObject);
+                gameObject.active = false;
+            }
+        }
+    }
 
+    //---------Getters--------------
+    public bool isPicked()
+    {
+        return picked;
+    }
     public string GetQuestDescription()
     {
         return questDescription;
@@ -94,9 +132,18 @@ public class Quest : MonoBehaviour
         return isDone;
     }
 
+    public bool doesActionDone()
+    {
+        return doesActionsDone;
+    }
+
+    //---------Setters--------------
 
 
-    
+    public void finishAction()
+    {
+        doesActionsDone = true;
+    }
 }
 
 public class QuestSave
