@@ -16,7 +16,7 @@ public class Quest : MonoBehaviour
     string questOwnersType;
     public string questOwnersName;
 
-    List<Quest> ListToUnlock = new List<Quest>();
+    public List<Quest> ListToUnlock = new List<Quest>();
 
     public bool itemSearching = false;
     public bool actionsCompliting = false;
@@ -27,7 +27,7 @@ public class Quest : MonoBehaviour
     private bool isItemFounded;
     private bool doesActionsDone;
 
-    private bool unlocked = false;
+    public bool unlocked = false;
     public bool picked = false;
 
     public Item questItem;
@@ -114,6 +114,10 @@ public class Quest : MonoBehaviour
                 //Destroy(gameObject);
                 gameObject.active = false;
             }
+        } else
+        {
+            Debug.Log(gameObject.name);
+            UnlockCheck();
         }
     }
 
