@@ -30,6 +30,8 @@ public class Quest : MonoBehaviour
     public bool unlocked = false;
     public bool picked = false;
 
+    public bool onlyWhenPicked = false;
+
     public Item questItem;
     public Item placeForItem;
 
@@ -146,7 +148,14 @@ public class Quest : MonoBehaviour
 
     public void finishAction()
     {
-        doesActionsDone = true;
+        if (onlyWhenPicked && isPicked())
+        {
+            doesActionsDone = true;
+        }
+        else if(!onlyWhenPicked){
+            doesActionsDone = true;
+        }
+        
     }
 }
 

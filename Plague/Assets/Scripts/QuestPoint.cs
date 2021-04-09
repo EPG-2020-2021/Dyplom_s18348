@@ -20,6 +20,11 @@ public class QuestPoint : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        quest.finishAction();
+        
+        quest.finishAction(); 
+       
+
+
+
     }
 }
