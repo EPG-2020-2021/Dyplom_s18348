@@ -15,6 +15,7 @@ public class Quest : MonoBehaviour
     public string name;
     string questOwnersType;
     public string questOwnersName;
+    public Creature owner;
 
     public List<Quest> ListToUnlock = new List<Quest>();
 
@@ -27,6 +28,7 @@ public class Quest : MonoBehaviour
     private bool isItemFounded;
     private bool doesActionsDone;
 
+    private bool published = false;
     public bool unlocked = false;
     public bool picked = false;
 
@@ -90,9 +92,11 @@ public class Quest : MonoBehaviour
             }
         }
 
-        if (unlocked)
+        if (unlocked && !published)
         {
+            owner.publishQuest(this);
             //Actions to publish this current quest;
+            published = true;
 
         }
 

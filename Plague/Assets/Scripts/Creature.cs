@@ -8,6 +8,8 @@ public class Creature : MonoBehaviour
     string type;
 
     
+    public List<Quest> myQuests;
+    
     
     void Start()
     {
@@ -19,5 +21,18 @@ public class Creature : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void publishQuest(params Quest[] quests)
+    {
+        foreach (Quest quest in quests)
+        {
+            //************
+            //Some notifications of new quests
+            //************
+
+
+            myQuests.Add(quest);
+        }
     }
 }
