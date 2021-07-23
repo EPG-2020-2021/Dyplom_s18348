@@ -12,7 +12,7 @@ public class ApplyButton : MonoBehaviour
     public GameObject goodFeature;
     public GameObject badFeature;
 
-    Item item = new Item();
+    CraftItem item = new CraftItem();
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +21,7 @@ public class ApplyButton : MonoBehaviour
     }
     public void SaveButton()
     {
-        item = new Item();
+        item = new CraftItem();
         LoadItem();
         item.ItemName = name.GetComponent<InputField>().text;
         item.craftability = true;

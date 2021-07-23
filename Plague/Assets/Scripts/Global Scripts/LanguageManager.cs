@@ -19,8 +19,8 @@ public class LanguageManager : MonoBehaviour
             
         }
 
-        path = Application.dataPath + "/Languages/" + language.ToString() + "/";
-        //path = Application.dataPath + "/Languages/" + "English" + "/";
+        //path = Application.dataPath + "/Languages/" + language.ToString() + "/";
+        path = Application.dataPath + "/Languages/" + "English" + "/";
         Debug.Log("LanguageManager - Start");
     }
 

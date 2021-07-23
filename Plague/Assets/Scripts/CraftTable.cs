@@ -6,37 +6,53 @@ using System;
 public class CraftTable : MonoBehaviour
 {
 
-    public Item firstItem;
-    public Item secondItem;
-    public Item thirdItem;
+    public CraftItem firstItem;
+    public CraftItem secondItem;
+    public CraftItem thirdItem;
 
-    Item[] items;
+    CraftItem[] items;
 
 
     int[] randArr;
 
-    public Item resultItem;
+    public CraftItem resultItem;
 
     System.Random random = new System.Random();
 
     // Start is called before the first frame update
     void Start()
-    {
+    {   resultItem = (CraftItem) GameObject.Instantiate(Resources.Load<CraftItem>("Prefabs/Craft Item"));
+        resultItem.gameObject.GetComponent<LoadItem>().enabled = false;
         //resultItem = new Item();
         randArr = new int[3];
-        Craft();
+        StartCoroutine(Craft());
     }
 
-    public void Craft()
+    bool isLoaded()
     {
+        foreach (var ci in items)
+        {
+            if (!ci.gameObject.GetComponent<LoadItem>().loaded)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public IEnumerator Craft()
+    {
+        
         float success;
         float fail;
-        items = new Item[] { firstItem, secondItem
+        items = new CraftItem[] { firstItem, secondItem
          //   , thirdItem 
         
         };
+        yield return new WaitUntil(() => isLoaded());
         for (int i = 0; i < items.Length; i++)
         {
+            print(items[i].good.Count);
             success = 1f / 9f * items[i].itemQuality;
             Debug.Log("quality: " + items[i].itemQuality);
             Debug.Log("Success: " + success);
@@ -50,6 +66,7 @@ public class CraftTable : MonoBehaviour
                 Debug.Log("first variant");
                 for (int j = 0; j < items[i].good.Count; j++)
                 {
+                    print(items[i].good[j]);
                     resultItem.AddGoodFeature(items[i].good[j]);
                 }
             } else if (randArr[i] < items[i].itemQuality && randArr[i] > success) //second variant
@@ -57,6 +74,8 @@ public class CraftTable : MonoBehaviour
                 Debug.Log("second variant");
                 for (int j = 0; j < items[i].good.Count; j++)
                 {
+                    print(items[i].good[j]);
+                    print(items[i].good.Count);
                     resultItem.AddGoodFeature(items[i].good[j]);
                 }
                 for (int j = 0; j < items[i].bad.Count; j++)
@@ -82,7 +101,8 @@ public class CraftTable : MonoBehaviour
                             break;
                         }
                     }
-                    
+
+                    print(items[i].good[goodfeatures[k]]);
                     resultItem.AddGoodFeature(items[i].good[goodfeatures[k]]);
                 }
 

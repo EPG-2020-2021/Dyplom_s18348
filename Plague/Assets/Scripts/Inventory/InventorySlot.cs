@@ -10,6 +10,7 @@ public class InventorySlot : MonoBehaviour
 
     public void AddItem(Item newItem)
     {
+        print(newItem.ItemName);
         item = newItem;
         icon.sprite = item.icon.sprite;
         icon.enabled = true;
@@ -32,4 +33,8 @@ public class InventorySlot : MonoBehaviour
         Inventory.instance.Remove(item);
     }
 
+    public void OnItemButton()
+    {
+       print(item.GetComponent<Weapon>().Durability);
+    }
 }

@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
 public class Quest : MonoBehaviour
 {
+    GameObject player;
+
     QuestManager questManager;
 
     //[HideInInspector]
@@ -34,10 +37,14 @@ public class Quest : MonoBehaviour
 
     public bool onlyWhenPicked = false;
 
-    public Item questItem;
-    public Item placeForItem;
+    public CraftItem placeForItem;
+    public string FindName = "";
+    public float FindQuality = 0f;
+    public List<string> FindFeatures;
 
-
+    [Header("Reward")]
+    public float reward_exp = 0f;
+    public GameObject reward_item;
     void Awake()
     {
         isItemFounded = !itemSearching;
@@ -49,17 +56,23 @@ public class Quest : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+
         questManager = FindObjectOfType<QuestManager>();
         LanguageManager.QuestTranslation(gameObject.GetComponent<Quest>());
 
         questOwnersType = gameObject.GetComponent<DropDown>().GetType();
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
 
-        if (itemSearching)
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (unlocked)
         {
-            questItem = new Item();
+            owner.publishQuest(this);
+            published = true;
+
         }
-
-
     }
 
     void Save()
@@ -95,7 +108,7 @@ public class Quest : MonoBehaviour
         if (unlocked && !published)
         {
             owner.publishQuest(this);
-            //Actions to publish this current quest;
+            print("Trhere is a new available quest");
             published = true;
 
         }
@@ -104,25 +117,8 @@ public class Quest : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (picked)
+        if (!picked)
         {
-            if (itemSearching)
-            {
-                if (placeForItem.gameObject == questItem.gameObject)
-                {
-                    isItemFounded = true;
-                }
-            }
-            if (isItemFounded && doesActionsDone)
-            {
-                isDone = true;
-                questManager.EndQuest(gameObject.GetComponent<Quest>());
-                //Destroy(gameObject);
-                gameObject.active = false;
-            }
-        } else
-        {
-            Debug.Log(gameObject.name);
             UnlockCheck();
         }
     }
@@ -149,7 +145,35 @@ public class Quest : MonoBehaviour
 
     //---------Setters--------------
 
+    public void pickQuest()
+    {
+        picked = true;
+    }
 
+    public bool returnQuest()
+    {
+        if (itemSearching &&
+            questManager.checkItemName(placeForItem, FindName) &&
+            questManager.checkItemQuality(placeForItem, FindQuality) &&
+            questManager.checkItemFeatures(placeForItem, FindFeatures))
+        {
+            return false;
+        }
+        else {
+            isItemFounded = true;
+        }
+        if (actionsCompliting && !doesActionsDone)
+        {
+            return false;
+        }
+
+        isDone = true;
+        questManager.EndQuest(gameObject.GetComponent<Quest>());
+        gameObject.active = false;
+
+        questManager.giveReward(reward_exp, reward_item);
+        return true;
+    }
     public void finishAction()
     {
         if (onlyWhenPicked && isPicked())

@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Talk Window
+  - Scroll
+  - Quest List Panel
+  - Quest Unit Name
+  - Canvas
+  - GameManager
+  - SkyCircle
   layers:
   - Default
   - TransparentFX

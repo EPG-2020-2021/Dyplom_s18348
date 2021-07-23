@@ -7,27 +7,29 @@ using UnityEngine;
 public class LoadItem : MonoBehaviour
 {
 
-    Item item;
+    CraftItem item;
     SpriteRenderer sr;
 
+    public bool loaded = false;
     void Start()
     {
-        item = GetComponent<Item>();
+        item = GetComponent<CraftItem>();
         sr = transform.GetComponent<SpriteRenderer>();
         Load();
+        loaded = true;
     }
 
     public void Load()
     {
         //string itemName = name.GetComponent<Text>().text;
 
-        if (File.Exists(Application.persistentDataPath
+        if (File.Exists(Application.dataPath
     + "/Items/" + item.ItemName + ".dat"))
         {
             ItemSave savedItem = new ItemSave();
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file =
-              File.Open(Application.persistentDataPath
+              File.Open(Application.dataPath
               + "/Items/" + item.ItemName + ".dat", FileMode.Open);
             savedItem = (ItemSave)bf.Deserialize(file);
             file.Close();

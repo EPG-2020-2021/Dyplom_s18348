@@ -11,7 +11,12 @@ public class Inventory : MonoBehaviour
 
 	void Awake()
 	{
-		instance = this;
+        if (instance == null)
+        {
+			print("new instance");
+   instance = this;
+        }
+     
 	}
 
 	#endregion
@@ -47,6 +52,7 @@ public class Inventory : MonoBehaviour
 	// Remove an item
 	public void Remove(Item item)
 	{
+		print(items.Count);
 		items.Remove(item);
 
 		if (onItemChangedCallback != null)
