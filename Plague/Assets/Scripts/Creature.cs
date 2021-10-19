@@ -9,7 +9,7 @@ public class Creature : MonoBehaviour
     public string Name;
     string type;
 
-    public bool interactible = false;
+    bool interactible = false;
 
     public GameObject player;
     
