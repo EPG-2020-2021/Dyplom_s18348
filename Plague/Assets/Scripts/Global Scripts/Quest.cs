@@ -169,6 +169,7 @@ public class Quest : MonoBehaviour
 
         isDone = true;
         questManager.EndQuest(gameObject.GetComponent<Quest>());
+        Inventory.instance.Remove(placeForItem);
         gameObject.active = false;
 
         questManager.giveReward(reward_exp, reward_item);

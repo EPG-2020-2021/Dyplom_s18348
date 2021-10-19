@@ -33,7 +33,7 @@ public class Creature : MonoBehaviour
     {
         if (talkWindow == null)
         {
-        talkWindow = GameObject.FindGameObjectWithTag("Canvas").transform.FindChild("TalkWindowHandler").FindChild("Talk window").gameObject;
+        talkWindow = GameObject.FindGameObjectWithTag("Canvas").transform.Find("TalkWindowHandler").Find("Talk window").gameObject;
             print(talkWindow);
             
 
