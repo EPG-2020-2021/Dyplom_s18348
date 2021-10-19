@@ -8,11 +8,11 @@ public class CraftTableGUI : MonoBehaviour
     bool interactible = false;
     public GameObject player;
 
-    Rigidbody2D rb;
+    GameObject CTgui;
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        CTgui = GameObject.Find("Canvas").transform.Find("CraftTableInventory").gameObject;      
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -32,7 +32,8 @@ public class CraftTableGUI : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             player = null;
-            interactible = false;        
+            interactible = false;
+            CTgui.SetActive(false);
         }
 
 
@@ -46,9 +47,9 @@ public class CraftTableGUI : MonoBehaviour
         {
          
             Debug.Log("Interaction with CraftTable");
-
-            GameObject go = GameObject.Find("CraftTableInventory");
-            go.SetActive(true);
+            CTgui.SetActive(true);
+           
+            
 
 
         }
