@@ -1920,6 +1920,7 @@ GameObject:
   - component: {fileID: 650609957}
   - component: {fileID: 650609958}
   - component: {fileID: 650609959}
+  - component: {fileID: 650609960}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -2012,6 +2013,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dayinmins: 15
   time: 4:20
+--- !u!114 &650609960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650609953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa98143b55b68fb43937fe6d7d93171b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemParent: {fileID: 1810396496}
 --- !u!1001 &701049966
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2618,7 +2632,6 @@ GameObject:
   - component: {fileID: 827737320}
   - component: {fileID: 827737319}
   - component: {fileID: 827737318}
-  - component: {fileID: 827737322}
   - component: {fileID: 827737323}
   m_Layer: 5
   m_Name: Canvas
@@ -2710,19 +2723,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &827737322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 827737317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa98143b55b68fb43937fe6d7d93171b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemParent: {fileID: 1810396496}
 --- !u!114 &827737323
 MonoBehaviour:
   m_ObjectHideFlags: 0
