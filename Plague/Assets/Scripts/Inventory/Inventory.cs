@@ -9,6 +9,8 @@ public class Inventory : MonoBehaviour
 
 	public static Inventory instance;
 
+	public GameObject craftTable;
+
 	void Awake()
 	{
         if (instance == null)
@@ -19,9 +21,14 @@ public class Inventory : MonoBehaviour
      
 	}
 
-	#endregion
+    #endregion
 
-	public delegate void OnItemChanged();
+    private void Start()
+    {
+			
+    }
+
+    public delegate void OnItemChanged();
 	public OnItemChanged onItemChangedCallback;
 
 	public int space = 1;

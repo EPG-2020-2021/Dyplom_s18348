@@ -35,6 +35,10 @@ public class InventorySlot : MonoBehaviour
 
     public void OnItemButton()
     {
-       print(item.GetComponent<Weapon>().Durability);
+        //print(item.GetComponent<Weapon>().Durability);
+        if (Inventory.instance.craftTable.GetComponent<CraftTableGUI>().CraftTableOpend)
+        {
+            Inventory.instance.craftTable.GetComponent<CraftTable>().Add(item);
+        }
     }
 }

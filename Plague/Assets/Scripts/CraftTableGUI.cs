@@ -9,6 +9,8 @@ public class CraftTableGUI : MonoBehaviour
     public GameObject player;
 
     GameObject CTgui;
+
+    public bool CraftTableOpend = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,10 +36,9 @@ public class CraftTableGUI : MonoBehaviour
             player = null;
             interactible = false;
             CTgui.SetActive(false);
+            CraftTableOpend = false;
+            Inventory.instance.craftTable = gameObject;
         }
-
-
-
     }
 
 
@@ -45,13 +46,20 @@ public class CraftTableGUI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F) && interactible)
         {
-         
+
+            if (CraftTableOpend)
+            {
+                CTgui.SetActive(false);
+                CraftTableOpend = false;
+                return;
+            }
             Debug.Log("Interaction with CraftTable");
             CTgui.SetActive(true);
-           
+            CraftTableOpend = true;
             
 
 
         }
+        
     }
 }

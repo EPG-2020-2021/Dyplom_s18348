@@ -6,11 +6,11 @@ using System;
 public class CraftTable : MonoBehaviour
 {
 
-    public CraftItem firstItem;
-    public CraftItem secondItem;
-    public CraftItem thirdItem;
+     CraftItem firstItem;
+     CraftItem secondItem;
+     CraftItem thirdItem;
 
-    CraftItem[] items;
+    public CraftItem[] items;
 
 
     int[] randArr;
@@ -20,16 +20,27 @@ public class CraftTable : MonoBehaviour
     System.Random random = new System.Random();
 
     // Start is called before the first frame update
-    void Start()
-    {   resultItem = (CraftItem) GameObject.Instantiate(Resources.Load<CraftItem>("Prefabs/Craft Item"));
-        resultItem.gameObject.GetComponent<LoadItem>().enabled = false;
+    void Start(){
+        items = new CraftItem[2];
         //resultItem = new Item();
         randArr = new int[3];
-        StartCoroutine(Craft());
+        //StartCoroutine(Craft());
+    }
+
+    public void Add(Item item)
+    {
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (item.craftability && items[i] == null)
+            {
+                items[i] = (CraftItem)item;
+                return;
+            }
+        }
     }
 
     bool isLoaded()
-    {
+    {//ci - craft item
         foreach (var ci in items)
         {
             if (!ci.gameObject.GetComponent<LoadItem>().loaded)
@@ -40,16 +51,17 @@ public class CraftTable : MonoBehaviour
         return true;
     }
 
-    public IEnumerator Craft()
+    public void Craft()
     {
-        
+        resultItem = (CraftItem)GameObject.Instantiate(Resources.Load<CraftItem>("Prefabs/Craft Item"));
+        resultItem.gameObject.GetComponent<LoadItem>().enabled = false;
         float success;
         float fail;
-        items = new CraftItem[] { firstItem, secondItem
+        //items = new CraftItem[2];// { firstItem, secondItem
          //   , thirdItem 
         
-        };
-        yield return new WaitUntil(() => isLoaded());
+       // };
+       // yield return new WaitUntil(() => isLoaded());
         for (int i = 0; i < items.Length; i++)
         {
             print(items[i].good.Count);
