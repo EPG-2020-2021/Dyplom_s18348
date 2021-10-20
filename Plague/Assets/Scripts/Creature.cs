@@ -25,7 +25,7 @@ public class Creature : MonoBehaviour
         myQuests = new List<Quest>();
         type = gameObject.GetComponent<DropDown>().GetType();
 
-        talkWindow = GameObject.FindGameObjectWithTag("Talk Window");
+        talkWindow = GameObject.Find("Canvas").transform.Find("TalkWindowHandler").Find("Talk window").gameObject;
         talkWindow.transform.parent.gameObject.active = false;
     }
 
@@ -33,7 +33,7 @@ public class Creature : MonoBehaviour
     {
         if (talkWindow == null)
         {
-        talkWindow = GameObject.FindGameObjectWithTag("Canvas").transform.Find("TalkWindowHandler").Find("Talk window").gameObject;
+        talkWindow = GameObject.Find("Canvas").transform.Find("TalkWindowHandler").Find("Talk window").gameObject;
             print(talkWindow);
             
 

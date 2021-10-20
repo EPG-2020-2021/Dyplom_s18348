@@ -23,7 +23,7 @@ public class InventoryUI : MonoBehaviour
     }
     void Start()
     {
-        UIInventory = transform.GetChild(0).gameObject;
+        UIInventory = GameObject.Find("Canvas").transform.Find("Inventory").gameObject;
         inventory = Inventory.instance;
         inventory.onItemChangedCallback += UpdateUI;
 

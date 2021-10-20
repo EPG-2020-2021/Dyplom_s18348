@@ -19,20 +19,23 @@ public class TalkWindow : MonoBehaviour
 
 
   
-
+    
     // Start is called before the first frame update
     void Start()
     {
-        Scroll = GameObject.FindGameObjectWithTag("Scroll");
-        QuestListPanel = GameObject.FindGameObjectWithTag("Quest List Panel");
+        
 
-        QuestUnitPrefab = (GameObject)Resources.Load("Prefabs/Quest Unit", typeof(GameObject));
+        
 
         
     }
 
     public void fillPanel(List<Quest> quests)
     {
+        QuestUnitPrefab = (GameObject)Resources.Load("Prefabs/Quest Unit", typeof(GameObject));
+        Scroll = GameObject.FindGameObjectWithTag("Scroll");
+        QuestListPanel = GameObject.FindGameObjectWithTag("Quest List Panel");
+
         foreach (Quest quest in quests)
         {
             if (!quest.isComplited())
