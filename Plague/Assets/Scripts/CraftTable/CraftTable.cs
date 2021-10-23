@@ -27,7 +27,7 @@ public class CraftTable : MonoBehaviour
 
     public bool Add(Item item)
     {
-        
+        print("ADD_incrafttable");
             if (item.craftability && items.Count<maxSlots)
             {
                 items.Add((CraftItem)item);
@@ -72,45 +72,48 @@ public class CraftTable : MonoBehaviour
     public OnItemAdd onItemAddCallback;
     public delegate void OnItemRemove();
     public OnItemRemove onItemRemoveCallback;
+    public delegate void OnItemResult();
+    public OnItemRemove onItemResultCallback;
 
     public void Craft()
     {
         resultItem = (CraftItem)GameObject.Instantiate(Resources.Load<CraftItem>("Prefabs/Craft Item"));
         resultItem.gameObject.GetComponent<LoadItem>().enabled = false;
         resultItem.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("ItemPictures/potion");
+        resultItem.icon = resultItem.GetComponent<SpriteRenderer>();
+        //resultItem.enabled = false;
         float success;
         float fail;
         //items = new CraftItem[2];// { firstItem, secondItem
-         //   , thirdItem 
-        
-       // };
-       // yield return new WaitUntil(() => isLoaded());
+        //   , thirdItem 
+
+        // };
+        // yield return new WaitUntil(() => isLoaded());
+        if (items.Count > 1 && items.Count < 4)
         for (int i = 0; i < items.Count; i++)
         {
-            print(items[i].good.Count);
+            
             success = 1f / 9f * items[i].itemQuality;
-            Debug.Log("quality: " + items[i].itemQuality);
-            Debug.Log("Success: " + success);
+            
             fail = 100f - (1f / 5f * (101f - items[i].itemQuality));
-            Debug.Log("Fail: " + fail);
+            
 
             randArr[i] = random.Next(101);
-            Debug.Log("Random: " + randArr[i]);
+            
             if (randArr[i] < success) //first variant
             {
-                Debug.Log("first variant");
+                
                 for (int j = 0; j < items[i].good.Count; j++)
                 {
-                    print(items[i].good[j]);
+                    
                     resultItem.AddGoodFeature(items[i].good[j]);
                 }
             } else if (randArr[i] < items[i].itemQuality && randArr[i] > success) //second variant
             {
-                Debug.Log("second variant");
+                
                 for (int j = 0; j < items[i].good.Count; j++)
                 {
-                    print(items[i].good[j]);
-                    print(items[i].good.Count);
+                    
                     resultItem.AddGoodFeature(items[i].good[j]);
                 }
                 for (int j = 0; j < items[i].bad.Count; j++)
@@ -120,7 +123,7 @@ public class CraftTable : MonoBehaviour
             }
             else if (randArr[i] > items[i].itemQuality && randArr[i] < fail) //third variant
             {
-                Debug.Log("third variant");
+                
                 // int[] goodfeatures = new int[items[i].good.Count * randArr[i]];
 
                 List<int> goodfeatures = new List<int>();
@@ -137,7 +140,7 @@ public class CraftTable : MonoBehaviour
                         }
                     }
 
-                    print(items[i].good[goodfeatures[k]]);
+                   
                     resultItem.AddGoodFeature(items[i].good[goodfeatures[k]]);
                 }
 
@@ -147,7 +150,7 @@ public class CraftTable : MonoBehaviour
                 }
             } else if (randArr[i] > fail) //fourth variant
             {
-                Debug.Log("fourth variant");
+                
                 for (int j = 0; j < items[i].bad.Count; j++)
                 {
                     resultItem.AddBadFeature(items[i].bad[j]);
@@ -155,7 +158,9 @@ public class CraftTable : MonoBehaviour
             }
 
         }
-
+        if (onItemResultCallback != null)
+            onItemResultCallback.Invoke();
+        instance.Remove();
     }
 
 

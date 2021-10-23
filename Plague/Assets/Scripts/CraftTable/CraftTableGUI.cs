@@ -10,6 +10,7 @@ public class CraftTableGUI : MonoBehaviour
 
     GameObject CTgui;
     CraftSlot[] slots;
+    ResultSlot resultslot;
 
     public Transform itemParent;
     CraftTable inventory;
@@ -21,6 +22,7 @@ public class CraftTableGUI : MonoBehaviour
         CTgui = GameObject.Find("Canvas").transform.Find("CraftTableInventory").gameObject;
         itemParent = CTgui.transform.GetChild(0);
         slots = itemParent.GetComponentsInChildren<CraftSlot>();
+        resultslot = itemParent.GetComponentInChildren<ResultSlot>();
        
     }
 
@@ -34,6 +36,7 @@ public class CraftTableGUI : MonoBehaviour
             inventory = CraftTable.instance;
             inventory.onItemAddCallback += AddUI;
             inventory.onItemRemoveCallback += RemoveUI;
+            inventory.onItemResultCallback += AddResult;
         }
 
 
@@ -69,9 +72,13 @@ public class CraftTableGUI : MonoBehaviour
     }
     void AddUI()
     {
-
+        
         for (int i = 0; i < slots.Length; i++)
         {
+            if (slots[i].GetComponent<CraftSlot>().item == inventory.items[inventory.items.Count - 1])
+            {
+                return;
+            }
             if (slots[i].GetComponent<CraftSlot>().item == null)
             {
                 slots[i].AddItem(inventory.items[inventory.items.Count - 1]);
@@ -81,6 +88,13 @@ public class CraftTableGUI : MonoBehaviour
          
     }
 
+    void AddResult()
+    {
+        if (resultslot.item == null)
+        {
+            resultslot.AddItem(inventory.resultItem);
+        }
+    }
     void RemoveUI()
     {
         for (int i = 0; i < slots.Length; i++)
