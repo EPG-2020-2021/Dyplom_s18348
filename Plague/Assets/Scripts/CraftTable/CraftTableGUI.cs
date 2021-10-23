@@ -102,7 +102,7 @@ public class CraftTableGUI : MonoBehaviour
             if (!inventory.items.Contains((CraftItem)slots[i].GetComponent<CraftSlot>().item))
             {
                 slots[i].ClearSlot();
-                return;
+                
             }
         }
     }

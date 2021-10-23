@@ -21,7 +21,8 @@ public class ResultSlot : MonoBehaviour
 
     public void ClearSlot()
     {
-        Inventory.instance.Add(item);
+        item.GetComponent<Interaction>().Interact();
+       // Inventory.instance.Add(item);
 
         CraftTable.instance.resultItem = null;
 

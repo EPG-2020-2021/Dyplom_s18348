@@ -23,7 +23,11 @@ public class CraftSlot : MonoBehaviour
 
     public void ClearSlot()
     {
-        Inventory.instance.Add(item);
+        if (CraftTable.instance.items.Count != 0)
+        {
+            Inventory.instance.Add(item);
+        }
+        
 
         CraftTable.instance.Remove((CraftItem)item);
 
@@ -33,10 +37,13 @@ public class CraftSlot : MonoBehaviour
         icon.enabled = false;
 
         //removeButton.interactable = false;
-
-        
     }
 
+    public void DeleteSlots()
+    {
+
+    }
+        
     //public void OnRemoveButton()
     //{
     //    Inventory.instance.Remove(item);

@@ -45,6 +45,10 @@ public class Interaction : MonoBehaviour
     {
 
         Inventory.instance.Add(item);
+        if (Player == null)
+        {
+            Player = GameObject.FindGameObjectWithTag("Player");
+        }
         transform.SetParent(Player.transform.GetChild(0));
         item.DestroySelf();
     }
