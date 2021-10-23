@@ -40,11 +40,10 @@ public class Inventory : MonoBehaviour
 	public void Add(Item item)
 	{
 		//if (item.showInInventory)
-		if (true)
-		{
+		
 			if (items.Count >= space)
 			{
-				Debug.Log("Not enough room.");
+				Debug.Log("Not enough space.");
 				return;
 			}
 
@@ -53,7 +52,7 @@ public class Inventory : MonoBehaviour
 
 			if (onItemChangedCallback != null)
 				onItemChangedCallback.Invoke();
-		}
+		
 	}
 
 	// Remove an item

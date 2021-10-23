@@ -5,12 +5,10 @@ using System;
 
 public class CraftTable : MonoBehaviour
 {
+    public static CraftTable instance;
+    int maxSlots = 3;
 
-     CraftItem firstItem;
-     CraftItem secondItem;
-     CraftItem thirdItem;
-
-    public CraftItem[] items;
+    public List<CraftItem> items;
 
 
     int[] randArr;
@@ -21,22 +19,41 @@ public class CraftTable : MonoBehaviour
 
     // Start is called before the first frame update
     void Start(){
-        items = new CraftItem[2];
+        items = new List<CraftItem>();
         //resultItem = new Item();
         randArr = new int[3];
         //StartCoroutine(Craft());
     }
 
-    public void Add(Item item)
+    public bool Add(Item item)
     {
-        for (int i = 0; i < items.Length; i++)
-        {
-            if (item.craftability && items[i] == null)
+        
+            if (item.craftability && items.Count<maxSlots)
             {
-                items[i] = (CraftItem)item;
-                return;
+                items.Add((CraftItem)item);
+                if (onItemAddCallback != null)
+                    onItemAddCallback.Invoke();
+                
+            
+            
+            return true;
             }
-        }
+        return false;
+        
+    }
+
+    public void Remove()
+    {
+        items = new List<CraftItem>();
+        if (onItemRemoveCallback != null)
+            onItemRemoveCallback.Invoke();
+    }
+
+    public void Remove(CraftItem item)
+    {
+        items.Remove(item);
+        //if (onItemRemoveCallback != null)
+        //    onItemRemoveCallback.Invoke();
     }
 
     bool isLoaded()
@@ -51,10 +68,16 @@ public class CraftTable : MonoBehaviour
         return true;
     }
 
+    public delegate void OnItemAdd();
+    public OnItemAdd onItemAddCallback;
+    public delegate void OnItemRemove();
+    public OnItemRemove onItemRemoveCallback;
+
     public void Craft()
     {
         resultItem = (CraftItem)GameObject.Instantiate(Resources.Load<CraftItem>("Prefabs/Craft Item"));
         resultItem.gameObject.GetComponent<LoadItem>().enabled = false;
+        resultItem.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("ItemPictures/potion");
         float success;
         float fail;
         //items = new CraftItem[2];// { firstItem, secondItem
@@ -62,7 +85,7 @@ public class CraftTable : MonoBehaviour
         
        // };
        // yield return new WaitUntil(() => isLoaded());
-        for (int i = 0; i < items.Length; i++)
+        for (int i = 0; i < items.Count; i++)
         {
             print(items[i].good.Count);
             success = 1f / 9f * items[i].itemQuality;
@@ -132,7 +155,6 @@ public class CraftTable : MonoBehaviour
             }
 
         }
-
 
     }
 
