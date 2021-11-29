@@ -33,7 +33,7 @@ public class Creature : MonoBehaviour
     {
         if (talkWindow == null)
         {
-        talkWindow = GameObject.Find("Canvas").transform.Find("TalkWindowHandler").Find("Talk window").gameObject;
+            talkWindow = GameObject.Find("Canvas").transform.Find("TalkWindowHandler").Find("Talk window").gameObject;
             print(talkWindow);
             
 
@@ -54,21 +54,21 @@ public class Creature : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F) && interactible)
         {
-            //Talk window
-            Debug.Log("Interaction with " + Name);
-            if (!listed)
-            {               
-                openTalkWindow();
-                talkWindow.GetComponent<TalkWindow>().fillPanel(myQuests);
-                listed = true;
-            }
-            
-
-           
+            Interaction();
         }
     }
 
-
+    public virtual void Interaction()
+    {
+        //Talk window
+        Debug.Log("Interaction with " + Name);
+        if (!listed)
+        {
+            openTalkWindow();
+            talkWindow.GetComponent<TalkWindow>().fillPanel(myQuests);
+            listed = true;
+        }
+    }
 
     void questCleaner()
     {

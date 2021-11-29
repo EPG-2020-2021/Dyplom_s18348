@@ -11,6 +11,8 @@ TagManager:
   - Canvas
   - GameManager
   - SkyCircle
+  - LeechArea
+  - Leech
   layers:
   - Default
   - TransparentFX
