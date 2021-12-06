@@ -7,28 +7,34 @@ public class Leech : MonoBehaviour
 {
     Rigidbody2D rb;
 
-    Vector2 startPosition;
+    public Vector2 startPosition;
     public Sprite drinkingLeech;
     GameObject leech;
-    bool dropable = false;
+    public bool dropable = false;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        startPosition = transform.position;
+        startPosition = transform.localPosition;
 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        collision.CompareTag("LeechArea");
+        if (collision.CompareTag("LeechArea"))
+        {
+
         dropable = true;
+        }
+        
 
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        collision.CompareTag("LeechArea");
-        dropable = false;
+        if (collision.CompareTag("LeechArea"))
+        {
+            dropable = false;
+        }
     }
 
     private void Update()
@@ -48,7 +54,7 @@ public class Leech : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Mouse0) && leech)
         {
-            if (dropable)
+            if (this.dropable)
             {
                 leech.GetComponent<Image>().sprite = drinkingLeech;
                 
@@ -59,7 +65,7 @@ public class Leech : MonoBehaviour
             }
             else
             {
-                leech.transform.position = startPosition;
+                //leech.transform.position = this.startPosition;
             }
             leech.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             leech = null;

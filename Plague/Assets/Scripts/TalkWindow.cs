@@ -64,7 +64,7 @@ public class TalkWindow : MonoBehaviour
     {
         //List<GameObject> children = QuestListPanel.transform.get
 
-
+        if(QuestListPanel)
         foreach (Transform child in QuestListPanel.transform)
         {
             GameObject.Destroy(child.gameObject);
