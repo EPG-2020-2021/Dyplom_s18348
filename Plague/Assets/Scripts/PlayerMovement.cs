@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public Animator animator;
     Rigidbody2D rb;
+    SpriteRenderer sr;
     public float moveSpeed = 5f;
     float move;
 
@@ -13,14 +15,19 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
         movement.x = Input.GetAxisRaw("Horizontal");
+        sr.flipX = movement.x >= 0 ? false : true;
+
         movement.y = Input.GetAxisRaw("Vertical");
+        animator.SetFloat("Speed", Mathf.Abs(movement.y) + Mathf.Abs(movement.x));
     }
 
     void FixedUpdate()
