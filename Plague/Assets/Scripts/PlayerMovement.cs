@@ -24,7 +24,8 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         movement.x = Input.GetAxisRaw("Horizontal");
-        sr.flipX = movement.x >= 0 ? false : true;
+        if(movement.x != 0)
+        sr.flipX = movement.x > 0 ? false : true;
 
         movement.y = Input.GetAxisRaw("Vertical");
         animator.SetFloat("Speed", Mathf.Abs(movement.y) + Mathf.Abs(movement.x));
