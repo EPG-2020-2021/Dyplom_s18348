@@ -10,7 +10,7 @@ public class StatsGUI : MonoBehaviour
     public Slider healthSlider;
     public Slider armorSlider;
 
-    private void Start()
+    private void Awake()
     {
         if (!instance)
         {
