@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Object : MonoBehaviour, IInteractible, IPickable
 {
     public new string name;
     public int cost;
-
+    public Sprite icon;
 
 
 
@@ -23,6 +21,6 @@ public class Object : MonoBehaviour, IInteractible, IPickable
 
     public void pickUp()
     {
-        
+
     }
 }
