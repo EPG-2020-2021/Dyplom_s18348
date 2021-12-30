@@ -5,10 +5,12 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
     public static PlayerScript instance; //single instance
+    public GameObject target;
 
 
-    //[SerializeField]
-    //internal
+
+    [SerializeField] 
+    internal PlayerCollisionController collisionController;
 
 
 

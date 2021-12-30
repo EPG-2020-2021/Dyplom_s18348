@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sickle : Weapon
+public class Sickle : Weapon2
 {
 
     private void Start()

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Random = System.Random;
 
-public class Weapon : Item
+public class Weapon2 : Item
 {   
     public float Durability = 100f;
     public float maxDurability = 100f;
