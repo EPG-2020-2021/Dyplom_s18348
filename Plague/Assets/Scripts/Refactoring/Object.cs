@@ -7,13 +7,6 @@ public class Object : MonoBehaviour, IInteractible, IPickable
     public Sprite icon;
 
 
-
-
-
-
-
-
-
     public void Interact()
     {
         pickUp();

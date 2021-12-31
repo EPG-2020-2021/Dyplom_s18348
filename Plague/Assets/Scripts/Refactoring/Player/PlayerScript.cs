@@ -11,7 +11,10 @@ public class PlayerScript : MonoBehaviour
 
     [SerializeField] 
     internal PlayerCollisionController collisionController;
-
+    [SerializeField]
+    internal PlayerInteractionController interactionController;
+    [SerializeField]
+    internal PlayerInputController inputController;
 
 
     private void Awake()
