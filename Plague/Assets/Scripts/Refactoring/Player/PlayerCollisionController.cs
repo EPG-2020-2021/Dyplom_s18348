@@ -12,4 +12,12 @@ public class PlayerCollisionController : MonoBehaviour
     {
         PlayerScript.instance.target = other.gameObject;
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (PlayerScript.instance.target.Equals(other))
+        {
+            PlayerScript.instance.target = null;
+        }
+    }
 }
