@@ -5,8 +5,7 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
     public static PlayerScript instance; //single instance
-    public GameObject target;
-
+    public GameObject target = null;
 
 
     [SerializeField] 
@@ -15,6 +14,8 @@ public class PlayerScript : MonoBehaviour
     internal PlayerInteractionController interactionController;
     [SerializeField]
     internal PlayerInputController inputController;
+    [SerializeField]
+    internal PlayerMovementController movementController;
 
 
     private void Awake()
@@ -24,7 +25,4 @@ public class PlayerScript : MonoBehaviour
             instance = this;
         }
     }
-
-
-
 }

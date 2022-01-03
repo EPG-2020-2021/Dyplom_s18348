@@ -7,24 +7,27 @@ public class PlayerInteractionController : MonoBehaviour
     
     public void Interact()
     {
-        var target = PlayerScript.instance.target.GetComponent<IInteractible>();
-
-        if (target == null)
+        print("Interacting");
+        var temp = PlayerScript.instance.target;
+        if (!temp || temp.GetComponent<IInteractible>() == null)
         {
             return;
         }
+        var target = temp.GetComponent<IInteractible>();
+
+        
 
         target.Interact();
     }
 
     public void Use()
     {
-        var target = PlayerScript.instance.target.GetComponent<IUsable>();
-
-        if (target == null)
+        var temp = PlayerScript.instance.target;
+        if (!temp || temp.GetComponent<IUsable>() == null)
         {
             return;
         }
+        var target = temp.GetComponent<IUsable>();
 
         target.Use();
 

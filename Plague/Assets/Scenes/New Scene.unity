@@ -949,9 +949,10 @@ GameObject:
   - component: {fileID: 954110135}
   - component: {fileID: 954110132}
   - component: {fileID: 954110134}
+  - component: {fileID: 954110136}
   m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
+  m_Name: Player
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1078,6 +1079,7 @@ MonoBehaviour:
   collisionController: {fileID: 954110132}
   interactionController: {fileID: 954110134}
   inputController: {fileID: 954110135}
+  movementController: {fileID: 954110136}
 --- !u!114 &954110134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1100,6 +1102,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3f197051e7bbaa4a91506787414f35a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &954110136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954110127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72e2ee3613784fa4eaa4b3fa7ebfc8a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1126600283
