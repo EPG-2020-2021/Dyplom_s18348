@@ -17,7 +17,7 @@ public class PlayerMovementController : MonoBehaviour
 
     public void Move(Vector3 direction)
     {
-        print("Move");
+        //print("Move");
         this.direction = direction;
     }
 

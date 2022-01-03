@@ -14,6 +14,6 @@ public class Object : MonoBehaviour, IInteractible, IPickable
 
     public void pickUp()
     {
-
+        print("PickUp");
     }
 }
