@@ -8,6 +8,8 @@ public class PlayerScript : MonoBehaviour
     public GameObject target = null;
 
 
+    public float playerSpeed = 80f;
+
     [SerializeField] 
     internal PlayerCollisionController collisionController;
     [SerializeField]

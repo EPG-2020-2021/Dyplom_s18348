@@ -1076,6 +1076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  playerSpeed: 3
   collisionController: {fileID: 954110132}
   interactionController: {fileID: 954110134}
   inputController: {fileID: 954110135}
