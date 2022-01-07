@@ -8,7 +8,7 @@ public class PlayerScript : MonoBehaviour
     public GameObject target = null;
 
 
-    public float playerSpeed = 80f;
+    private float playerSpeed = 2.5f;
 
     [SerializeField] 
     internal PlayerCollisionController collisionController;
@@ -18,7 +18,8 @@ public class PlayerScript : MonoBehaviour
     internal PlayerInputController inputController;
     [SerializeField]
     internal PlayerMovementController movementController;
-
+    [SerializeField]
+    internal CharacterStats playerStats;
 
     private void Awake()
     {

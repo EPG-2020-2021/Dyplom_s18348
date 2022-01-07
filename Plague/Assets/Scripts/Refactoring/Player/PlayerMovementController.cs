@@ -12,7 +12,14 @@ public class PlayerMovementController : MonoBehaviour
     }
     private void Start()
     {
-        speed = PlayerScript.instance.playerSpeed;
+        RefreshSpeed();
+        PlayerScript.instance.playerStats.GetStat(StatKey.Speed).onValueChange += RefreshSpeed;
+
+    }
+
+    private void RefreshSpeed()
+    {
+        speed = PlayerScript.instance.playerStats.GetStat(StatKey.Speed).value;
     }
 
     public void Move(Vector3 direction)

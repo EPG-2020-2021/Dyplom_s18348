@@ -4,6 +4,10 @@ using UnityEngine;
 
 public enum StatKey
 {
+    //Speed================================
+    Speed,
+
+    //Diseases=============================
     BloodPressure,
     HeartBeatRate,
     Nausea, //тошнота
@@ -11,6 +15,6 @@ public enum StatKey
     Dizziness, //головокружение
     Pain,
     Fatigue //усталость
-
+    
 
 }
