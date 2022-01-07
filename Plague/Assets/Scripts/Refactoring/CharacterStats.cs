@@ -14,4 +14,13 @@ public class CharacterStats : MonoBehaviour
     {
         return stats.Find(item => item.statKey.Equals(key));
     }
+
+    public List<Stat> GetStats()
+    {
+        return stats;
+    }
+    public void SetStats(List<Stat> newStats)
+    {
+        stats = newStats;
+    }
 }

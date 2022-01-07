@@ -18,6 +18,7 @@ public class PlayerInteractionController : MonoBehaviour
         
 
         target.Interact();
+        PlayerScript.instance.target.GetComponent<IUsable>().Use(gameObject);
     }
 
     public void Use()

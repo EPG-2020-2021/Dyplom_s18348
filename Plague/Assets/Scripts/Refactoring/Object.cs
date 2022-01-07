@@ -9,7 +9,7 @@ public class Object : MonoBehaviour, IInteractible, IPickable
 
     public void Interact()
     {
-        pickUp();
+        pickUp();  
     }
 
     public void pickUp()
