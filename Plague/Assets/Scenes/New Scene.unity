@@ -1699,7 +1699,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statKey: 0
   minValue: 0
-  maxValue: 10
+  maxValue: 4
   value: 2
 --- !u!1001 &3593521116407224677
 PrefabInstance:
@@ -1708,6 +1708,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1635232638, guid: 5a0568937d8be9340a483f9462685fb8, type: 3}
+      propertyPath: value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3593521118069686248, guid: 5a0568937d8be9340a483f9462685fb8, type: 3}
       propertyPath: m_Name
       value: PlantTemplate

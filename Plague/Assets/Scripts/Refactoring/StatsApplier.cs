@@ -12,7 +12,18 @@ public class StatsApplier : MonoBehaviour
 
         for (int i = 0; i < stats.Length; i++)
         {
-             characterStats.GetStat(stats[i].statKey).Increase(stats[i].value); 
+             characterStats.GetStat(stats[i].statKey).Change(stats[i].value); 
+        }
+    }
+
+    public static void CancelStats(GameObject fromObject, GameObject toCharacter)
+    {
+        var stats = fromObject.GetComponentsInChildren<Stat>();
+        var characterStats = toCharacter.GetComponent<CharacterStats>();
+
+        for (int i = 0; i < stats.Length; i++)
+        {
+            characterStats.GetStat(stats[i].statKey).Change(-stats[i].value);
         }
     }
 }

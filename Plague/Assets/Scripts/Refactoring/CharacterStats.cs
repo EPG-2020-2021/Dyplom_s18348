@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
     private List<Stat> stats;
-
+    private string statsPath = "Prefabs/Stats/";
     private void Awake()
     {
         stats = new List<Stat>(GetComponentsInChildren<Stat>());
@@ -16,8 +17,8 @@ public class CharacterStats : MonoBehaviour
 
         if (stat == null)
         {
-            AddStat(key);
-            stat = stats.Find(item => item.statKey.Equals(key));
+            
+            stat = AddStat(key);
         }
 
         return stat;
@@ -32,11 +33,12 @@ public class CharacterStats : MonoBehaviour
         stats = newStats;
     }
 
-    public void AddStat(StatKey name)
+    public Stat AddStat(StatKey name)
     {
-        var stat = (GameObject)Resources.Load("Prefabs/Stats/" + name.ToString(), typeof(GameObject));
-        //print("../Prefabs/Stats/" + name.ToString());
-        stats.Add(Instantiate(stat, transform.Find("Stats").transform).GetComponent<Stat>());
-        
+        var statPrefab = (GameObject)Resources.Load(statsPath + name.ToString(), typeof(GameObject));
+        var stat = Instantiate(statPrefab, transform.Find("Stats").transform).GetComponent<Stat>();
+        stat.SetRandomValue();
+        stats.Add(stat);
+        return stat;
     }
 }

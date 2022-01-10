@@ -17,25 +17,18 @@ public class Stat : MonoBehaviour
     public OnValueChange onValueChange;
     private void Awake()
     {
-        value = Mathf.Clamp(value, minValue, maxValue);
+        onValueChange += ()=> value = Mathf.Clamp(value, minValue, maxValue);
     }
 
-    public void Increase(float increaser)
+    public void Change(float delta)
     {
-        value += increaser;
-        value = Mathf.Clamp(value, minValue, maxValue);
-
+        value += delta;
         onValueChange.Invoke();
     }
 
-    public void Decrease(float decreaser)
+    public void SetRandomValue()
     {
-        value -= decreaser;
-        value = Mathf.Clamp(value, minValue, maxValue);
-
-        onValueChange.Invoke();
+        value = Random.Range(minValue, maxValue);
+        print(value);
     }
-
-
-
 }
