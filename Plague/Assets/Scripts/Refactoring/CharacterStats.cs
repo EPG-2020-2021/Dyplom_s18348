@@ -12,7 +12,15 @@ public class CharacterStats : MonoBehaviour
 
     public Stat GetStat(StatKey key)
     {
-        return stats.Find(item => item.statKey.Equals(key));
+        Stat stat = stats.Find(item => item.statKey.Equals(key));
+
+        if (stat == null)
+        {
+            AddStat(key);
+            stat = stats.Find(item => item.statKey.Equals(key));
+        }
+
+        return stat;
     }
 
     public List<Stat> GetStats()
@@ -22,5 +30,13 @@ public class CharacterStats : MonoBehaviour
     public void SetStats(List<Stat> newStats)
     {
         stats = newStats;
+    }
+
+    public void AddStat(StatKey name)
+    {
+        var stat = (GameObject)Resources.Load("Prefabs/Stats/" + name.ToString(), typeof(GameObject));
+        //print("../Prefabs/Stats/" + name.ToString());
+        stats.Add(Instantiate(stat, transform.Find("Stats").transform).GetComponent<Stat>());
+        
     }
 }

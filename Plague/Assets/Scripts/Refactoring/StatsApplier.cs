@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ public class StatsApplier : MonoBehaviour
 
         for (int i = 0; i < stats.Length; i++)
         {
-            characterStats.GetStat(stats[i].statKey).Increase(stats[i].value);
+             characterStats.GetStat(stats[i].statKey).Increase(stats[i].value); 
         }
     }
 }
