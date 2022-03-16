@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Stat : MonoBehaviour
 {
@@ -29,6 +27,5 @@ public class Stat : MonoBehaviour
     public void SetRandomValue()
     {
         value = Random.Range(minValue, maxValue);
-        print(value);
     }
 }

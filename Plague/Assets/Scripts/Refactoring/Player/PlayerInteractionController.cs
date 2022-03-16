@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInteractionController : MonoBehaviour
-{
-    
+{    
     public void Interact()
     {
         print("Interacting");
@@ -18,7 +17,7 @@ public class PlayerInteractionController : MonoBehaviour
         
 
         target.Interact();
-        PlayerScript.instance.target.GetComponent<IUsable>().Use(gameObject);
+        Use();
     }
 
     public void Use()
@@ -30,7 +29,7 @@ public class PlayerInteractionController : MonoBehaviour
         }
         var target = temp.GetComponent<IUsable>();
 
-        target.Use();
+        target.Use(gameObject);
 
     }
 

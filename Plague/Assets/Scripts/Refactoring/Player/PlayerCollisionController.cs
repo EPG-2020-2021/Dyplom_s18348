@@ -5,7 +5,7 @@ public class PlayerCollisionController : MonoBehaviour
     private void Start()
     {
         if(!PlayerScript.instance.collisionController)
-        PlayerScript.instance.collisionController = this;
+            PlayerScript.instance.collisionController = this;
     }
 
     private void OnTriggerEnter(Collider other)

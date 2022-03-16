@@ -4,9 +4,44 @@ using UnityEngine;
 
 public class NPCScript : MonoBehaviour
 {
+    [SerializeField]
+    private Object slot;
+
     //DialogController dialogController;
 
     [SerializeField]
-    CharacterStats characterStats;
+    internal CharacterStats characterStats;
+    [SerializeField]
+    internal NPCController npcController;
+
+    public void PutObject(Object obj)
+    {
+        if (!slot)
+        {
+            slot = obj;
+        }
+    }
+
+    public Object TakeObject()
+    {
+        if (slot == null)
+        {
+            return new Object();
+        }
+
+        var result = slot;
+        slot = null;
+        return result;
+    }
+
+    public Object GetObject()
+    {
+        if (slot == null)
+        {
+            return new Object();
+        }
+
+        return slot; 
+    }
 
 }

@@ -6,7 +6,10 @@ public class Object : MonoBehaviour, IInteractible, IPickable
     public int cost;
     public Sprite icon;
 
-
+    //public Object(string name)
+    //{
+    //    this.name = name;
+    //}
     public void Interact()
     {
         pickUp();  
