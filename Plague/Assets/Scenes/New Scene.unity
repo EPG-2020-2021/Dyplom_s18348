@@ -1699,7 +1699,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statKey: 0
   minValue: 0
-  maxValue: 4
+  maxValue: 10
   value: 2
 --- !u!1001 &2943192805126063201
 PrefabInstance:
