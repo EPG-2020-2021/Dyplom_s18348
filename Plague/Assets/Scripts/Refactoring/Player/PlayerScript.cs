@@ -20,6 +20,12 @@ public class PlayerScript : MonoBehaviour
     internal PlayerMovementController movementController;
     [SerializeField]
     internal CharacterStats playerStats;
+    [SerializeField]
+    internal PlayerHealthController healthController;
+    [SerializeField]
+    internal Inventory inventory;
+    [SerializeField]
+    internal CharacterAnimationController animationController;
 
     private void Awake()
     {

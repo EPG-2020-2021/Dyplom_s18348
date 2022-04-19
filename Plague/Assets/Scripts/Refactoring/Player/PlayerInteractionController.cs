@@ -17,7 +17,6 @@ public class PlayerInteractionController : MonoBehaviour
         
 
         target.Interact();
-        Use();
     }
 
     public void Use()

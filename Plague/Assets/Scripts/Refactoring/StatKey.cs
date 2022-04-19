@@ -14,8 +14,14 @@ public enum StatKey
     Temperature,
     Dizziness, //головокружение
     Pain,
-    Fatigue //усталость
+    Fatigue, //усталость
     
+    //Health===============================
+    Health,
     
 
+
+
+
+    Test
 }

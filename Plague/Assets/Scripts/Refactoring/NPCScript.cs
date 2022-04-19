@@ -16,7 +16,7 @@ public class NPCScript : MonoBehaviour
 
     public void PutObject(Object obj)
     {
-        if (!slot)
+        if (slot == null)
         {
             slot = obj;
         }

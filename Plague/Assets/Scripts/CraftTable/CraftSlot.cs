@@ -25,7 +25,7 @@ public class CraftSlot : MonoBehaviour
     {
         if (CraftTable.instance.items.Count != 0)
         {
-            Inventory.instance.Add(item);
+            InventoryOLD.instance.Add(item);
         }
         
 

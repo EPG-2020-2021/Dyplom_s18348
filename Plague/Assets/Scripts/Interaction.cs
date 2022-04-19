@@ -44,7 +44,7 @@ public class Interaction : MonoBehaviour
     public virtual void Interact()
     {
 
-        Inventory.instance.Add(item);
+        InventoryOLD.instance.Add(item);
         if (Player == null)
         {
             Player = GameObject.FindGameObjectWithTag("Player");

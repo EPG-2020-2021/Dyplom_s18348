@@ -51,7 +51,7 @@ public class CraftTableGUI : MonoBehaviour
             interactible = false;
             CTgui.SetActive(false);
             CraftTableOpend = false;
-            Inventory.instance.craftTable = gameObject;
+            InventoryOLD.instance.craftTable = gameObject;
         }
     }
 

@@ -24,8 +24,8 @@ public class PlayerMovementController : MonoBehaviour
 
     public void Move(Vector3 direction)
     {
-        //print("Move");
         this.direction = direction;
+        PlayerScript.instance.animationController.MoveAnimation(direction.z, direction.x);
     }
 
     private void FixedUpdate()
@@ -35,6 +35,6 @@ public class PlayerMovementController : MonoBehaviour
             return;
         }
         
-        rb.MovePosition(transform.position + direction * Time.deltaTime * speed);
+        rb.MovePosition(transform.position + direction * Time.fixedDeltaTime * speed);
     }
 }

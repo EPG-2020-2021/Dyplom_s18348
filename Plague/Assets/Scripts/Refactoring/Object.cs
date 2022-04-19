@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class Object : MonoBehaviour, IInteractible, IPickable
 {
+
     public new string name;
+    public string description;
     public int cost;
     public Sprite icon;
 
@@ -17,6 +20,7 @@ public class Object : MonoBehaviour, IInteractible, IPickable
 
     public void pickUp()
     {
-        print("PickUp");
+        PlayerScript.instance.inventory.Add(this);
+        gameObject.SetActive(false);
     }
 }

@@ -10,14 +10,20 @@ public class PlayerCollisionController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print("triggering with " + other.name);
         PlayerScript.instance.target = other.gameObject;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        print("triggering out of " + other.name);
         if (PlayerScript.instance.target.Equals(other.gameObject))
+        {
+            PlayerScript.instance.target = null;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (PlayerScript.instance.target && !PlayerScript.instance.target.activeSelf)
         {
             PlayerScript.instance.target = null;
         }
