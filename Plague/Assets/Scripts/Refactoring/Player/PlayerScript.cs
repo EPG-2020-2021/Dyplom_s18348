@@ -8,8 +8,6 @@ public class PlayerScript : MonoBehaviour
     public GameObject target = null;
 
 
-    private float playerSpeed = 2.5f;
-
     [SerializeField] 
     internal PlayerCollisionController collisionController;
     [SerializeField]
@@ -26,6 +24,8 @@ public class PlayerScript : MonoBehaviour
     internal Inventory inventory;
     [SerializeField]
     internal CharacterAnimationController animationController;
+    [SerializeField]
+    internal MoneyController moneyController;
 
     private void Awake()
     {

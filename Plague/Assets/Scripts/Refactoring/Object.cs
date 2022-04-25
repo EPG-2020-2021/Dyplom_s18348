@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class Object : MonoBehaviour, IInteractible, IPickable
+public class Object : MonoBehaviour, IInteractable, IPickable
 {
 
     public new string name;

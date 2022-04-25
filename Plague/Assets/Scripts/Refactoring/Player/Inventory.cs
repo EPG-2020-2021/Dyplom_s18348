@@ -35,6 +35,18 @@ public class Inventory : MonoBehaviour
         inventory.Remove(item);
     }
 
+    public bool Has (Object item)
+    {
+        if (inventory.Contains(item))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
     private bool EnoughSpace()
     {
         return inventory.Count < inventorySize ? true : false;

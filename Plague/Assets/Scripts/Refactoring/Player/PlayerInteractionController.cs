@@ -8,11 +8,11 @@ public class PlayerInteractionController : MonoBehaviour
     {
         print("Interacting");
         var temp = PlayerScript.instance.target;
-        if (!temp || temp.GetComponent<IInteractible>() == null)
+        if (!temp || temp.GetComponent<IInteractable>() == null)
         {
             return;
         }
-        var target = temp.GetComponent<IInteractible>();
+        var target = temp.GetComponent<IInteractable>();
 
         
 
