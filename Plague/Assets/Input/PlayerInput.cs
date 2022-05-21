@@ -137,6 +137,14 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Shop"",
+                    ""type"": ""Button"",
+                    ""id"": ""bd633aac-1900-49d5-88e7-a43318df61aa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -159,6 +167,28 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""10563d08-9776-4958-8dca-96cbee4daae8"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Shop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aa54d87b-7e79-4e35-a397-82030a89f1e3"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Shop"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -202,6 +232,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         // PlayerUI
         m_PlayerUI = asset.FindActionMap("PlayerUI", throwIfNotFound: true);
         m_PlayerUI_Inventory = m_PlayerUI.FindAction("Inventory", throwIfNotFound: true);
+        m_PlayerUI_Shop = m_PlayerUI.FindAction("Shop", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -293,11 +324,13 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputActionMap m_PlayerUI;
     private IPlayerUIActions m_PlayerUIActionsCallbackInterface;
     private readonly InputAction m_PlayerUI_Inventory;
+    private readonly InputAction m_PlayerUI_Shop;
     public struct PlayerUIActions
     {
         private @PlayerInput m_Wrapper;
         public PlayerUIActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Inventory => m_Wrapper.m_PlayerUI_Inventory;
+        public InputAction @Shop => m_Wrapper.m_PlayerUI_Shop;
         public InputActionMap Get() { return m_Wrapper.m_PlayerUI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -310,6 +343,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Inventory.started -= m_Wrapper.m_PlayerUIActionsCallbackInterface.OnInventory;
                 @Inventory.performed -= m_Wrapper.m_PlayerUIActionsCallbackInterface.OnInventory;
                 @Inventory.canceled -= m_Wrapper.m_PlayerUIActionsCallbackInterface.OnInventory;
+                @Shop.started -= m_Wrapper.m_PlayerUIActionsCallbackInterface.OnShop;
+                @Shop.performed -= m_Wrapper.m_PlayerUIActionsCallbackInterface.OnShop;
+                @Shop.canceled -= m_Wrapper.m_PlayerUIActionsCallbackInterface.OnShop;
             }
             m_Wrapper.m_PlayerUIActionsCallbackInterface = instance;
             if (instance != null)
@@ -317,6 +353,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Inventory.started += instance.OnInventory;
                 @Inventory.performed += instance.OnInventory;
                 @Inventory.canceled += instance.OnInventory;
+                @Shop.started += instance.OnShop;
+                @Shop.performed += instance.OnShop;
+                @Shop.canceled += instance.OnShop;
             }
         }
     }
@@ -347,5 +386,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     public interface IPlayerUIActions
     {
         void OnInventory(InputAction.CallbackContext context);
+        void OnShop(InputAction.CallbackContext context);
     }
 }
