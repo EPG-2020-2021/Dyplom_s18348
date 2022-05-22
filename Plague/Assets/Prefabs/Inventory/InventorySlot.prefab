@@ -1059,7 +1059,6 @@ MonoBehaviour:
   _closeButton: {fileID: 7524102442752346915}
   _itemButton: {fileID: 7524102443374488358}
   _infoPanel: {fileID: 0}
-  containerController: {fileID: 0}
 --- !u!114 &8892231564897714013
 MonoBehaviour:
   m_ObjectHideFlags: 0

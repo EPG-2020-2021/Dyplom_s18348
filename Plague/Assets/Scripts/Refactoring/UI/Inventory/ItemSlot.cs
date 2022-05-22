@@ -15,11 +15,8 @@ public class ItemSlot : MonoBehaviour
     [SerializeField]
     private InfoPanel _infoPanel;
 
- 
-    public UIContainerController containerController;
+    private UIInventoryController inventoryController;
 
-
-    private bool _inited = false;
 
     private void Start()
     {
@@ -28,8 +25,8 @@ public class ItemSlot : MonoBehaviour
 
     public void Remove()
     {
-        containerController.Remove(this.item);
-        /*Destroy(item.gameObject);*/item.gameObject.SetActive(false);
+        inventoryController.Remove(this.item);
+        Destroy(item.gameObject);
         item = null;
         UpdateSlot();
     }
@@ -45,14 +42,11 @@ public class ItemSlot : MonoBehaviour
 
     public void Init()
     {
-        if (!_inited)
+        if (!inventoryController)
         {
-            //containerController = UIManager.instance.inventoryController;
-
-            containerController.onContainerUpdateCallback += UpdateSlot;
+            inventoryController = UIManager.instance.inventoryController;
+            inventoryController.onInventoryUpdateCallback += UpdateSlot;
             _infoPanel = GetComponentInChildren<InfoPanel>();
-
-            _inited = true;
         }   
         
     }
@@ -60,29 +54,12 @@ public class ItemSlot : MonoBehaviour
     public void UpdateSlot()
     {
         _icon.enabled = !(item is null);
-        //_closeButton.interactable = !(item is null);
+        _closeButton.interactable = !(item is null);
         _icon.sprite = item is null? null : item.icon;
 
         if (item) _infoPanel.Fill(item);
-    }
-
-    //additional for shop
+    } 
 
 
-    public void Buy()
-    {
-        if (item)
-        {
-            UIManager.instance.shopUi.TryToBuy(item);
-            Remove();
-        }
-    }
-    public void Sell()
-    {
-        if (item)
-        {
-            UIManager.instance.shopUi.Sell(item);
-            Remove();
-        }
-    }
+
 }

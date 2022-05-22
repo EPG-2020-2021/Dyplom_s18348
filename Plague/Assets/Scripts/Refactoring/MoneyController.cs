@@ -26,7 +26,6 @@ public class MoneyController : MonoBehaviour
         {
             _money -= amount;
             onMoneyChangeCallback?.Invoke();
-            return;
         }
 
         print("Not enough money");

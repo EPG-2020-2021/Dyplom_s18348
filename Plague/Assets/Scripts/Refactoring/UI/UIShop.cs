@@ -1,20 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-public class UIShop : UIContainerController, IInteractable
+public class UIShop : MonoBehaviour, IInteractable
 {
+    private Transform container;
     private Transform shopItemTemplate;
 
     private IShopCustomer shopCustomer;
 
 
-    public override void Init()
-    {
-        base.Init();
-
-    }
 
     public void Sell(Object item)
     {
@@ -32,47 +27,18 @@ public class UIShop : UIContainerController, IInteractable
 
     public void Interact()
     {
-        gameObject.SetActive(true);
-        Fill();
+        throw new System.NotImplementedException();
     }
 
-    public void Close()
+    public void OpenClose()
     {
-        gameObject.SetActive(false);
+        gameObject.SetActive(!gameObject.activeSelf);
     }
 
 
-    public void SetShopCustomer(IShopCustomer shopCustomer)
+    private void Awake()
     {
-        this.shopCustomer = shopCustomer;
-
-        Init();
-    }
-
-    public IShopCustomer GetShopCustomer()
-    {
-        return shopCustomer;
-    }
-
-    public void ClearCustomer()
-    {
-        shopCustomer = null;
-
-        Close();
-    }
-
-    public void Fill()
-    {
-        for (int i = 0; i < slots.Count; i++)
-        {
-            if (i < container.container.Count)
-            {
-                slots[i].item = container.container[i];
-                continue;
-            }
-            slots[i].Remove();
-        }
-        onContainerUpdateCallback?.Invoke();
+       
     }
 
 }

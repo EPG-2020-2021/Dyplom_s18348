@@ -10,8 +10,6 @@ public class UIManager : MonoBehaviour
     internal UIHealthController healthController;
     [SerializeField]
     internal UIInventoryController inventoryController;
-    [SerializeField]
-    internal UIShop shopUi;
 
     void Awake()
     {

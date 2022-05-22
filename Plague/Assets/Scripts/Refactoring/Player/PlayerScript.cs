@@ -26,8 +26,6 @@ public class PlayerScript : MonoBehaviour
     internal CharacterAnimationController animationController;
     [SerializeField]
     internal MoneyController moneyController;
-    [SerializeField]
-    internal ShopCustomer shopCustomer;
 
     private void Awake()
     {

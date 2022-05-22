@@ -19,7 +19,6 @@ public class PlayerInputController : MonoBehaviour
         controls.Player.Move.canceled += _ 
             => PlayerScript.instance.movementController.Move(Vector3.zero);
         controls.PlayerUI.Inventory.performed += _ => UIManager.instance.inventoryController.OpenClose();
-        controls.PlayerUI.Shop.performed += _ => UIManager.instance.shopUi.Interact();
     }
 
     private void OnEnable()
