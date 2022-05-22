@@ -10,7 +10,16 @@ public class PlayerCollisionController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        PlayerScript.instance.target = other.gameObject;
+        if (other.GetComponent<IInteractable>() != null)
+        {
+            PlayerScript.instance.target = other.gameObject;
+        }
+
+        if (other.GetComponent<Shop>() != null)
+        {
+            PlayerScript.instance.shopCustomer.SetShop(other.GetComponent<Shop>());
+        }
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -18,6 +27,11 @@ public class PlayerCollisionController : MonoBehaviour
         if (PlayerScript.instance.target.Equals(other.gameObject))
         {
             PlayerScript.instance.target = null;
+        }
+
+        if (other.GetComponent<Shop>() != null)
+        {
+            PlayerScript.instance.shopCustomer.ExitShop();
         }
     }
 

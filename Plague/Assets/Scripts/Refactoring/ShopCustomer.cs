@@ -7,11 +7,15 @@ public class ShopCustomer : MonoBehaviour, IShopCustomer
     private bool isInited = false;
 
     private Inventory inventory;
+    private Shop shop;
     private MoneyController moneyController;
+
+
 
     public void Buy(Object item)
     {
         inventory.Add(item);
+        //shop.Remove(item);
     }
 
     public void Sell(Object item)
@@ -19,7 +23,7 @@ public class ShopCustomer : MonoBehaviour, IShopCustomer
         if (inventory.Has(item))
         {
 
-            //Add item to shop
+            shop.Add(item);
 
             inventory.Remove(item);
 
@@ -41,6 +45,18 @@ public class ShopCustomer : MonoBehaviour, IShopCustomer
         }
     }
 
+    public void SetShop(Shop shop)
+    {
+        this.shop = shop;
+
+        Init();
+    }
+
+    public void ExitShop()
+    {
+        shop = null;
+    }
+
     public void Init()
     {
         if (isInited)
@@ -51,20 +67,6 @@ public class ShopCustomer : MonoBehaviour, IShopCustomer
         inventory = PlayerScript.instance.inventory;
         moneyController = PlayerScript.instance.moneyController;
 
-
-
         isInited = true;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
