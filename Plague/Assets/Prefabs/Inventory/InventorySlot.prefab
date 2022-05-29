@@ -1058,7 +1058,7 @@ MonoBehaviour:
   item: {fileID: 0}
   _closeButton: {fileID: 7524102442752346915}
   _itemButton: {fileID: 7524102443374488358}
-  _infoPanel: {fileID: 0}
+  _infoPanel: {fileID: 8892231564897714013}
   containerController: {fileID: 0}
 --- !u!114 &8892231564897714013
 MonoBehaviour:
