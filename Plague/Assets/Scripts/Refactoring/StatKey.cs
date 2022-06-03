@@ -19,7 +19,8 @@ public enum StatKey
     //Health===============================
     Health,
     
-
+    //Book=================================
+    Decription,
 
 
 

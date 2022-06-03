@@ -29,7 +29,7 @@ public class ItemSlot : MonoBehaviour
     public void Remove()
     {
         containerController.Remove(this.item);
-        /*Destroy(item.gameObject);*/item.gameObject.SetActive(false);
+        /*Destroy(item.gameObject);*/item?.gameObject.SetActive(false);
         item = null;
         UpdateSlot();
     }
@@ -60,7 +60,10 @@ public class ItemSlot : MonoBehaviour
     public void UpdateSlot()
     {
         _icon.enabled = !(item is null);
-        _closeButton.interactable = !(item is null);
+        if (_closeButton != null)
+        {
+             _closeButton.interactable = !(item is null);
+        }
         _icon.sprite = item is null? null : item.icon;
 
         if (item) _infoPanel.Fill(item);
