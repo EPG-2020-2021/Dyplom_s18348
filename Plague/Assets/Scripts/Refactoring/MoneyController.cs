@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MoneyController : MonoBehaviour
 {
+    [SerializeField]
     private int _money = 0;
 
     public delegate void OnMoneyChange();

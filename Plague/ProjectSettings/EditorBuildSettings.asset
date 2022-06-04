@@ -5,10 +5,19 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/HomeInside.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Outside.unity
     guid: dace905b6c7c46a478885bd273dfc830
+  - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: 37a774ffad381984c85b74ae37c82756
+  - enabled: 1
+    path: Assets/Scenes/New Scene.unity
+    guid: fbf387d7d60ac6a458ecc258af065d7c
+  - enabled: 1
+    path: Assets/Scenes/Book shop.unity
+    guid: 0ef3fb28e493da44e9227e07bf2c0fcf
   m_configObjects: {}

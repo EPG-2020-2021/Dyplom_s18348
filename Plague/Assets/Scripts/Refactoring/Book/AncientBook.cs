@@ -16,5 +16,4 @@ public class AncientBook : MonoBehaviour
     {
         _decriptionLevel += level;
     }
-    
 }
