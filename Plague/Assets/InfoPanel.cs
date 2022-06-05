@@ -16,7 +16,7 @@ public class InfoPanel : Selectable
     [SerializeField]
     private TextMeshProUGUI _stats;
 
-    void LateUpdate()
+    void FixedUpdate()
     {
         if (slot.item && IsHighlighted() && !infoPanel.activeSelf)
         {
@@ -42,6 +42,7 @@ public class InfoPanel : Selectable
         {
             _stats.text += $"- {stat.statKey.ToString()}: {stat.value}\n";
         }
+        _stats.text += $"\nCost: {item.cost.ToString()}\n";
     }
     public void Clean()
     {

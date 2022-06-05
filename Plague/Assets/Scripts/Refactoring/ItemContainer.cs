@@ -9,6 +9,9 @@ public class ItemContainer : MonoBehaviour
 
     public UIContainerController containerController;
 
+    [HideInInspector]
+    public ContainerFiller containerFiller;
+
     public virtual void Add(Object item)
     {
         if (!EnoughSpace())

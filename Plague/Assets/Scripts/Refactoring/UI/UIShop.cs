@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class UIShop : UIContainerController, IInteractable
+public class UIShop : UIContainerController
 {
-    private Transform shopItemTemplate;
-
     private IShopCustomer shopCustomer;
 
+    [HideInInspector]
+    public bool isOpened = false;
 
     public override void Init()
     {
@@ -21,19 +21,22 @@ public class UIShop : UIContainerController, IInteractable
         shopCustomer.Sell(item);
     }
 
-    public void TryToBuy(Object item)
+    public bool TryToBuy(Object item)
     {
         if (shopCustomer.TryToPay(item.cost))
         {
             shopCustomer?.Buy(item);
+            return true;
         }
-        
+        return false;
     }
 
-    public void Interact()
+    public void ShowHide()
     {
-        gameObject.SetActive(true);
-        Fill();
+        if (!container) return;
+       
+        gameObject.SetActive(!gameObject.activeSelf);
+        if (isOpened) Fill();
     }
 
     public void Close()

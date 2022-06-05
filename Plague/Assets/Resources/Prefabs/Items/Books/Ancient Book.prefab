@@ -45,7 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statKey: 9
   minValue: 0
-  maxValue: 10
+  maxValue: 15
   value: 1
 --- !u!1 &2905849130185391273
 GameObject:
@@ -65,7 +65,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1274246560474505561
 Transform:
   m_ObjectHideFlags: 0

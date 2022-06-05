@@ -76,8 +76,10 @@ public class ItemSlot : MonoBehaviour
     {
         if (item)
         {
-            UIManager.instance.shopUi.TryToBuy(item);
-            Remove();
+            if (UIManager.instance.shopUi.TryToBuy(item))
+            {
+                Remove();
+            }           
         }
     }
     public void Sell()
