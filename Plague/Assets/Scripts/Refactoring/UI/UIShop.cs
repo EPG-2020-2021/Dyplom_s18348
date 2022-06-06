@@ -39,7 +39,7 @@ public class UIShop : UIContainerController
         if (!container) return;
        
         gameObject.SetActive(!gameObject.activeSelf);
-        if (isOpened) Fill();
+        Fill();
     }
 
     public void Close()

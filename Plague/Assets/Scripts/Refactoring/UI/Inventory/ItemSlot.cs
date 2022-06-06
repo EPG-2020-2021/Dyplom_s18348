@@ -15,6 +15,8 @@ public class ItemSlot : MonoBehaviour
     [SerializeField]
     private Button _itemButton;
     [SerializeField]
+    private Button _giveButton;
+    [SerializeField]
     private InfoPanel _infoPanel;
 
  
@@ -34,6 +36,7 @@ public class ItemSlot : MonoBehaviour
         containerController.Remove(this.item);
         /*Destroy(item.gameObject);*/item?.gameObject.SetActive(false);
         item = null;
+        _inited = false;
         UpdateSlot();
     }
 
@@ -55,6 +58,8 @@ public class ItemSlot : MonoBehaviour
             containerController.onContainerUpdateCallback += UpdateSlot;
 
             if(_sellButton)UIManager.instance.shopUi.onShopUpdateCallback += SellButtonUpdate;
+
+            if(_giveButton) PlayerScript.instance.npcContact.onNPCSetCallback += GiveButtonUpdate;
             
 
             _infoPanel = GetComponentInChildren<InfoPanel>();
@@ -100,6 +105,7 @@ public class ItemSlot : MonoBehaviour
         }
     }
 
+
     public void SellButtonUpdate()
     {
         if (_sellButton is null) return;
@@ -110,5 +116,26 @@ public class ItemSlot : MonoBehaviour
             return;
         }
         _sellButton.interactable = false;
+    }
+
+    // Additional for healing
+
+    public void Give()
+    {
+        PlayerScript.instance.npcContact.closestNPC.PutObject(item);
+        Remove();
+        PlayerScript.instance.npcContact.closestNPC.npcController.Use();
+    }
+
+    public void GiveButtonUpdate()
+    {
+        if (_giveButton is null) return;
+
+        if (PlayerScript.instance.npcContact.closestNPC)
+        {
+            _giveButton.interactable = !(item is null);
+            return;
+        }
+        _giveButton.interactable = false;
     }
 }

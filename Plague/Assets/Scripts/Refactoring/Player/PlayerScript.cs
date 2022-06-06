@@ -7,7 +7,6 @@ public class PlayerScript : MonoBehaviour
     public static PlayerScript instance; //single instance
     public GameObject target = null;
 
-
     [SerializeField] 
     internal PlayerCollisionController collisionController;
     [SerializeField]
@@ -28,6 +27,8 @@ public class PlayerScript : MonoBehaviour
     internal MoneyController moneyController;
     [SerializeField]
     internal ShopCustomer shopCustomer;
+    [SerializeField]
+    internal NPCContact npcContact;
 
     private void Awake()
     {

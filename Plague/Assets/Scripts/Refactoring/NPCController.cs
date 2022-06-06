@@ -23,6 +23,9 @@ internal class NPCController : MonoBehaviour
     }
 
 
-
+    public void SetItem(Object obj)
+    {
+        npc.PutObject(obj);
+    }
 
 }

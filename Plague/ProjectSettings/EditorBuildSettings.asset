@@ -6,10 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/HomeInside.unity
+    path: Assets/Scenes/shit/HomeInside.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 0
-    path: Assets/Scenes/Outside.unity
+    path: Assets/Scenes/shit/Outside.unity
     guid: dace905b6c7c46a478885bd273dfc830
   - enabled: 1
     path: Assets/Scenes/Main.unity

@@ -13,6 +13,8 @@ public class NPCScript : MonoBehaviour
     internal CharacterStats characterStats;
     [SerializeField]
     internal NPCController npcController;
+    [SerializeField]
+    internal NPCCollisionController npcCollisionController;
 
     public void PutObject(Object obj)
     {
