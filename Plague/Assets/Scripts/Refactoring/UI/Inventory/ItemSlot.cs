@@ -9,7 +9,9 @@ public class ItemSlot : MonoBehaviour
     private Image _icon;
     public Object item;
     [SerializeField]
-    private Button _closeButton;
+    private Button _deleteButton;
+    [SerializeField]
+    private Button _sellButton;
     [SerializeField]
     private Button _itemButton;
     [SerializeField]
@@ -17,6 +19,7 @@ public class ItemSlot : MonoBehaviour
 
  
     public UIContainerController containerController;
+
 
 
     private bool _inited = false;
@@ -50,6 +53,10 @@ public class ItemSlot : MonoBehaviour
             //containerController = UIManager.instance.inventoryController;
 
             containerController.onContainerUpdateCallback += UpdateSlot;
+
+            if(_sellButton)UIManager.instance.shopUi.onShopUpdateCallback += SellButtonUpdate;
+            
+
             _infoPanel = GetComponentInChildren<InfoPanel>();
 
             _inited = true;
@@ -60,13 +67,15 @@ public class ItemSlot : MonoBehaviour
     public void UpdateSlot()
     {
         _icon.enabled = !(item is null);
-        if (_closeButton != null)
+        if (_deleteButton != null)
         {
-             _closeButton.interactable = !(item is null);
+             _deleteButton.interactable = !(item is null);
         }
         _icon.sprite = item is null? null : item.icon;
 
         if (item) _infoPanel.Fill(item);
+
+        SellButtonUpdate();
     }
 
     //additional for shop
@@ -89,5 +98,17 @@ public class ItemSlot : MonoBehaviour
             UIManager.instance.shopUi.Sell(item);
             Remove();
         }
+    }
+
+    public void SellButtonUpdate()
+    {
+        if (_sellButton is null) return;
+
+            if (UIManager.instance.shopUi.container)
+        {
+            _sellButton.interactable = !(item is null);
+            return;
+        }
+        _sellButton.interactable = false;
     }
 }

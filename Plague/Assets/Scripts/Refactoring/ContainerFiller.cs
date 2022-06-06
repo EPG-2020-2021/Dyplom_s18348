@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = System.Random;
 
 public class ContainerFiller : MonoBehaviour
 {
@@ -9,8 +10,12 @@ public class ContainerFiller : MonoBehaviour
     private List<GameObject> savedObjectsToInject;
     private ItemContainer target;
 
-    public bool loading = false;
-    public bool randomValues = false; 
+    public int number;
+
+    private bool loading = false;
+    private bool randomValues = false;
+
+    private Random rnd = new Random();
 
     private void Awake()
     {
@@ -24,17 +29,20 @@ public class ContainerFiller : MonoBehaviour
         if (loading)
         {
             objectsToInject = savedObjectsToInject;
+            randomValues = false;
+            number = objectsToInject.Count;
         }
         else
         {
             objectsToInject = prefabsToInject;
+            randomValues = true;
         }
 
 
-        foreach (var obj in objectsToInject)
+        for (int i = 0; i < number; i++)
         {
-            GameObject instance = Instantiate(obj);
-            
+            GameObject instance = 
+                Instantiate(objectsToInject[rnd.Next(objectsToInject.Count)]);
             if (randomValues)
             {
                 instance.GetComponentInChildren<Stat>().SetRandomValue();

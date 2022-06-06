@@ -17,7 +17,7 @@ public class ShopCollisionController : MonoBehaviour
         
         UIManager.instance.shopUi.container = GetComponent<ItemContainer>();
         UIManager.instance.shopUi.SetShopCustomer(other?.GetComponent<IShopCustomer>());
-        //enable shop buttons
+        UIManager.instance.shopUi.onShopUpdateCallback?.Invoke();
 
 
         //}
@@ -34,5 +34,7 @@ public class ShopCollisionController : MonoBehaviour
         {
             UIManager.instance.shopUi.container = null;
         }
+
+        UIManager.instance.shopUi.onShopUpdateCallback?.Invoke();
     }
 }

@@ -24,7 +24,7 @@ public class PlayerCollisionController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (PlayerScript.instance.target.Equals(other.gameObject))
+        if (PlayerScript.instance.target && PlayerScript.instance.target.Equals(other.gameObject))
         {
             PlayerScript.instance.target = null;
         }

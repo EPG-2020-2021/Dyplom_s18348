@@ -196,29 +196,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f756621986d91784ab3c3579efb1b826, type: 3}
---- !u!1 &330511378 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5987725401876460059, guid: 50c266cf6531dd94c952fb2f11911190, type: 3}
-  m_PrefabInstance: {fileID: 634064119}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &330511379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330511378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a36c83a0d6f29469aef313f057ef82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectsToInject: []
-  prefabsToInject:
-  - {fileID: 2905849130185391273, guid: 0c0127efc12e202488652937985745b3, type: 3}
-  - {fileID: 2526265097405810708, guid: 129be661dd65f2c45b0057ad7d596e8c, type: 3}
-  loading: 0
-  randomValues: 1
 --- !u!1 &390894864
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,6 +295,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1337268084872301475, guid: 50c266cf6531dd94c952fb2f11911190, type: 3}
+      propertyPath: prefabsToInject.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1337268084872301475, guid: 50c266cf6531dd94c952fb2f11911190, type: 3}
+      propertyPath: randomValues
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1337268084872301475, guid: 50c266cf6531dd94c952fb2f11911190, type: 3}
+      propertyPath: prefabsToInject.Array.data[0]
+      value: 
+      objectReference: {fileID: 2905849130185391273, guid: 0c0127efc12e202488652937985745b3, type: 3}
+    - target: {fileID: 1337268084872301475, guid: 50c266cf6531dd94c952fb2f11911190, type: 3}
+      propertyPath: prefabsToInject.Array.data[1]
+      value: 
+      objectReference: {fileID: 2526265097405810708, guid: 129be661dd65f2c45b0057ad7d596e8c, type: 3}
     - target: {fileID: 5987725401876460059, guid: 50c266cf6531dd94c952fb2f11911190, type: 3}
       propertyPath: m_Name
       value: Shop

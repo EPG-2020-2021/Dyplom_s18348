@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5987725401876460069}
   - component: {fileID: 5987725401876460058}
   - component: {fileID: 5987725401876460071}
+  - component: {fileID: 1337268084872301475}
   m_Layer: 0
   m_Name: Shop
   m_TagString: Untagged
@@ -59,6 +60,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   container: []
   containerController: {fileID: 0}
+  containerFiller: {fileID: 0}
 --- !u!65 &5987725401876460071
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -72,3 +74,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4.2433696, y: 2.0966697, z: 3.797486}
   m_Center: {x: 0, y: 0.54833484, z: 0.6469151}
+--- !u!114 &1337268084872301475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5987725401876460059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a36c83a0d6f29469aef313f057ef82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectsToInject: []
+  prefabsToInject: []
+  loading: 0
+  randomValues: 0

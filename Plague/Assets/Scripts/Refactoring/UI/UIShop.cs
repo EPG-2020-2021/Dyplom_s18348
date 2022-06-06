@@ -7,6 +7,9 @@ public class UIShop : UIContainerController
 {
     private IShopCustomer shopCustomer;
 
+    public delegate void OnShopSet();
+    public OnContainerUpdate onShopUpdateCallback;
+
     [HideInInspector]
     public bool isOpened = false;
 
