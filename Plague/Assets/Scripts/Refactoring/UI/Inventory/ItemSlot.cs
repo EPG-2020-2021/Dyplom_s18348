@@ -58,9 +58,8 @@ public class ItemSlot : MonoBehaviour
             containerController.onContainerUpdateCallback += UpdateSlot;
 
             if(_sellButton)UIManager.instance.shopUi.onShopUpdateCallback += SellButtonUpdate;
-
-            if(_giveButton) PlayerScript.instance.npcContact.onNPCSetCallback += GiveButtonUpdate;
             
+            if(_giveButton) PlayerScript.instance.givable.onGivableSetCallback += GiveButtonUpdate;
 
             _infoPanel = GetComponentInChildren<InfoPanel>();
 
@@ -122,16 +121,15 @@ public class ItemSlot : MonoBehaviour
 
     public void Give()
     {
-        PlayerScript.instance.npcContact.closestNPC.PutObject(item);
+        PlayerScript.instance.givable.closest.PutObject(item);
         Remove();
-        PlayerScript.instance.npcContact.closestNPC.npcController.Use();
     }
 
     public void GiveButtonUpdate()
     {
         if (_giveButton is null) return;
 
-        if (PlayerScript.instance.npcContact.closestNPC)
+        if (!(PlayerScript.instance.givable.closest is null))
         {
             _giveButton.interactable = !(item is null);
             return;

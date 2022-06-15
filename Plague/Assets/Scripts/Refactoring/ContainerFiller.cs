@@ -45,7 +45,7 @@ public class ContainerFiller : MonoBehaviour
                 Instantiate(objectsToInject[rnd.Next(objectsToInject.Count)]);
             if (randomValues)
             {
-                instance.GetComponentInChildren<Stat>().SetRandomValue();
+                StatsApplier.RandomiseStats(instance);
             }
 
 

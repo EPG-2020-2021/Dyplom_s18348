@@ -12,6 +12,8 @@ public class UIManager : MonoBehaviour
     internal UIInventoryController inventoryController;
     [SerializeField]
     internal UIShop shopUi;
+    [SerializeField]
+    internal CraftUIController craftUi;
 
     void Awake()
     {
@@ -19,5 +21,7 @@ public class UIManager : MonoBehaviour
         {
             instance = this;
         }
+
+        craftUi.onCraftUpdateCallback += craftUi.ShowHide;
     }
 }

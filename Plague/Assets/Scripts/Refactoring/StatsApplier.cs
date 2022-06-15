@@ -12,7 +12,7 @@ public class StatsApplier : MonoBehaviour
 
         for (int i = 0; i < stats.Length; i++)
         {
-             characterStats.GetStat(stats[i].statKey).Change(stats[i].value); 
+             characterStats.GetStat(stats[i].statKey)?.Change(stats[i].value); 
         }
     }
 
@@ -24,6 +24,16 @@ public class StatsApplier : MonoBehaviour
         for (int i = 0; i < stats.Length; i++)
         {
             characterStats.GetStat(stats[i].statKey).Change(-stats[i].value);
+        }
+    }
+
+    public static void RandomiseStats(GameObject obj)
+    {
+        var stats = obj.GetComponentsInChildren<Stat>();
+
+        foreach (var stat in stats)
+        {
+            stat.SetRandomValue();
         }
     }
 }

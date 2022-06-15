@@ -24,5 +24,9 @@ public enum StatKey
 
 
 
+    //Quality
+    Quality,
+
+
     Test
 }

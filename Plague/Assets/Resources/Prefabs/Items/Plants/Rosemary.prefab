@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 40310689856571632}
   - component: {fileID: 40310689856571634}
   - component: {fileID: 40310689219778708}
+  - component: {fileID: 1789309378880780907}
   m_Layer: 0
   m_Name: Stats
   m_TagString: Untagged
@@ -64,6 +65,22 @@ MonoBehaviour:
   minValue: -100
   maxValue: 100
   value: 2
+--- !u!114 &1789309378880780907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40310689856571639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d9f041ade38e09449b3a664be45f2e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statKey: 10
+  minValue: 0
+  maxValue: 100
+  value: 100
 --- !u!1 &2388937156594219551
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,7 +186,7 @@ GameObject:
   - component: {fileID: 3553892272822197350}
   - component: {fileID: 3553892272822197351}
   m_Layer: 0
-  m_Name: PlantTemplate (1)
+  m_Name: Rosemary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

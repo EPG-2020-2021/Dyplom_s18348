@@ -35,8 +35,19 @@ public class CharacterStats : MonoBehaviour
 
     public Stat AddStat(StatKey name)
     {
+        if (name.Equals(StatKey.Quality))
+        {
+            return null;
+        }
         Debug.Log(name);
         var statPrefab = (GameObject)Resources.Load(statsPath + name.ToString(), typeof(GameObject));
+        //
+        /*//
+        var stat = Instantiate(statPrefab, transform.Find("Stats").transform).GetComponent<Stat>();
+        stat.value = value;
+        stat.statKey = name;
+        *///
+        //
         var stat = Instantiate(statPrefab, transform.Find("Stats").transform).GetComponent<Stat>();
         stat.SetRandomValue();
         stats.Add(stat);

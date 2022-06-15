@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPCScript : MonoBehaviour
+public class NPCScript : MonoBehaviour, IGivable
 {
     [SerializeField]
     private Object slot;
@@ -22,6 +22,7 @@ public class NPCScript : MonoBehaviour
         {
             slot = obj;
         }
+        npcController.Use();
     }
 
     public Object TakeObject()

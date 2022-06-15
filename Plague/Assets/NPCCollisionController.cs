@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class NPCCollisionController : MonoBehaviour
 {
-    private NPCScript npc;
+    private IGivable npc;
 
     private void Start()
     {
-        npc = GetComponent<NPCScript>();
+        npc = GetComponent<IGivable>();
     }
 
 
@@ -16,8 +16,8 @@ public class NPCCollisionController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<NPCContact>().closestNPC = npc;
-            other.gameObject.GetComponent<NPCContact>().onNPCSetCallback?.Invoke();
+            other.gameObject.GetComponent<Givable>().closest = npc;
+            other.gameObject.GetComponent<Givable>().onGivableSetCallback?.Invoke();
         }
 
     }
@@ -26,8 +26,8 @@ public class NPCCollisionController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<NPCContact>().closestNPC = null;
-            other.gameObject.GetComponent<NPCContact>().onNPCSetCallback?.Invoke();
+            other.gameObject.GetComponent<Givable>().closest = null;
+            other.gameObject.GetComponent<Givable>().onGivableSetCallback?.Invoke();
         }
     }
 }

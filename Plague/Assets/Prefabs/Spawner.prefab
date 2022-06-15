@@ -45,10 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 0}
-  nameofspawnitem: Czosnek
   max: 3
   delaymin: 5
   delaymax: 9
+  items: []
 --- !u!212 &7291501907118938256
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -4,11 +4,11 @@ public class SmoothCamera : MonoBehaviour
 {
     private Transform target;
 
-    public float smoothSpeed;
-    public Vector2 pos;
+    public float smoothSpeed = 0.06f;
+    public Vector2 pos = new Vector2(0f, 1f);
 
-    public Vector2 limitaionMin;
-    public Vector2 limitaionMax;
+    public Vector2 limitaionMin = new Vector2(-1000f, -1000f);
+    public Vector2 limitaionMax = new Vector2(1000f, 1000f);
 
     private void Start()
     {
