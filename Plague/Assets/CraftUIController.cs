@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CraftUIController : UIContainerController
 {
+
     public OnContainerUpdate onCraftUpdateCallback;
 
     public void ShowHide()
@@ -19,6 +20,11 @@ public class CraftUIController : UIContainerController
     private void Start()
     {
         Init();
+    }
+
+    public void Craft()
+    {
+        container.gameObject.GetComponent<Table>().Craft();
     }
 
 }

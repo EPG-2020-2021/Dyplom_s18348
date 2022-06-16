@@ -17,12 +17,20 @@ public class Table : ItemContainer, IGivable
 
     private void Start()
     {
-        
+        containerController = UIManager.instance.craftUi;
+
+        containerController.Init();
+        inventorySize = containerController.GetSize();
     }
 
 
     public void Craft()
     {
+        if (container.Count <= 1 || container.Count >= 4 || resultObject)
+        {
+            return;
+        }
+
         float avgResultQuality = .0f;
 
         foreach (var obj in container)
@@ -49,6 +57,9 @@ public class Table : ItemContainer, IGivable
         {
             AddStat(stat.statKey, stat.value);
         }
+
+        RemoveAll();
+        Add(resultObject.GetComponent<Object>(), inventorySize - 1);
     }
 
     private List<Stat> GetRandomStats(List<Stat> stats, float quality){

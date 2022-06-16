@@ -11,10 +11,20 @@ public class UIContainerController : MonoBehaviour
     protected List<ItemSlot> slots;
     public ItemContainer container;
 
-    public void Add(Object item)
+    public bool Add(Object item, int? place = null)
     {
-        GetFreeSlot().item = item;
-        onContainerUpdateCallback?.Invoke();
+        var slot = GetFreeSlot(place);
+        if (slot)
+        {
+            slot.item = item;
+            onContainerUpdateCallback?.Invoke();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
 
     public void Remove(Object item)
@@ -23,14 +33,21 @@ public class UIContainerController : MonoBehaviour
         container.Remove(item);
     }
 
-    private ItemSlot GetFreeSlot()
+    private ItemSlot GetFreeSlot(int? number = null)
     {
+        int counter = 0;
+
         foreach (var slot in slots)
         {
-            if (!slot.item)
+            if (number != null && counter.Equals(number) && !slot.item )
             {
                 return slot;
             }
+            if (number is null && !slot.item )
+            {
+                return slot;
+            }
+            counter++;
         }
 
         return null;
@@ -61,6 +78,14 @@ public class UIContainerController : MonoBehaviour
         //container = PlayerScript.instance.inventory;
 
 
+    }
+
+    public void RemoveAll()
+    {
+        foreach (var slot in slots)
+        {
+            slot.Remove();
+        }
     }
 
 }

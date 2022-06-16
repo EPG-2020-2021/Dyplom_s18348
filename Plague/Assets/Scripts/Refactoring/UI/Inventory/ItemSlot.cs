@@ -136,4 +136,26 @@ public class ItemSlot : MonoBehaviour
         }
         _giveButton.interactable = false;
     }
+
+    public void Take()
+    {
+        if (item)
+        {
+            PlayerScript.instance.inventory.Add(item);
+            Remove();
+        }
+    }
+
+    public void Craft()
+    {
+        if (item)
+        {
+            Take();
+        }
+        else
+        {
+            CraftUIController controller = (CraftUIController)containerController;
+            controller.Craft();
+        }
+    }
 }

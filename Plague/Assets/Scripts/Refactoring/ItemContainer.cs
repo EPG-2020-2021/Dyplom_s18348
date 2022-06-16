@@ -12,7 +12,7 @@ public class ItemContainer : MonoBehaviour
     [HideInInspector]
     public ContainerFiller containerFiller;
 
-    public virtual void Add(Object item)
+    public virtual void Add(Object item, int? place = null)
     {
         if (!EnoughSpace())
         {
@@ -22,7 +22,7 @@ public class ItemContainer : MonoBehaviour
 
 
         container.Add(item);
-        containerController.Add(item);
+        containerController.Add(item, place);
     }
 
     internal virtual void Remove(Object item)
@@ -47,4 +47,8 @@ public class ItemContainer : MonoBehaviour
         return container.Count < inventorySize ? true : false;
     }
 
+    public void RemoveAll()
+    {
+        containerController.RemoveAll();
+    }
 }
