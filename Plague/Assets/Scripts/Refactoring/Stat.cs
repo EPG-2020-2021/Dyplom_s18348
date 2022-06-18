@@ -6,7 +6,7 @@ public class Stat : MonoBehaviour
     public StatKey statKey;
 
     [SerializeField]
-    private float minValue = 0, maxValue = 10;
+    public float minValue = 0, maxValue = 10;
 
     [SerializeField]
     public float value = 0;
@@ -21,7 +21,13 @@ public class Stat : MonoBehaviour
     public void Change(float delta)
     {
         value += delta;
-        onValueChange.Invoke();
+        onValueChange?.Invoke();
+    }
+
+    public void Set(float value)
+    {
+        this.value = value;
+        onValueChange?.Invoke();
     }
 
     public void SetRandomValue()

@@ -16,4 +16,14 @@ public class DEBUG : MonoBehaviour
     {
         stats.Heal(heal);
     }
+
+    public void Save()
+    {
+        SaveSystem.SaveStats(PlayerScript.instance.playerStats);
+    }
+
+    public void Load()
+    {
+        SaveSystem.LoadStats(PlayerScript.instance.playerStats);
+    }
 }

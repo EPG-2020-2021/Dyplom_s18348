@@ -5,14 +5,21 @@ using UnityEngine;
 
 public class StatsApplier : MonoBehaviour
 {
-    public static void ApplyStats(GameObject fromObject, GameObject toCharacter)
+    public static void ApplyStats(GameObject fromObject, GameObject toCharacter, bool overwrite = false)
     {
         var stats = fromObject.GetComponentsInChildren<Stat>();
         var characterStats = toCharacter.GetComponent<CharacterStats>();
 
         for (int i = 0; i < stats.Length; i++)
         {
-             characterStats.GetStat(stats[i].statKey)?.Change(stats[i].value); 
+            if (overwrite)
+            {
+                characterStats.GetStat(stats[i].statKey)?.Set(stats[i].value);
+            }
+            else { 
+
+                characterStats.GetStat(stats[i].statKey)?.Change(stats[i].value);
+            }
         }
 
         characterStats.UpdateStatsText();
