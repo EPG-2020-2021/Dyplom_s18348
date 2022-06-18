@@ -15,6 +15,8 @@ public class NPCScript : MonoBehaviour, IGivable
     internal NPCController npcController;
     [SerializeField]
     internal NPCCollisionController npcCollisionController;
+    [SerializeField]
+    internal NpcUi npcUI;
 
     public void PutObject(Object obj)
     {

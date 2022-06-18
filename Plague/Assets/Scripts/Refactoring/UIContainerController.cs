@@ -29,7 +29,6 @@ public class UIContainerController : MonoBehaviour
 
     public void Remove(Object item)
     {
-        print(item?.name + "item");
         container.Remove(item);
     }
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 
@@ -6,9 +7,11 @@ public class CharacterStats : MonoBehaviour
 {
     private List<Stat> stats;
     private string statsPath = "Prefabs/Stats/";
+    public TextMeshProUGUI statsText;
     private void Awake()
     {
         stats = new List<Stat>(GetComponentsInChildren<Stat>());
+        UpdateStatsText();
     }
 
     public Stat GetStat(StatKey key)
@@ -21,6 +24,7 @@ public class CharacterStats : MonoBehaviour
             stat = AddStat(key);
         }
 
+        UpdateStatsText();
         return stat;
     }
 
@@ -30,6 +34,7 @@ public class CharacterStats : MonoBehaviour
     }
     public void SetStats(List<Stat> newStats)
     {
+        UpdateStatsText();
         stats = newStats;
     }
 
@@ -51,6 +56,22 @@ public class CharacterStats : MonoBehaviour
         var stat = Instantiate(statPrefab, transform.Find("Stats").transform).GetComponent<Stat>();
         stat.SetRandomValue();
         stats.Add(stat);
+        UpdateStatsText();
         return stat;
+    }
+
+    public string GetStatsString()
+    {
+        var stringResult = "";
+        foreach (var stat in stats)
+        {
+            stringResult += $"- {stat.statKey.ToString()}: {stat.value}\n";
+        }
+        return stringResult;
+    }
+
+    public void UpdateStatsText()
+    {
+        statsText.text = GetStatsString();
     }
 }

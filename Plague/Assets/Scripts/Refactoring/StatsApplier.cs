@@ -14,6 +14,8 @@ public class StatsApplier : MonoBehaviour
         {
              characterStats.GetStat(stats[i].statKey)?.Change(stats[i].value); 
         }
+
+        characterStats.UpdateStatsText();
     }
 
     public static void CancelStats(GameObject fromObject, GameObject toCharacter)
@@ -25,6 +27,8 @@ public class StatsApplier : MonoBehaviour
         {
             characterStats.GetStat(stats[i].statKey).Change(-stats[i].value);
         }
+
+        characterStats.UpdateStatsText();
     }
 
     public static void RandomiseStats(GameObject obj)

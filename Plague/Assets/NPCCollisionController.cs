@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class NPCCollisionController : MonoBehaviour
 {
+    public NPCScript npcScript;
     private IGivable npc;
-
+    
     private void Start()
     {
         npc = GetComponent<IGivable>();
@@ -18,6 +20,8 @@ public class NPCCollisionController : MonoBehaviour
         {
             other.gameObject.GetComponent<Givable>().closest = npc;
             other.gameObject.GetComponent<Givable>().onGivableSetCallback?.Invoke();
+
+            npcScript.npcUI.Show();
         }
 
     }
@@ -28,6 +32,8 @@ public class NPCCollisionController : MonoBehaviour
         {
             other.gameObject.GetComponent<Givable>().closest = null;
             other.gameObject.GetComponent<Givable>().onGivableSetCallback?.Invoke();
+
+            npcScript.npcUI.Hide();
         }
     }
 }
