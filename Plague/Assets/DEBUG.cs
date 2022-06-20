@@ -25,7 +25,9 @@ public class DEBUG : MonoBehaviour
 
     public void Load()
     {
-        SaveSystem.LoadContainer(PlayerScript.instance.inventory);
+        //SaveSystem.LoadContainer(PlayerScript.instance.inventory);
         //SaveSystem.LoadStats(PlayerScript.instance.playerStats);
+
+        SaveSystem.MasterLoad();   
     }
 }

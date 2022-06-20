@@ -10,6 +10,8 @@ public static class SaveSystem
     private static string containersPath = "/Containers/";
     private static string fileType = ".rims";
 
+    private static bool loaded = false;
+
     #region Stats
     public static void SaveStats(CharacterStats character)
     {
@@ -31,7 +33,7 @@ public static class SaveSystem
         Debug.Log($"Successful stats save");
     }
 
-    public static void LoadStats(CharacterStats character)
+    private static void LoadStats(CharacterStats character)
     {
         string path = Application.persistentDataPath + savePath + statsPath + character.gameObject.name + fileType;
         if (File.Exists(path))
@@ -78,7 +80,7 @@ public static class SaveSystem
     }
 
 
-    public static void LoadContainer(ItemContainer itemContainer)
+    private static void LoadContainer(ItemContainer itemContainer)
     {
         string path = Application.persistentDataPath + savePath + containersPath + itemContainer.gameObject.name + fileType;
         if (File.Exists(path))
@@ -98,4 +100,18 @@ public static class SaveSystem
         }
     }
     #endregion
+
+
+    public static void MasterLoad()
+    {
+        if (loaded)
+        {
+            return;
+        }
+
+        LoadContainer(PlayerScript.instance.inventory);
+        LoadStats(PlayerScript.instance.playerStats);
+
+        loaded = true;
+    }
 }

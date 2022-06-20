@@ -57,6 +57,7 @@ public class ContainerFiller : MonoBehaviour
 
     public void Load(List<GameObject> objs)
     {
+        target.RemoveAll();
         savedObjectsToInject = objs;
         loading = true;
 
