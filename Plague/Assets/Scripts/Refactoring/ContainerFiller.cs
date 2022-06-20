@@ -53,4 +53,15 @@ public class ContainerFiller : MonoBehaviour
             instance.SetActive(false);
         }
     }
+
+
+    public void Load(List<GameObject> objs)
+    {
+        savedObjectsToInject = objs;
+        loading = true;
+
+        Fill();
+
+        loading = false;
+    }
 }

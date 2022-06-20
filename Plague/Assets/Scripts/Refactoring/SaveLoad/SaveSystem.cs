@@ -7,11 +7,19 @@ public static class SaveSystem
 {
     private static string savePath = "/Saves";
     private static string statsPath = "/Stats/";
+    private static string containersPath = "/Containers/";
     private static string fileType = ".rims";
+
+    #region Stats
     public static void SaveStats(CharacterStats character)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + savePath + statsPath + character.gameObject.name + fileType;
+        string path = Application.persistentDataPath + savePath + statsPath;
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+        path += character.gameObject.name + fileType;
         FileStream stream = new FileStream(path, FileMode.Create);
 
         var stats = character.GetStats();
@@ -20,7 +28,7 @@ public static class SaveSystem
         formatter.Serialize(stream, data);
         stream.Close();
 
-        Debug.Log($"Successful save {path}");
+        Debug.Log($"Successful stats save");
     }
 
     public static void LoadStats(CharacterStats character)
@@ -36,6 +44,8 @@ public static class SaveSystem
             stream.Close();
 
             StatsApplier.ApplyStats(data.GetStats(), character.gameObject, true);
+
+            GameObject.Destroy(data.GetStats());
         }
         else
         {
@@ -43,4 +53,49 @@ public static class SaveSystem
         }
 
     }
+
+    #endregion
+
+    #region Container   
+
+    public static void SaveContainer(ItemContainer itemContainer)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + savePath + containersPath;
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+        path += itemContainer.gameObject.name + fileType;
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        ContainerData data = new ContainerData(itemContainer);
+
+        formatter.Serialize(stream, data);
+        stream.Close();
+
+        Debug.Log($"Successful container save");
+    }
+
+
+    public static void LoadContainer(ItemContainer itemContainer)
+    {
+        string path = Application.persistentDataPath + savePath + containersPath + itemContainer.gameObject.name + fileType;
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+
+            ContainerData data = formatter.Deserialize(stream) as ContainerData;
+
+            stream.Close();
+
+            itemContainer.containerFiller.Load(data.GetObjects());
+        }
+        else
+        {
+            Debug.LogError("Save file not found");
+        }
+    }
+    #endregion
 }

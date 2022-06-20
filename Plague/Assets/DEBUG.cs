@@ -19,11 +19,13 @@ public class DEBUG : MonoBehaviour
 
     public void Save()
     {
-        SaveSystem.SaveStats(PlayerScript.instance.playerStats);
+        SaveSystem.SaveContainer(PlayerScript.instance.inventory);
+        //SaveSystem.SaveStats(PlayerScript.instance.playerStats);
     }
 
     public void Load()
     {
-        SaveSystem.LoadStats(PlayerScript.instance.playerStats);
+        SaveSystem.LoadContainer(PlayerScript.instance.inventory);
+        //SaveSystem.LoadStats(PlayerScript.instance.playerStats);
     }
 }

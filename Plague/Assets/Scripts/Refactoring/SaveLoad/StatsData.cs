@@ -29,7 +29,7 @@ public class StatsData
 
     public GameObject GetStats()
     {
-        var statPackPrefab = (GameObject)Resources.Load("Prefabs/statsPack", typeof(GameObject));
+        var statPackPrefab = (GameObject)Resources.Load("Prefabs/Pack", typeof(GameObject));
         var statPrefab = (GameObject)Resources.Load("Prefabs/Stats/Empty", typeof(GameObject));
         var statPack = GameObject.Instantiate(statPackPrefab);
 
@@ -44,7 +44,6 @@ public class StatsData
             stat.minValue = minValue[i];
             stat.maxValue = maxValue[i];
             stat.value = value[i];
-            Debug.Log(stat.statKey + " " + stat.value);
         }
 
         return statPack;
