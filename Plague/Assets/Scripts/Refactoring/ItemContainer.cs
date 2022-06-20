@@ -27,11 +27,20 @@ public class ItemContainer : MonoBehaviour
 
         container.Add(item);
         containerController.Add(item, place);
+
+        if (gameObject.CompareTag("Player"))
+        {
+            SaveSystem.SaveContainer(this);
+        }
     }
 
     internal virtual void Remove(Object item)
     {
         container.Remove(item);
+        if (gameObject.CompareTag("Player"))
+        {
+            SaveSystem.SaveContainer(this);
+        }
     }
 
     public virtual bool Has(Object item)

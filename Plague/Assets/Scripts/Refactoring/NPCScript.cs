@@ -18,6 +18,7 @@ public class NPCScript : MonoBehaviour, IGivable
     [SerializeField]
     internal NpcUi npcUI;
 
+
     public void PutObject(Object obj)
     {
         if (slot == null)

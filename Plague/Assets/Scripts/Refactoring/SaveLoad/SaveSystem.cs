@@ -33,7 +33,7 @@ public static class SaveSystem
         Debug.Log($"Successful stats save");
     }
 
-    private static void LoadStats(CharacterStats character)
+    public static void LoadStats(CharacterStats character)
     {
         string path = Application.persistentDataPath + savePath + statsPath + character.gameObject.name + fileType;
         if (File.Exists(path))
@@ -48,10 +48,11 @@ public static class SaveSystem
             StatsApplier.ApplyStats(data.GetStats(), character.gameObject, true);
 
             GameObject.Destroy(data.GetStats());
+            Debug.Log("load stats for " + character.gameObject.name);
         }
         else
         {
-            Debug.LogError("Save file not found");
+            Debug.LogError("Save file not found " + character.gameObject.name);
         }
 
     }
@@ -100,7 +101,6 @@ public static class SaveSystem
         }
     }
     #endregion
-
 
     public static void MasterLoad()
     {

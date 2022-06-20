@@ -11,9 +11,15 @@ public class CharacterStats : MonoBehaviour
     private void Awake()
     {
         stats = new List<Stat>(GetComponentsInChildren<Stat>());
+        SaveSystem.LoadStats(this);
         UpdateStatsText();
     }
 
+    private void Start()
+    {
+
+        UpdateStatsText();
+    }
     public Stat GetStat(StatKey key)
     {
         Stat stat = stats.Find(item => item.statKey.Equals(key));
@@ -72,6 +78,11 @@ public class CharacterStats : MonoBehaviour
 
     public void UpdateStatsText()
     {
+        SaveSystem.SaveStats(this);
         statsText.text = GetStatsString();
+        if (gameObject.CompareTag("Player"))
+        {
+            //statsText.text += "Money: " + PlayerScript.instance.moneyController.GetMoneyAmount();
+        }
     }
 }
