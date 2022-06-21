@@ -123,6 +123,7 @@ public class ItemSlot : MonoBehaviour
     {
         PlayerScript.instance.givable.closest.PutObject(item);
         Remove();
+        GiveButtonUpdate();
     }
 
     public void GiveButtonUpdate()

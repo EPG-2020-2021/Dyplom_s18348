@@ -29,8 +29,6 @@ public static class SaveSystem
 
         formatter.Serialize(stream, data);
         stream.Close();
-
-        Debug.Log($"Successful stats save");
     }
 
     public static void LoadStats(CharacterStats character)
@@ -69,6 +67,10 @@ public static class SaveSystem
         {
             Directory.CreateDirectory(path);
         }
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
         path += itemContainer.gameObject.name + fileType;
         FileStream stream = new FileStream(path, FileMode.Create);
 
@@ -76,8 +78,6 @@ public static class SaveSystem
 
         formatter.Serialize(stream, data);
         stream.Close();
-
-        Debug.Log($"Successful container save");
     }
 
 
@@ -104,10 +104,6 @@ public static class SaveSystem
 
     public static void MasterLoad()
     {
-        if (loaded)
-        {
-            return;
-        }
 
         LoadContainer(PlayerScript.instance.inventory);
         LoadStats(PlayerScript.instance.playerStats);

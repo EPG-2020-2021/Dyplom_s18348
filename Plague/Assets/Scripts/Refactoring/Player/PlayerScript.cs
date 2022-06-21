@@ -41,7 +41,7 @@ public class PlayerScript : MonoBehaviour
 
     private void Start()
     {
-
+        print("PLAYERSCRIPT");
         SaveSystem.MasterLoad();
     }
 }

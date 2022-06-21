@@ -34,8 +34,6 @@ public class ContainerData
                 this.value[counter].Add(stat.value);
             }
 
-            Debug.Log($"{counter}\n {name}\n {key[counter].ToString()} \n ============= \n {value[counter].ToString()} \n ---------------- \n");
-
             counter++;
         }
     }
@@ -51,6 +49,7 @@ public class ContainerData
 
         for (int i = 0; i < size; i++)
         {
+            Debug.Log($"{name[i]}");
             var prefab = Resources.Load($"Prefabs/Items/Plants/{name[i]}");
             var obj = GameObject.Instantiate(objectPrefab, containerPack.transform);
 

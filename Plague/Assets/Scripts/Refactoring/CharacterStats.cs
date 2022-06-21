@@ -80,9 +80,5 @@ public class CharacterStats : MonoBehaviour
     {
         SaveSystem.SaveStats(this);
         statsText.text = GetStatsString();
-        if (gameObject.CompareTag("Player"))
-        {
-            //statsText.text += "Money: " + PlayerScript.instance.moneyController.GetMoneyAmount();
-        }
     }
 }

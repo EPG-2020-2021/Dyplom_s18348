@@ -18,6 +18,7 @@ public class ItemContainer : MonoBehaviour
     }
     public virtual void Add(Object item, int? place = null)
     {
+        print("Added " + item.name);
         if (!EnoughSpace())
         {
             print("Not enough space");

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -14,7 +15,7 @@ public class UIManager : MonoBehaviour
     internal UIShop shopUi;
     [SerializeField]
     internal CraftUIController craftUi;
-
+    public TextMeshProUGUI money;
     void Awake()
     {
         if (!instance)
@@ -23,5 +24,15 @@ public class UIManager : MonoBehaviour
         }
 
         craftUi.onCraftUpdateCallback += craftUi.ShowHide;
+    }
+
+    private void Start()
+    {
+
+        PlayerScript.instance.moneyController.onMoneyChangeCallback += UpdateMoney;
+    }
+    private void UpdateMoney()
+    {
+        money.text = PlayerScript.instance.moneyController.GetMoneyAmount().ToString();
     }
 }

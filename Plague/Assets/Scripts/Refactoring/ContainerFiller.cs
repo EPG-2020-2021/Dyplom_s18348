@@ -41,8 +41,18 @@ public class ContainerFiller : MonoBehaviour
 
         for (int i = 0; i < number; i++)
         {
-            GameObject instance = 
+            GameObject instance;
+            if (loading)
+            {
+                 instance =
+                Instantiate(objectsToInject[i]);
+            }
+            else
+            {
+               instance =
                 Instantiate(objectsToInject[rnd.Next(objectsToInject.Count)]);
+            }
+            
             if (randomValues)
             {
                 StatsApplier.RandomiseStats(instance);
