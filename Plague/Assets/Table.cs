@@ -1,103 +1,117 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Table : ItemContainer, IGivable
 {
     private string statsPath = "Prefabs/Stats/Empty";
 
-    //public List<GameObject> container;
+    private string streptomycinPath = "Prefabs/Items/Plants/Streptomycin";
 
     public GameObject resultPrefab;
+
     private List<Stat> resultStats = new List<Stat>();
 
     public GameObject resultObject;
 
+    private GameObject streptomycinPrefab;
 
-    private void Start()
+    public Table()
     {
-        containerController = UIManager.instance.craftUi;
-
-        containerController.Init();
-        inventorySize = containerController.GetSize();
-    }
-
-
-    public void Craft()
-    {
-        if (container.Count <= 1 || container.Count >= 4 || resultObject)
-        {
-            return;
-        }
-
-        float avgResultQuality = .0f;
-
-        foreach (var obj in container)
-        {
-            var stats = obj.GetComponentsInChildren<Stat>().ToList();
-            var qualityStat = stats.Find(stat => stat.statKey.Equals(StatKey.Quality));
-            var quality = qualityStat.value;
-            stats.Remove(qualityStat);
-            resultStats.AddRange(GetRandomStats(stats, quality));
-            avgResultQuality += quality/container.Count;    
-        }
-
-        if (resultStats is null)
-        {
-            return;
-        }
-
-
-
-        resultObject = Instantiate(resultPrefab);
-        resultObject.GetComponentInChildren<Stat>().value = avgResultQuality;
-
-        foreach (var stat in resultStats)
-        {
-            AddStat(stat.statKey, stat.value);
-        }
-
-        RemoveAll();
-        Add(resultObject.GetComponent<Object>(), inventorySize - 1);
-    }
-
-    private List<Stat> GetRandomStats(List<Stat> stats, float quality){
-        int number = (int)(stats.Count * quality / 100f);
-
-        var randomStats = new List<Stat>();
-        while (randomStats.Count < number) //random bool
-        {
-            var randInt = Random.Range(0, stats.Count);
-            randomStats.Add(stats[randInt]);
-            stats.RemoveAt(randInt);
-        }
-
-
-        return randomStats;
     }
 
     public Stat AddStat(StatKey name, float value)
     {
-        var statPrefab = (GameObject)Resources.Load(statsPath, typeof(GameObject));
-        var stat = resultObject.GetComponentsInChildren<Stat>().ToList().Find(curStat => curStat.statKey.Equals(name));
-        if (stat)
+        GameObject gameObject = (GameObject)Resources.Load(this.statsPath, typeof(GameObject));
+        Stat component = this.resultObject.GetComponentsInChildren<Stat>().ToList<Stat>().Find((Stat curStat) => curStat.statKey.Equals(name));
+        if (!component)
         {
-            print(stat.name)
-;            stat.value += value;
+            component = Object.Instantiate<GameObject>(gameObject, this.resultObject.transform.Find("Stats").transform).GetComponent<Stat>();
+            component.@value = value;
+            component.statKey = name;
         }
         else
         {
-            stat = Instantiate(statPrefab, resultObject.transform.Find("Stats").transform).GetComponent<Stat>();
-            stat.value = value;
-            stat.statKey = name;
-            
+            MonoBehaviour.print(component.name);
+            component.@value += value;
         }
-        return stat;
+        return component;
+    }
+
+    public void Craft()
+    {
+        bool flag = true;
+        if (this.container.Count == 3 && PlayerScript.instance.playerStats.GetStat(StatKey.Decription).@value.Equals(100f))
+        {
+            foreach (Object obj in this.container)
+            {
+                if (obj.name.Equals("Soil"))
+                {
+                    continue;
+                }
+                flag = false;
+            }
+            if (flag)
+            {
+                base.RemoveAll();
+                this.resultObject = Object.Instantiate<GameObject>(this.streptomycinPrefab);
+                this.Add(this.resultObject.GetComponent<Object>(), new int?(this.inventorySize - 1));
+                return;
+            }
+        }
+        if (this.container.Count <= 1 || this.container.Count >= 4 || this.resultObject)
+        {
+            return;
+        }
+        float count = 0f;
+        foreach (Object obj1 in this.container)
+        {
+            List<Stat> list = obj1.GetComponentsInChildren<Stat>().ToList<Stat>();
+            Stat stat1 = list.Find((Stat stat) => stat.statKey.Equals(StatKey.Quality));
+            float single = stat1.@value;
+            list.Remove(stat1);
+            this.resultStats.AddRange(this.GetRandomStats(list, single));
+            count = count + single / (float)this.container.Count;
+        }
+        if (this.resultStats == null)
+        {
+            return;
+        }
+        this.resultObject = Object.Instantiate<GameObject>(this.resultPrefab);
+        this.resultObject.GetComponentInChildren<Stat>().@value = count;
+        foreach (Stat resultStat in this.resultStats)
+        {
+            this.AddStat(resultStat.statKey, resultStat.@value);
+        }
+        base.RemoveAll();
+        this.Add(this.resultObject.GetComponent<Object>(), new int?(this.inventorySize - 1));
+    }
+
+    private List<Stat> GetRandomStats(List<Stat> stats, float quality)
+    {
+        int count = (int)((float)stats.Count * quality / 100f);
+        List<Stat> stats1 = new List<Stat>();
+        while (stats1.Count < count)
+        {
+            int num = UnityEngine.Random.Range(0, stats.Count);
+            stats1.Add(stats[num]);
+            stats.RemoveAt(num);
+        }
+        return stats1;
     }
 
     public void PutObject(Object obj)
     {
-        Add(obj);
+        this.Add(obj, null);
+    }
+
+    private void Start()
+    {
+        this.containerController = UIManager.instance.craftUi;
+        this.containerController.Init();
+        this.inventorySize = this.containerController.GetSize();
+        this.streptomycinPrefab = (GameObject)Resources.Load(this.streptomycinPath, typeof(GameObject));
     }
 }

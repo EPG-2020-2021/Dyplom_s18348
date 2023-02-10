@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,19 +8,20 @@ public class UIHealthController : MonoBehaviour
 
     private PlayerHealthController healthController;
 
+    public UIHealthController()
+    {
+    }
+
     private void Start()
     {
-        healthController = PlayerScript.instance.healthController;
-        healthSlider = GetComponent<Slider>();
-
-        healthController.health.onValueChange += UpdateHealth;
-
-
-        UpdateHealth();
+        this.healthController = PlayerScript.instance.healthController;
+        this.healthSlider = base.GetComponent<Slider>();
+        this.healthController.health.onValueChange += new Stat.OnValueChange(this.UpdateHealth);
+        this.UpdateHealth();
     }
 
     public void UpdateHealth()
     {
-        healthSlider.value = healthController.GetHealth();
+        this.healthSlider.@value = this.healthController.GetHealth();
     }
 }

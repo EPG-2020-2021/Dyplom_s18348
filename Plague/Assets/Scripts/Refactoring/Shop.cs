@@ -1,18 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class Shop : ItemContainer
 {
+    public Shop()
+    {
+    }
 
     private void Start()
     {
-        containerFiller = GetComponent<ContainerFiller>();
-        containerController = UIManager.instance.shopUi;
-        containerController.Init();
-        inventorySize = containerController.GetSize();
-
-        containerFiller.Fill();
+        this.containerFiller = base.GetComponent<ContainerFiller>();
+        this.containerController = UIManager.instance.shopUi;
+        this.containerController.Init();
+        this.inventorySize = this.containerController.GetSize();
+        this.containerFiller.Fill();
     }
-
 }

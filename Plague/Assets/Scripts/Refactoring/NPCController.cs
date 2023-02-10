@@ -1,31 +1,31 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 internal class NPCController : MonoBehaviour
 {
     [SerializeField]
     private NPCScript npc;
+
+    public NPCController()
+    {
+    }
+
+    public void SetItem(Object obj)
+    {
+        this.npc.PutObject(obj);
+    }
+
     private void Start()
     {
-       
     }
 
     public void Use()
     {
-        var temp = npc.GetObject();
-        if (!temp || temp.GetComponent<IUsable>() == null)
+        Object obj = this.npc.GetObject();
+        if (!obj || obj.GetComponent<IUsable>() == null)
         {
-            print("return");
             return;
         }
-        var target = temp.GetComponent<IUsable>();
-
-        target.Use(gameObject);
+        obj.GetComponent<IUsable>().Use(base.gameObject);
     }
-
-
-    public void SetItem(Object obj)
-    {
-        npc.PutObject(obj);
-    }
-
 }

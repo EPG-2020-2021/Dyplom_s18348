@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using TMPro;
 using UnityEngine;
 
@@ -9,30 +8,40 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     internal UIHealthController healthController;
+
     [SerializeField]
     internal UIInventoryController inventoryController;
+
     [SerializeField]
     internal UIShop shopUi;
+
     [SerializeField]
     internal CraftUIController craftUi;
-    public TextMeshProUGUI money;
-    void Awake()
-    {
-        if (!instance)
-        {
-            instance = this;
-        }
 
-        craftUi.onCraftUpdateCallback += craftUi.ShowHide;
+    public TextMeshProUGUI money;
+
+    public UIManager()
+    {
+    }
+
+    private void Awake()
+    {
+        if (!UIManager.instance)
+        {
+            UIManager.instance = this;
+        }
+        this.craftUi.onCraftUpdateCallback += new UIContainerController.OnContainerUpdate(this.craftUi.ShowHide);
     }
 
     private void Start()
     {
-
-        PlayerScript.instance.moneyController.onMoneyChangeCallback += UpdateMoney;
+        PlayerScript.instance.moneyController.onMoneyChangeCallback += new MoneyController.OnMoneyChange(this.UpdateMoney);
     }
+
     private void UpdateMoney()
     {
-        money.text = PlayerScript.instance.moneyController.GetMoneyAmount().ToString();
+        TextMeshProUGUI str = this.money;
+        int moneyAmount = PlayerScript.instance.moneyController.GetMoneyAmount();
+        str.text = moneyAmount.ToString();
     }
 }

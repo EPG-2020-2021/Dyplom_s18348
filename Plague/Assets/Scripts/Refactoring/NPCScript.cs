@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class NPCScript : MonoBehaviour, IGivable
@@ -7,47 +6,52 @@ public class NPCScript : MonoBehaviour, IGivable
     [SerializeField]
     private Object slot;
 
-    //DialogController dialogController;
-
     [SerializeField]
     internal CharacterStats characterStats;
+
     [SerializeField]
     internal NPCController npcController;
+
     [SerializeField]
     internal NPCCollisionController npcCollisionController;
+
     [SerializeField]
     internal NpcUi npcUI;
 
-
-    public void PutObject(Object obj)
+    public NPCScript()
     {
-        if (slot == null)
-        {
-            slot = obj;
-        }
-        npcController.Use();
-    }
-
-    public Object TakeObject()
-    {
-        if (slot == null)
-        {
-            return new Object();
-        }
-
-        var result = slot;
-        slot = null;
-        return result;
     }
 
     public Object GetObject()
     {
-        if (slot == null)
+        if (this.slot == null)
         {
             return new Object();
         }
-
-        return slot; 
+        return this.slot;
     }
 
+    public void PutObject(Object obj)
+    {
+        if (this.slot == null)
+        {
+            this.slot = obj;
+        }
+        this.npcController.Use();
+        if (this.characterStats.Cured())
+        {
+            base.GetComponent<BoxCollider>().enabled = false;
+        }
+    }
+
+    public Object TakeObject()
+    {
+        if (this.slot == null)
+        {
+            return new Object();
+        }
+        Object obj = this.slot;
+        this.slot = null;
+        return obj;
+    }
 }

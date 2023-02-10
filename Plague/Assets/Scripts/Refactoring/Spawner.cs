@@ -1,63 +1,71 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+
+using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour
 {
     public GameObject prefabToSpawn;
 
-    public int max = 0;
-    public int delaymin = 0, delaymax = 0;
-    
+    public int max;
+
+    public int delaymin;
+
+    public int delaymax;
+
     public List<GameObject> items;
 
-    private float x, y;
+    private float x;
 
-    private float lastSpawn = 0f;
+    private float y;
 
-    //public bool spawnOnlyTillDay = false;
+    private float lastSpawn;
 
-    private static Random rnd = new Random();
+    private static Random rnd;
 
     private Vector3 size;
 
-    void Start()
+    static Spawner()
     {
-        items = new List<GameObject>();
-        size = GetComponent<SpriteRenderer>().bounds.size;
+        Spawner.rnd = new Random();
     }
 
-    void FixedUpdate()
+    public Spawner()
     {
-        if (Time.time - lastSpawn > delaymin &&
-            items.Count < max && // if enough space
-            Time.time - lastSpawn > Random.Range(delaymin, delaymax))
-        {
-            x = Random.Range(-size.x / 2f, size.x / 2f);
-            y = Random.Range(-size.y / 2f, size.y / 2f);
-
-            
-            var item = Instantiate(prefabToSpawn, transform, false);
-            StatsApplier.RandomiseStats(item);
-            item.transform.localPosition = new Vector3(x, y, -0.05f);
-            items.Add(item);
-
-            lastSpawn = Time.time;
-        }
-        Cleaner();
     }
 
-    
-
-    void Cleaner()
+    private void Cleaner()
     {
-        foreach (var obj in items)
+        foreach (GameObject item in this.items)
         {
-            if (!obj.gameObject.activeSelf)
+            if (item.gameObject.activeSelf)
             {
-                items.Remove(obj);
-                return;
+                continue;
             }
+            this.items.Remove(item);
+            return;
         }
+    }
+
+    private void FixedUpdate()
+    {
+        if (Time.time - this.lastSpawn > (float)this.delaymin && this.items.Count < this.max && Time.time - this.lastSpawn > (float)Random.Range(this.delaymin, this.delaymax))
+        {
+            this.x = Random.Range(-this.size.x / 2f, this.size.x / 2f);
+            this.y = Random.Range(-this.size.y / 2f, this.size.y / 2f);
+            GameObject vector3 = Object.Instantiate<GameObject>(this.prefabToSpawn, base.transform, false);
+            StatsApplier.RandomiseStats(vector3);
+            vector3.transform.localPosition = new Vector3(this.x, this.y, -0.05f);
+            this.items.Add(vector3);
+            this.lastSpawn = Time.time;
+        }
+        this.Cleaner();
+    }
+
+    private void Start()
+    {
+        this.items = new List<GameObject>();
+        this.size = base.GetComponent<SpriteRenderer>().bounds.size;
     }
 }

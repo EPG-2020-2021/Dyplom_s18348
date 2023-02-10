@@ -1,35 +1,61 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class MoneyController : MonoBehaviour
 {
     [SerializeField]
-    private int _money = 0;
+    private int _money;
 
-    public delegate void OnMoneyChange();
-    public OnMoneyChange onMoneyChangeCallback;
+    public MoneyController.OnMoneyChange onMoneyChangeCallback;
 
-    public int GetMoneyAmount()
+    public MoneyController()
     {
-        return _money;
     }
 
     public void Earn(int amount)
     {
-        _money += amount;
-        onMoneyChangeCallback?.Invoke();
+        this._money += amount;
+        SaveSystem.SaveMoney();
+        MoneyController.OnMoneyChange onMoneyChange = this.onMoneyChangeCallback;
+        if (onMoneyChange == null)
+        {
+            return;
+        }
+        onMoneyChange();
+    }
+
+    public int GetMoneyAmount()
+    {
+        return this._money;
+    }
+
+    public void Set(int amount)
+    {
+        this._money = amount;
+        MoneyController.OnMoneyChange onMoneyChange = this.onMoneyChangeCallback;
+        if (onMoneyChange == null)
+        {
+            return;
+        }
+        onMoneyChange();
     }
 
     public void Spend(int amount)
     {
-        if (_money >= amount)
+        if (this._money < amount)
         {
-            _money -= amount;
-            onMoneyChangeCallback?.Invoke();
+            MonoBehaviour.print("Not enough money");
             return;
         }
-
-        print("Not enough money");
+        this._money -= amount;
+        SaveSystem.SaveMoney();
+        MoneyController.OnMoneyChange onMoneyChange = this.onMoneyChangeCallback;
+        if (onMoneyChange == null)
+        {
+            return;
+        }
+        onMoneyChange();
     }
+
+    public delegate void OnMoneyChange();
 }

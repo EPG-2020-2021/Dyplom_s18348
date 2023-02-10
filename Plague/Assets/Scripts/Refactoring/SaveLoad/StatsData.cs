@@ -1,52 +1,45 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class StatsData
 {
     private int number;
 
     private List<StatKey> statKey = new List<StatKey>();
 
-    private List<float> minValue = new List<float>(), maxValue = new List<float>();
+    private List<float> minValue = new List<float>();
 
-    private List<float> value = new List<float>();
+    private List<float> maxValue = new List<float>();
 
-    public StatsData (List<Stat> stats)
+    private List<float> @value = new List<float>();
+
+    public StatsData(List<Stat> stats)
     {
-        number = stats.Count;
-
-        foreach (var stat in stats)
+        this.number = stats.Count;
+        foreach (Stat stat in stats)
         {
-            statKey.Add(stat.statKey);
-            minValue.Add(stat.minValue);
-            maxValue.Add(stat.maxValue);
-            value.Add(stat.value);
+            this.statKey.Add(stat.statKey);
+            this.minValue.Add(stat.minValue);
+            this.maxValue.Add(stat.maxValue);
+            this.@value.Add(stat.@value);
         }
-
     }
 
     public GameObject GetStats()
     {
-        var statPackPrefab = (GameObject)Resources.Load("Prefabs/Pack", typeof(GameObject));
-        var statPrefab = (GameObject)Resources.Load("Prefabs/Stats/Empty", typeof(GameObject));
-        var statPack = GameObject.Instantiate(statPackPrefab);
-
-
-
-
-        for (int i = 0; i < number; i++)
+        GameObject gameObject = (GameObject)Resources.Load("Prefabs/Pack", typeof(GameObject));
+        GameObject gameObject1 = (GameObject)Resources.Load("Prefabs/Stats/Empty", typeof(GameObject));
+        GameObject gameObject2 = Object.Instantiate<GameObject>(gameObject);
+        for (int i = 0; i < this.number; i++)
         {
-            var stat = GameObject.Instantiate(statPrefab, statPack.transform).GetComponent<Stat>();
-
-            stat.statKey = statKey[i];
-            stat.minValue = minValue[i];
-            stat.maxValue = maxValue[i];
-            stat.value = value[i];
+            Stat component = Object.Instantiate<GameObject>(gameObject1, gameObject2.transform).GetComponent<Stat>();
+            component.statKey = this.statKey[i];
+            component.minValue = this.minValue[i];
+            component.maxValue = this.maxValue[i];
+            component.@value = this.@value[i];
         }
-
-        return statPack;
+        return gameObject2;
     }
-
 }

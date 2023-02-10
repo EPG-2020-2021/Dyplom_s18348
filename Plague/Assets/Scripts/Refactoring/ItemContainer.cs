@@ -1,68 +1,70 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemContainer : MonoBehaviour
 {
-    protected int inventorySize = 0;
+    protected int inventorySize;
+
     public List<Object> container = new List<Object>();
 
     public UIContainerController containerController;
 
     public ContainerFiller containerFiller;
 
-
-    private void Start()
+    public ItemContainer()
     {
-
     }
+
     public virtual void Add(Object item, int? place = null)
     {
-        print("Added " + item.name);
-        if (!EnoughSpace())
+        MonoBehaviour.print(String.Concat("Added ", item.name));
+        if (!this.EnoughSpace())
         {
-            print("Not enough space");
+            MonoBehaviour.print("Not enough space");
             return;
         }
-
-
-        container.Add(item);
-        containerController.Add(item, place);
-
-        if (gameObject.CompareTag("Player"))
+        this.container.Add(item);
+        this.containerController.Add(item, place);
+        if (base.gameObject.CompareTag("Player"))
         {
             SaveSystem.SaveContainer(this);
         }
     }
 
-    internal virtual void Remove(Object item)
+    private bool EnoughSpace()
     {
-        container.Remove(item);
-        if (gameObject.CompareTag("Player"))
+        if (this.container.Count >= this.inventorySize)
         {
-            SaveSystem.SaveContainer(this);
+            return false;
         }
+        return true;
     }
 
     public virtual bool Has(Object item)
     {
-        if (container.Contains(item))
+        if (this.container.Contains(item))
         {
             return true;
         }
-        else
-        {
-            return false;
-        }
-
+        return false;
     }
-    private bool EnoughSpace()
+
+    internal virtual void Remove(Object item)
     {
-        return container.Count < inventorySize ? true : false;
+        this.container.Remove(item);
+        if (base.gameObject.CompareTag("Player"))
+        {
+            SaveSystem.SaveContainer(this);
+        }
     }
 
     public void RemoveAll()
     {
-        containerController.RemoveAll();
+        this.containerController.RemoveAll();
+    }
+
+    private void Start()
+    {
     }
 }

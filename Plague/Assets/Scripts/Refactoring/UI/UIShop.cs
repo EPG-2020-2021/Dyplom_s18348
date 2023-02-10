@@ -1,84 +1,99 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class UIShop : UIContainerController
 {
     private IShopCustomer shopCustomer;
 
-    public delegate void OnShopSet();
-    public OnContainerUpdate onShopUpdateCallback;
+    public UIContainerController.OnContainerUpdate onShopUpdateCallback;
 
     [HideInInspector]
-    public bool isOpened = false;
+    public bool isOpened;
 
-    public override void Init()
+    public UIShop()
     {
-        base.Init();
-
-    }
-
-    public void Sell(Object item)
-    {
-        shopCustomer.Sell(item);
-    }
-
-    public bool TryToBuy(Object item)
-    {
-        if (shopCustomer.TryToPay(item.cost))
-        {
-            shopCustomer?.Buy(item);
-            return true;
-        }
-        return false;
-    }
-
-    public void ShowHide()
-    {
-        if (!container) return;
-       
-        gameObject.SetActive(!gameObject.activeSelf);
-        Fill();
-    }
-
-    public void Close()
-    {
-        gameObject.SetActive(false);
-    }
-
-
-    public void SetShopCustomer(IShopCustomer shopCustomer)
-    {
-        this.shopCustomer = shopCustomer;
-
-        Init();
-    }
-
-    public IShopCustomer GetShopCustomer()
-    {
-        return shopCustomer;
     }
 
     public void ClearCustomer()
     {
-        shopCustomer = null;
+        this.shopCustomer = null;
+        this.Close();
+    }
 
-        Close();
+    public void Close()
+    {
+        base.gameObject.SetActive(false);
     }
 
     public void Fill()
     {
-        for (int i = 0; i < slots.Count; i++)
+        for (int i = 0; i < this.slots.Count; i++)
         {
-            if (i < container.container.Count)
+            if (i >= this.container.container.Count)
             {
-                slots[i].item = container.container[i];
-                continue;
+                this.slots[i].Remove();
             }
-            slots[i].Remove();
+            else
+            {
+                this.slots[i].item = this.container.container[i];
+            }
         }
-        onContainerUpdateCallback?.Invoke();
+        UIContainerController.OnContainerUpdate onContainerUpdate = this.onContainerUpdateCallback;
+        if (onContainerUpdate == null)
+        {
+            return;
+        }
+        onContainerUpdate();
     }
 
+    public IShopCustomer GetShopCustomer()
+    {
+        return this.shopCustomer;
+    }
+
+    public override void Init()
+    {
+        base.Init();
+    }
+
+    public void Sell(Object item)
+    {
+        this.shopCustomer.Sell(item);
+    }
+
+    public void SetShopCustomer(IShopCustomer shopCustomer)
+    {
+        this.shopCustomer = shopCustomer;
+        this.Init();
+    }
+
+    public void ShowHide()
+    {
+        if (!this.container)
+        {
+            return;
+        }
+        base.gameObject.SetActive(!base.gameObject.activeSelf);
+        this.Fill();
+    }
+
+    public bool TryToBuy(Object item)
+    {
+        if (!this.shopCustomer.TryToPay(item.cost))
+        {
+            return false;
+        }
+        IShopCustomer shopCustomer = this.shopCustomer;
+        if (shopCustomer != null)
+        {
+            shopCustomer.Buy(item);
+        }
+        else
+        {
+        }
+        return true;
+    }
+
+    public delegate void OnShopSet();
 }

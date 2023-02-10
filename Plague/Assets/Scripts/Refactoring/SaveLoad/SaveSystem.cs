@@ -1,113 +1,138 @@
-﻿using UnityEngine;
+﻿using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Collections.Generic;
+using UnityEngine;
 
 public static class SaveSystem
 {
-    private static string savePath = "/Saves";
-    private static string statsPath = "/Stats/";
-    private static string containersPath = "/Containers/";
-    private static string fileType = ".rims";
+    private static string savePath;
 
-    private static bool loaded = false;
+    private static string statsPath;
 
-    #region Stats
-    public static void SaveStats(CharacterStats character)
+    private static string containersPath;
+
+    private static string fileType;
+
+    private static bool loaded;
+
+    static SaveSystem()
     {
-        BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + savePath + statsPath;
-        if (!Directory.Exists(path))
+        SaveSystem.savePath = "/Saves";
+        SaveSystem.statsPath = "/Stats/";
+        SaveSystem.containersPath = "/Containers/";
+        SaveSystem.fileType = ".rims";
+        SaveSystem.loaded = false;
+    }
+
+    public static void DeleteSaves()
+    {
+        Directory.Delete(String.Concat(Application.persistentDataPath, SaveSystem.savePath), true);
+    }
+
+    private static void LoadContainer(ItemContainer itemContainer)
+    {
+        string str = String.Concat(new String[] { Application.persistentDataPath, SaveSystem.savePath, SaveSystem.containersPath, itemContainer.gameObject.name, SaveSystem.fileType });
+        if (!File.Exists(str))
         {
-            Directory.CreateDirectory(path);
+            Debug.LogError("Save file not found");
+            return;
         }
-        path += character.gameObject.name + fileType;
-        FileStream stream = new FileStream(path, FileMode.Create);
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+        FileStream fileStream = new FileStream(str, FileMode.Open);
+        ContainerData containerDatum = binaryFormatter.Deserialize(fileStream) as ContainerData;
+        fileStream.Close();
+        itemContainer.containerFiller.Load(containerDatum.GetObjects());
+    }
 
-        var stats = character.GetStats();
-        StatsData data = new StatsData(stats);
-
-        formatter.Serialize(stream, data);
-        stream.Close();
+    private static void LoadMoney()
+    {
+        string str = String.Concat(new String[] { Application.persistentDataPath, SaveSystem.savePath, SaveSystem.statsPath, "PlayersMoney", SaveSystem.fileType });
+        if (!File.Exists(str))
+        {
+            Debug.LogError("Save file not found");
+            return;
+        }
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+        FileStream fileStream = new FileStream(str, FileMode.Open);
+        MoneyData moneyDatum = binaryFormatter.Deserialize(fileStream) as MoneyData;
+        fileStream.Close();
+        PlayerScript.instance.moneyController.Set(moneyDatum.GetMoney());
     }
 
     public static void LoadStats(CharacterStats character)
     {
-        string path = Application.persistentDataPath + savePath + statsPath + character.gameObject.name + fileType;
-        if (File.Exists(path))
+        string str = String.Concat(new String[] { Application.persistentDataPath, SaveSystem.savePath, SaveSystem.statsPath, character.gameObject.name, SaveSystem.fileType });
+        if (!File.Exists(str))
         {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
-
-            StatsData data = formatter.Deserialize(stream) as StatsData;
-
-            stream.Close();
-
-            StatsApplier.ApplyStats(data.GetStats(), character.gameObject, true);
-
-            GameObject.Destroy(data.GetStats());
-            Debug.Log("load stats for " + character.gameObject.name);
+            Debug.LogError(String.Concat("Save file not found ", character.gameObject.name));
+            return;
         }
-        else
-        {
-            Debug.LogError("Save file not found " + character.gameObject.name);
-        }
-
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+        FileStream fileStream = new FileStream(str, FileMode.Open);
+        StatsData statsDatum = binaryFormatter.Deserialize(fileStream) as StatsData;
+        fileStream.Close();
+        StatsApplier.ApplyStats(statsDatum.GetStats(), character.gameObject, true);
+        Object.Destroy(statsDatum.GetStats());
+        Debug.Log(String.Concat("load stats for ", character.gameObject.name));
     }
-
-    #endregion
-
-    #region Container   
-
-    public static void SaveContainer(ItemContainer itemContainer)
-    {
-        BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + savePath + containersPath;
-        if (!Directory.Exists(path))
-        {
-            Directory.CreateDirectory(path);
-        }
-        if (File.Exists(path))
-        {
-            File.Delete(path);
-        }
-        path += itemContainer.gameObject.name + fileType;
-        FileStream stream = new FileStream(path, FileMode.Create);
-
-        ContainerData data = new ContainerData(itemContainer);
-
-        formatter.Serialize(stream, data);
-        stream.Close();
-    }
-
-
-    private static void LoadContainer(ItemContainer itemContainer)
-    {
-        string path = Application.persistentDataPath + savePath + containersPath + itemContainer.gameObject.name + fileType;
-        if (File.Exists(path))
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
-
-            ContainerData data = formatter.Deserialize(stream) as ContainerData;
-
-            stream.Close();
-
-            itemContainer.containerFiller.Load(data.GetObjects());
-        }
-        else
-        {
-            Debug.LogError("Save file not found");
-        }
-    }
-    #endregion
 
     public static void MasterLoad()
     {
+        SaveSystem.LoadContainer(PlayerScript.instance.inventory);
+        SaveSystem.LoadStats(PlayerScript.instance.playerStats);
+        SaveSystem.LoadMoney();
+        SaveSystem.loaded = true;
+    }
 
-        LoadContainer(PlayerScript.instance.inventory);
-        LoadStats(PlayerScript.instance.playerStats);
+    public static void SaveContainer(ItemContainer itemContainer)
+    {
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+        string str = String.Concat(Application.persistentDataPath, SaveSystem.savePath, SaveSystem.containersPath);
+        if (!Directory.Exists(str))
+        {
+            Directory.CreateDirectory(str);
+        }
+        if (File.Exists(str))
+        {
+            File.Delete(str);
+        }
+        str = String.Concat(str, itemContainer.gameObject.name, SaveSystem.fileType);
+        FileStream fileStream = new FileStream(str, FileMode.Create);
+        binaryFormatter.Serialize(fileStream, new ContainerData(itemContainer));
+        fileStream.Close();
+    }
 
-        loaded = true;
+    public static void SaveMoney()
+    {
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+        string str = String.Concat(Application.persistentDataPath, SaveSystem.savePath, SaveSystem.statsPath);
+        if (!Directory.Exists(str))
+        {
+            Directory.CreateDirectory(str);
+        }
+        if (File.Exists(str))
+        {
+            File.Delete(str);
+        }
+        str = String.Concat(str, "PlayersMoney", SaveSystem.fileType);
+        FileStream fileStream = new FileStream(str, FileMode.Create);
+        MoneyData moneyDatum = new MoneyData(PlayerScript.instance.moneyController.GetMoneyAmount());
+        binaryFormatter.Serialize(fileStream, moneyDatum);
+        fileStream.Close();
+    }
+
+    public static void SaveStats(CharacterStats character)
+    {
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+        string str = String.Concat(Application.persistentDataPath, SaveSystem.savePath, SaveSystem.statsPath);
+        if (!Directory.Exists(str))
+        {
+            Directory.CreateDirectory(str);
+        }
+        str = String.Concat(str, character.gameObject.name, SaveSystem.fileType);
+        FileStream fileStream = new FileStream(str, FileMode.Create);
+        binaryFormatter.Serialize(fileStream, new StatsData(character.GetStats()));
+        fileStream.Close();
+        Debug.Log("Saved stats");
     }
 }

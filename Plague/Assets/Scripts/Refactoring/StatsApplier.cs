@@ -1,50 +1,61 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class StatsApplier : MonoBehaviour
 {
+    public StatsApplier()
+    {
+    }
+
     public static void ApplyStats(GameObject fromObject, GameObject toCharacter, bool overwrite = false)
     {
-        var stats = fromObject.GetComponentsInChildren<Stat>();
-        var characterStats = toCharacter.GetComponent<CharacterStats>();
-
-        for (int i = 0; i < stats.Length; i++)
+        Stat[] componentsInChildren = fromObject.GetComponentsInChildren<Stat>();
+        CharacterStats component = toCharacter.GetComponent<CharacterStats>();
+        for (int i = 0; i < (int)componentsInChildren.Length; i++)
         {
-            if (overwrite)
+            if (!overwrite)
             {
-                characterStats.GetStat(stats[i].statKey)?.Set(stats[i].value);
+                Stat stat = component.GetStat(componentsInChildren[i].statKey);
+                if (stat != null)
+                {
+                    stat.Change(componentsInChildren[i].@value);
+                }
+                else
+                {
+                }
             }
-            else { 
-
-                characterStats.GetStat(stats[i].statKey)?.Change(stats[i].value);
+            else
+            {
+                Stat stat1 = component.GetStat(componentsInChildren[i].statKey);
+                if (stat1 != null)
+                {
+                    stat1.Set(componentsInChildren[i].@value);
+                }
+                else
+                {
+                }
             }
         }
-
-        characterStats.UpdateStatsText();
+        component.UpdateStatsText();
     }
 
     public static void CancelStats(GameObject fromObject, GameObject toCharacter)
     {
-        var stats = fromObject.GetComponentsInChildren<Stat>();
-        var characterStats = toCharacter.GetComponent<CharacterStats>();
-
-        for (int i = 0; i < stats.Length; i++)
+        Stat[] componentsInChildren = fromObject.GetComponentsInChildren<Stat>();
+        CharacterStats component = toCharacter.GetComponent<CharacterStats>();
+        for (int i = 0; i < (int)componentsInChildren.Length; i++)
         {
-            characterStats.GetStat(stats[i].statKey).Change(-stats[i].value);
+            component.GetStat(componentsInChildren[i].statKey).Change(-componentsInChildren[i].@value);
         }
-
-        characterStats.UpdateStatsText();
+        component.UpdateStatsText();
     }
 
     public static void RandomiseStats(GameObject obj)
     {
-        var stats = obj.GetComponentsInChildren<Stat>();
-
-        foreach (var stat in stats)
+        Stat[] componentsInChildren = obj.GetComponentsInChildren<Stat>();
+        for (int i = 0; i < (int)componentsInChildren.Length; i++)
         {
-            stat.SetRandomValue();
+            componentsInChildren[i].SetRandomValue();
         }
     }
 }

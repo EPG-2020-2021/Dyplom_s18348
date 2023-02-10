@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
@@ -6,73 +6,62 @@ using Random = System.Random;
 public class ContainerFiller : MonoBehaviour
 {
     public List<GameObject> objectsToInject;
+
     public List<GameObject> prefabsToInject;
+
     private List<GameObject> savedObjectsToInject;
+
     private ItemContainer target;
 
     public int number;
 
-    private bool loading = false;
-    private bool randomValues = false;
+    private bool loading;
+
+    private bool randomValues;
 
     private Random rnd = new Random();
 
+    public ContainerFiller()
+    {
+    }
+
     private void Awake()
     {
-        target = GetComponent<ItemContainer>();
+        this.target = base.GetComponent<ItemContainer>();
     }
 
     public void Fill()
     {
-        
-
-        if (loading)
+        GameObject gameObject;
+        if (!this.loading)
         {
-            objectsToInject = savedObjectsToInject;
-            randomValues = false;
-            number = objectsToInject.Count;
+            this.objectsToInject = this.prefabsToInject;
+            this.randomValues = true;
         }
         else
         {
-            objectsToInject = prefabsToInject;
-            randomValues = true;
+            this.objectsToInject = this.savedObjectsToInject;
+            this.randomValues = false;
+            this.number = this.objectsToInject.Count;
         }
-
-
-        for (int i = 0; i < number; i++)
+        for (int i = 0; i < this.number; i++)
         {
-            GameObject instance;
-            if (loading)
+            gameObject = (!this.loading ? Object.Instantiate<GameObject>(this.objectsToInject[this.rnd.Next(this.objectsToInject.Count)]) : Object.Instantiate<GameObject>(this.objectsToInject[i]));
+            if (this.randomValues)
             {
-                 instance =
-                Instantiate(objectsToInject[i]);
+                StatsApplier.RandomiseStats(gameObject);
             }
-            else
-            {
-               instance =
-                Instantiate(objectsToInject[rnd.Next(objectsToInject.Count)]);
-            }
-            
-            if (randomValues)
-            {
-                StatsApplier.RandomiseStats(instance);
-            }
-
-
-            target.Add(instance.GetComponent<Object>());
-            instance.SetActive(false);
+            this.target.Add(gameObject.GetComponent<Object>(), null);
+            gameObject.SetActive(false);
         }
     }
 
-
     public void Load(List<GameObject> objs)
     {
-        target.RemoveAll();
-        savedObjectsToInject = objs;
-        loading = true;
-
-        Fill();
-
-        loading = false;
+        this.target.RemoveAll();
+        this.savedObjectsToInject = objs;
+        this.loading = true;
+        this.Fill();
+        this.loading = false;
     }
 }

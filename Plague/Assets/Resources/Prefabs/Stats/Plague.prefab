@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4113096762437130271}
   - component: {fileID: 4211728104857977610}
   m_Layer: 0
-  m_Name: Empty
+  m_Name: Plague
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d9f041ade38e09449b3a664be45f2e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statKey: 12
-  minValue: 0
-  maxValue: 0
+  statKey: 11
+  minValue: -10
+  maxValue: 10
   value: 0

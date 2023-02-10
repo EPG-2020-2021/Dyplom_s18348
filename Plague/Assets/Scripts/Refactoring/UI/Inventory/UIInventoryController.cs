@@ -1,24 +1,25 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using UnityEngine;
 
 public class UIInventoryController : UIContainerController
 {
-
-    public void OpenClose()
+    public UIInventoryController()
     {
-        gameObject.SetActive(!gameObject.activeSelf);
     }
 
     public override void Init()
     {
         base.Init();
-        container = PlayerScript.instance.inventory;
+        this.container = PlayerScript.instance.inventory;
+    }
+
+    public void OpenClose()
+    {
+        base.gameObject.SetActive(!base.gameObject.activeSelf);
     }
 
     private void Start()
     {
-        Init();
+        this.Init();
     }
-
 }

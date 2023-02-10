@@ -28,5 +28,7 @@ public enum StatKey
     Quality,
 
 
+    Plague,
+
     Test
 }

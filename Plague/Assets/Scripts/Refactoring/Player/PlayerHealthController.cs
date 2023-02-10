@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PlayerHealthController : MonoBehaviour
@@ -8,38 +10,36 @@ public class PlayerHealthController : MonoBehaviour
     [HideInInspector]
     public Stat health;
 
-
-    void Awake()
+    public PlayerHealthController()
     {
-        health = PlayerScript.instance.playerStats.GetStat(StatKey.Health);
     }
 
-    public void Damage(float dmg)
+    private void Awake()
     {
-        health.Change(-dmg);
-        CheckForDeath();
+        this.health = PlayerScript.instance.playerStats.GetStat(StatKey.Health);
+        PlayerScript.instance.playerStats.GetStat(StatKey.Health).onValueChange += new Stat.OnValueChange(this.CheckForDeath);
     }
 
     private void CheckForDeath()
     {
-        if (GetHealth() <= 0)
+        MonoBehaviour.print(this.GetHealth());
+        if (this.GetHealth() <= 0f)
         {
-            Die();
+            base.StartCoroutine(this.Die());
         }
     }
 
-    private void Die()
+    private IEnumerator Die()
     {
-        //Invoke death
-    }
-
-    public void Heal(float hp)
-    {
-        health.Change(hp);
+        MonoBehaviour.print("You died");
+        yield return new WaitForSeconds(0.5f);
+        SaveSystem.DeleteSaves();
+        yield return new WaitForSeconds(1f);
+        Application.Quit();
     }
 
     public float GetHealth()
     {
-        return health.value;
+        return PlayerScript.instance.playerStats.GetStat(StatKey.Health).@value;
     }
 }

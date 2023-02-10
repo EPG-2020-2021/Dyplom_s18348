@@ -1,72 +1,65 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class ShopCustomer : MonoBehaviour, IShopCustomer
 {
-    private bool isInited = false;
+    private bool isInited;
 
     private Inventory inventory;
+
     private Shop shop;
+
     private MoneyController moneyController;
 
-
+    public ShopCustomer()
+    {
+    }
 
     public void Buy(Object item)
     {
-        inventory.Add(item);
-        //shop.Remove(item);
+        this.inventory.Add(item, null);
+    }
+
+    public void ExitShop()
+    {
+        this.shop = null;
+    }
+
+    public void Init()
+    {
+        if (this.isInited)
+        {
+            return;
+        }
+        this.inventory = PlayerScript.instance.inventory;
+        this.moneyController = PlayerScript.instance.moneyController;
+        this.isInited = true;
     }
 
     public void Sell(Object item)
     {
-        if (inventory.Has(item))
+        if (this.inventory.Has(item))
         {
-
-            shop.Add(item);
-
-            inventory.Remove(item);
-
-            moneyController.Earn(item.cost);
-        }
-    }
-
-    public bool TryToPay(int amount)
-    {
-        if (amount <= moneyController.GetMoneyAmount())
-        {
-            moneyController.Spend(amount);
-            return true;
-        }
-        else
-        {
-            print("Not enough money");
-            return false;
+            this.shop.Add(item, null);
+            this.inventory.Remove(item);
+            this.moneyController.Earn(item.cost);
         }
     }
 
     public void SetShop(Shop shop)
     {
         this.shop = shop;
-
-        Init();
+        this.Init();
     }
 
-    public void ExitShop()
+    public bool TryToPay(int amount)
     {
-        shop = null;
-    }
-
-    public void Init()
-    {
-        if (isInited)
+        if (amount > this.moneyController.GetMoneyAmount())
         {
-            return;
+            MonoBehaviour.print("Not enough money");
+            return false;
         }
-
-        inventory = PlayerScript.instance.inventory;
-        moneyController = PlayerScript.instance.moneyController;
-
-        isInited = true;
+        this.moneyController.Spend(amount);
+        return true;
     }
 }

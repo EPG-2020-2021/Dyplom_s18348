@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,47 +6,58 @@ using UnityEngine.UI;
 public class InfoPanel : Selectable
 {
     public GameObject infoPanel;
+
     public ItemSlot slot;
 
     [SerializeField]
     private TextMeshProUGUI _name;
+
     [SerializeField]
     private TextMeshProUGUI _description;
+
     [SerializeField]
     private TextMeshProUGUI _stats;
 
-    void FixedUpdate()
+    public InfoPanel()
     {
-        if (slot.item && IsHighlighted() && !infoPanel.activeSelf)
-        {
-            infoPanel.SetActive(true);
-        }
-        else if (!IsHighlighted())
-        {
-            infoPanel.SetActive(false);
-        }
     }
 
+    public void Clean()
+    {
+        this._name.text = "";
+        this._description.text = "";
+        this._stats.text = "";
+    }
 
     public void Fill(Object item)
     {
-        Clean();
-
-        _name.text = item.name;
-        _description.text = item.description;
-
-        var stats = item.GetComponentsInChildren<Stat>();
-
-        foreach (var stat in stats)
+        this.Clean();
+        this._name.text = item.name;
+        this._description.text = item.description;
+        Stat[] componentsInChildren = item.GetComponentsInChildren<Stat>();
+        for (int i = 0; i < (int)componentsInChildren.Length; i++)
         {
-            _stats.text += $"- {stat.statKey.ToString()}: {stat.value}\n";
+            Stat stat = componentsInChildren[i];
+            if (!stat.statKey.Equals(StatKey.Plague) || stat.@value < 0f)
+            {
+                TextMeshProUGUI textMeshProUGUI = this._stats;
+                textMeshProUGUI.text = String.Concat(textMeshProUGUI.text, String.Format("- {0}: {1}\n", (object)stat.statKey.ToString(), stat.@value));
+            }
         }
-        _stats.text += $"\nCost: {item.cost.ToString()}\n";
+        TextMeshProUGUI textMeshProUGUI1 = this._stats;
+        textMeshProUGUI1.text = String.Concat(textMeshProUGUI1.text, "\nCost: ", item.cost.ToString(), "\n");
     }
-    public void Clean()
+
+    private void FixedUpdate()
     {
-        _name.text = "";
-        _description.text = "";
-        _stats.text = "";
+        if (this.slot.item && base.IsHighlighted() && !this.infoPanel.activeSelf)
+        {
+            this.infoPanel.SetActive(true);
+            return;
+        }
+        if (!base.IsHighlighted())
+        {
+            this.infoPanel.SetActive(false);
+        }
     }
 }

@@ -1,17 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class FeaturedObject : Object, IUsable
 {
+    public FeaturedObject()
+    {
+    }
 
     public void Use()
     {
-        StatsApplier.ApplyStats(this.gameObject, PlayerScript.instance.gameObject);
+        StatsApplier.ApplyStats(base.gameObject, PlayerScript.instance.gameObject, false);
     }
 
     public void Use(GameObject instance)
     {
-        StatsApplier.ApplyStats(this.gameObject, instance);
+        StatsApplier.ApplyStats(base.gameObject, instance, false);
     }
 }

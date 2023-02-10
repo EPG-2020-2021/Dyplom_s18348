@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,156 +6,178 @@ public class ItemSlot : MonoBehaviour
 {
     [SerializeField]
     private Image _icon;
+
     public Object item;
+
     [SerializeField]
     private Button _deleteButton;
+
     [SerializeField]
     private Button _sellButton;
+
     [SerializeField]
     private Button _itemButton;
+
     [SerializeField]
     private Button _giveButton;
+
     [SerializeField]
     private InfoPanel _infoPanel;
 
- 
     public UIContainerController containerController;
 
+    private bool _inited;
 
-
-    private bool _inited = false;
-
-    private void Start()
+    public ItemSlot()
     {
-        Init();
     }
-
-    public void Remove()
-    {
-        containerController.Remove(this.item);
-        /*Destroy(item.gameObject);*/item?.gameObject.SetActive(false);
-        item = null;
-        _inited = false;
-        UpdateSlot();
-    }
-
-    public void Use()
-    {
-        if (item && item.GetComponent<IUsable>() != null)
-        {
-            item.GetComponent<IUsable>().Use();
-            Remove();
-        }
-    }
-
-    public void Init()
-    {
-        if (!_inited)
-        {
-            //containerController = UIManager.instance.inventoryController;
-
-            containerController.onContainerUpdateCallback += UpdateSlot;
-
-            if(_sellButton)UIManager.instance.shopUi.onShopUpdateCallback += SellButtonUpdate;
-            
-            if(_giveButton) PlayerScript.instance.givable.onGivableSetCallback += GiveButtonUpdate;
-
-            _infoPanel = GetComponentInChildren<InfoPanel>();
-
-            _inited = true;
-        }   
-        
-    }
-
-    public void UpdateSlot()
-    {
-        _icon.enabled = !(item is null);
-        if (_deleteButton != null)
-        {
-             _deleteButton.interactable = !(item is null);
-        }
-        _icon.sprite = item is null? null : item.icon;
-
-        if (item) _infoPanel.Fill(item);
-
-        SellButtonUpdate();
-    }
-
-    //additional for shop
-
 
     public void Buy()
     {
-        if (item)
+        if (this.item && UIManager.instance.shopUi.TryToBuy(this.item))
         {
-            if (UIManager.instance.shopUi.TryToBuy(item))
-            {
-                Remove();
-            }           
-        }
-    }
-    public void Sell()
-    {
-        if (item)
-        {
-            UIManager.instance.shopUi.Sell(item);
-            Remove();
-        }
-    }
-
-
-    public void SellButtonUpdate()
-    {
-        if (_sellButton is null) return;
-
-            if (UIManager.instance.shopUi.container)
-        {
-            _sellButton.interactable = !(item is null);
-            return;
-        }
-        _sellButton.interactable = false;
-    }
-
-    // Additional for healing
-
-    public void Give()
-    {
-        PlayerScript.instance.givable.closest.PutObject(item);
-        Remove();
-        GiveButtonUpdate();
-    }
-
-    public void GiveButtonUpdate()
-    {
-        if (_giveButton is null) return;
-
-        if (!(PlayerScript.instance.givable.closest is null))
-        {
-            _giveButton.interactable = !(item is null);
-            return;
-        }
-        _giveButton.interactable = false;
-    }
-
-    public void Take()
-    {
-        if (item)
-        {
-            PlayerScript.instance.inventory.Add(item);
-            Remove();
+            this.Remove();
         }
     }
 
     public void Craft()
     {
-        if (item)
+        if (this.item)
         {
-            Take();
+            this.Take();
+            return;
+        }
+        ((CraftUIController)this.containerController).Craft();
+    }
+
+    public void Give()
+    {
+        PlayerScript.instance.givable.closest.PutObject(this.item);
+        this.Remove();
+    }
+
+    public void GiveButtonUpdate()
+    {
+        if (this._giveButton == null)
+        {
+            return;
+        }
+        if (PlayerScript.instance.givable.closest == null)
+        {
+            this._giveButton.interactable = false;
+            return;
+        }
+        if (this.item && PlayerScript.instance.givable.obj && this.item.name.Equals("Streptomycin") && PlayerScript.instance.givable.obj.CompareTag("Npc"))
+        {
+            this._giveButton.interactable = false;
+            return;
+        }
+        this._giveButton.interactable = this.item != null;
+    }
+
+    public void Init()
+    {
+        if (!this._inited)
+        {
+            this.containerController.onContainerUpdateCallback += new UIContainerController.OnContainerUpdate(this.UpdateSlot);
+            if (this._sellButton)
+            {
+                UIManager.instance.shopUi.onShopUpdateCallback += new UIContainerController.OnContainerUpdate(this.SellButtonUpdate);
+            }
+            if (this._giveButton)
+            {
+                PlayerScript.instance.givable.onGivableSetCallback += new Givable.OnGivableSet(this.GiveButtonUpdate);
+            }
+            this._infoPanel = base.GetComponentInChildren<InfoPanel>();
+            this._inited = true;
+        }
+    }
+
+    public void Remove()
+    {
+        this.containerController.Remove(this.item);
+        Object obj = this.item;
+        if (obj != null)
+        {
+            obj.gameObject.SetActive(false);
         }
         else
         {
-            CraftUIController controller = (CraftUIController)containerController;
-            controller.Craft();
+        }
+        this.item = null;
+        this._inited = false;
+        this.UpdateSlot();
+    }
+
+    public void Sell()
+    {
+        if (this.item)
+        {
+            UIManager.instance.shopUi.Sell(this.item);
+            this.Remove();
+        }
+    }
+
+    public void SellButtonUpdate()
+    {
+        if (this._sellButton == null)
+        {
+            return;
+        }
+        if (!UIManager.instance.shopUi.container)
+        {
+            this._sellButton.interactable = false;
+            return;
+        }
+        this._sellButton.interactable = this.item != null;
+    }
+
+    private void Start()
+    {
+        this.Init();
+    }
+
+    public void Take()
+    {
+        if (this.item)
+        {
+            PlayerScript.instance.inventory.Add(this.item, null);
+            this.Remove();
+        }
+    }
+
+    public void UpdateSlot()
+    {
+        Sprite sprite;
+        this._icon.enabled = this.item != null;
+        if (this._deleteButton != null)
+        {
+            this._deleteButton.interactable = this.item != null;
+        }
+        Image image = this._icon;
+        if (this.item == null)
+        {
+            sprite = null;
+        }
+        else
+        {
+            sprite = this.item.icon;
+        }
+        image.sprite = sprite;
+        if (this.item)
+        {
+            this._infoPanel.Fill(this.item);
+        }
+        this.SellButtonUpdate();
+        this.GiveButtonUpdate();
+    }
+
+    public void Use()
+    {
+        if (this.item && this.item.GetComponent<IUsable>() != null)
+        {
+            this.item.GetComponent<IUsable>().Use();
+            this.Remove();
         }
     }
 }

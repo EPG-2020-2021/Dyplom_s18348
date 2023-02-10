@@ -1,90 +1,104 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class UIContainerController : MonoBehaviour
 {
-
-    public delegate void OnContainerUpdate();
-    public OnContainerUpdate onContainerUpdateCallback;
+    public UIContainerController.OnContainerUpdate onContainerUpdateCallback;
 
     protected List<ItemSlot> slots;
+
     public ItemContainer container;
+
+    public UIContainerController()
+    {
+    }
 
     public bool Add(Object item, int? place = null)
     {
-        var slot = GetFreeSlot(place);
-        if (slot)
-        {
-            slot.item = item;
-            onContainerUpdateCallback?.Invoke();
-            return true;
-        }
-        else
+        ItemSlot freeSlot = this.GetFreeSlot(place);
+        if (!freeSlot)
         {
             return false;
         }
-
-    }
-
-    public void Remove(Object item)
-    {
-        container.Remove(item);
+        freeSlot.item = item;
+        UIContainerController.OnContainerUpdate onContainerUpdate = this.onContainerUpdateCallback;
+        if (onContainerUpdate != null)
+        {
+            onContainerUpdate();
+        }
+        else
+        {
+        }
+        return true;
     }
 
     private ItemSlot GetFreeSlot(int? number = null)
     {
-        int counter = 0;
-
-        foreach (var slot in slots)
+        ItemSlot itemSlot;
+        int num = 0;
+        List<ItemSlot>.Enumerator enumerator = this.slots.GetEnumerator();
+        try
         {
-            if (number != null && counter.Equals(number) && !slot.item )
+            while (enumerator.MoveNext())
             {
-                return slot;
+                ItemSlot current = enumerator.Current;
+                if (number.HasValue && num.Equals(number) && !current.item)
+                {
+                    itemSlot = current;
+                    return itemSlot;
+                }
+                else if (number.HasValue || current.item)
+                {
+                    num++;
+                }
+                else
+                {
+                    itemSlot = current;
+                    return itemSlot;
+                }
             }
-            if (number is null && !slot.item )
-            {
-                return slot;
-            }
-            counter++;
+            return null;
         }
-
-        return null;
+        finally
+        {
+            ((IDisposable)enumerator).Dispose();
+        }
+        return itemSlot;
     }
 
     public int GetSize()
     {
-        Init();
-        return slots.Count;
+        this.Init();
+        return this.slots.Count;
     }
 
     public virtual void Init()
     {
-        if (slots != null)
+        if (this.slots != null)
         {
-            slots = new List<ItemSlot>();
+            this.slots = new List<ItemSlot>();
         }
-
-
-        slots = GetComponentsInChildren<ItemSlot>().ToList();
-        
-
-        foreach (var slot in slots)
+        this.slots = base.GetComponentsInChildren<ItemSlot>().ToList<ItemSlot>();
+        foreach (ItemSlot slot in this.slots)
         {
             slot.Init();
         }
+    }
 
-        //container = PlayerScript.instance.inventory;
-
-
+    public void Remove(Object item)
+    {
+        this.container.Remove(item);
     }
 
     public void RemoveAll()
     {
-        foreach (var slot in slots)
+        foreach (ItemSlot slot in this.slots)
         {
             slot.Remove();
         }
     }
 
+    public delegate void OnContainerUpdate();
 }
