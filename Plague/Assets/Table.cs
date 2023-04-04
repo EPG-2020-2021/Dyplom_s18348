@@ -61,6 +61,10 @@ public class Table : ItemContainer, IGivable
                 return;
             }
         }
+        if (this.resultObject && !this.container.Contains(this.resultObject.GetComponent<Object>()))
+        {
+            this.resultObject = null;
+        }
         if (this.container.Count <= 1 || this.container.Count >= 4 || this.resultObject)
         {
             return;
