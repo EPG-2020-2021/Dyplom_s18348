@@ -10,6 +10,9 @@ public class Spawner : MonoBehaviour
 
     public int max;
 
+    private int nightDelayMin, nightDelayMax;
+    private int dayDelayMin, dayDelayMax;
+
     public int delaymin;
 
     public int delaymax;
@@ -67,5 +70,25 @@ public class Spawner : MonoBehaviour
     {
         this.items = new List<GameObject>();
         this.size = base.GetComponent<SpriteRenderer>().bounds.size;
+
+        nightDelayMin = delaymin * 2;
+        nightDelayMax = delaymax * 2;
+        dayDelayMin = delaymin;
+        dayDelayMax = delaymax;
+
+        TimeManage.onDayStartCallback += SetDayMode;
+        TimeManage.onNightStartCallback += SetNightMode;
+    }
+
+    private void SetNightMode()
+    {
+        delaymin = nightDelayMin;
+        delaymax = nightDelayMax;
+    }
+
+    private void SetDayMode()
+    {
+        delaymin = dayDelayMin;
+        delaymax = dayDelayMax;
     }
 }

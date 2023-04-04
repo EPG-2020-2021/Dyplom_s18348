@@ -5,13 +5,17 @@ using UnityEngine;
 public class ShopCollisionController : MonoBehaviour
 {
     private UIShop shopUi;
+
     private void Start()
     {
         shopUi = UIManager.instance.shopUi;
     }
+    
 
     private void OnTriggerEnter(Collider other)
     {
+        
+        
         //if (other.GetComponent<IShopCustomer>() != null)
         //{
         

@@ -5,19 +5,25 @@ using UnityEngine;
 public class TimeManage : MonoBehaviour
 {
     public GameObject daynnightCircle;
-    public float dayinmins = 25f;
+    private float dayinmins = 1f;
 
     public static string time = "12:00";
 
-    float rotation = 0f;
-    float lastrotation = 0f;
+    private float rotation = 0f;
+    private float lastrotation = 0f;
+
+    public delegate void OnDayStart();
+    public static OnDayStart onDayStartCallback;
+
+    public delegate void OnNightStart();
+    public static OnNightStart onNightStartCallback;
 
     // Update is called once per frame
     void Update()
     {
-        var times = time.Split(':');
-        int hours = int.Parse(times[0]);
-        int minutes = int.Parse(times[1]);
+        var timeParts = time.Split(':');
+        int hours = int.Parse(timeParts[0]);
+        int minutes = int.Parse(timeParts[1]);
 
         
         rotation = ((hours-2) * 15f + (minutes * 0.25f));
@@ -29,7 +35,6 @@ public class TimeManage : MonoBehaviour
         {
             time = hours + ":" + (minutes+=1);
             lastrotation = Time.time;
-            print(time);
         }
         if(minutes >= 60)
         {
@@ -40,10 +45,15 @@ public class TimeManage : MonoBehaviour
             time = "00:00";
         }
 
+        if (hours == 6)
+        {
+            onDayStartCallback.Invoke();
+        }
+        if (hours == 23 && minutes == 59)
+        {
+            onNightStartCallback.Invoke();
+        }
         
     }
 
-
-
-    //Delgates for night and day
 }

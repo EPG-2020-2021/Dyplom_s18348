@@ -11,6 +11,9 @@ public class UIShop : UIContainerController
     [HideInInspector]
     public bool isOpened;
 
+
+    private bool opened = true;
+
     public UIShop()
     {
     }
@@ -55,6 +58,10 @@ public class UIShop : UIContainerController
     public override void Init()
     {
         base.Init();
+
+
+        TimeManage.onDayStartCallback += OpenShop;
+        TimeManage.onNightStartCallback += CloseShop;
     }
 
     public void Sell(Object item)
@@ -70,7 +77,7 @@ public class UIShop : UIContainerController
 
     public void ShowHide()
     {
-        if (!this.container)
+        if (!this.container || !opened)
         {
             return;
         }
@@ -93,6 +100,17 @@ public class UIShop : UIContainerController
         {
         }
         return true;
+    }
+
+    private void OpenShop()
+    {
+        opened = true;
+    }
+    private void CloseShop()
+    {
+        opened = false;
+        Close();
+
     }
 
     public delegate void OnShopSet();
