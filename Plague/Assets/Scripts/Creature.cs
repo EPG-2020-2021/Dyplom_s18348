@@ -13,7 +13,7 @@ public class Creature : MonoBehaviour
 
     public GameObject player;
     
-    public List<Quest> myQuests;
+    public List<QuestOld> myQuests;
 
     public GameObject talkWindow;
 
@@ -22,7 +22,7 @@ public class Creature : MonoBehaviour
     void Start()
     {
         questManager = FindObjectOfType<QuestManager>();
-        myQuests = new List<Quest>();
+        myQuests = new List<QuestOld>();
         type = gameObject.GetComponent<DropDown>().GetType();
 
         talkWindow = GameObject.Find("Canvas").transform.Find("TalkWindowHandler").Find("Talk window").gameObject;
@@ -72,7 +72,7 @@ public class Creature : MonoBehaviour
 
     void questCleaner()
     {
-        foreach (Quest quest in myQuests)
+        foreach (QuestOld quest in myQuests)
         {
             if (quest.isComplited())
             {
@@ -82,9 +82,9 @@ public class Creature : MonoBehaviour
         }
     }
 
-    public void publishQuest(params Quest[] quests)
+    public void publishQuest(params QuestOld[] quests)
     {
-        foreach (Quest quest in quests)
+        foreach (QuestOld quest in quests)
         {
             //************
             //Some notifications of new quests

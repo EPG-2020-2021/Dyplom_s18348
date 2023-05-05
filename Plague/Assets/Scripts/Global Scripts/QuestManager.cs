@@ -8,9 +8,9 @@ public class QuestManager : MonoBehaviour
     GameObject player;
     Stats playerStats;
     public List<Creature> creatures;
-    public List<Quest> quests;
+    public List<QuestOld> quests;
 
-    public List<Quest> complitedQuests;
+    public List<QuestOld> complitedQuests;
 
 
     private void Start()
@@ -73,7 +73,7 @@ public class QuestManager : MonoBehaviour
     }
     }
 
-    public void EndQuest(Quest quest)
+    public void EndQuest(QuestOld quest)
     {
         complitedQuests.Add(quest);
     }

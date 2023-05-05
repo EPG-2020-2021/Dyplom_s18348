@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class QuestPoint : MonoBehaviour
 {
-    public Quest quest;
+    public QuestOld quest;
    
     void Start()
     {

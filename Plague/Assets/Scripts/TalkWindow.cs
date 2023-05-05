@@ -30,13 +30,13 @@ public class TalkWindow : MonoBehaviour
         
     }
 
-    public void fillPanel(List<Quest> quests)
+    public void fillPanel(List<QuestOld> quests)
     {
         QuestUnitPrefab = (GameObject)Resources.Load("Prefabs/Quest Unit", typeof(GameObject));
         Scroll = GameObject.FindGameObjectWithTag("Scroll");
         QuestListPanel = GameObject.FindGameObjectWithTag("Quest List Panel");
 
-        foreach (Quest quest in quests)
+        foreach (QuestOld quest in quests)
         {
             if (!quest.isComplited())
             {

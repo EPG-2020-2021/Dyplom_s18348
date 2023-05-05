@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
-public class Quest : MonoBehaviour
+public class QuestOld : MonoBehaviour
 {
     GameObject player;
 
@@ -20,7 +20,7 @@ public class Quest : MonoBehaviour
     public string questOwnersName;
     public Creature owner;
 
-    public List<Quest> ListToUnlock = new List<Quest>();
+    public List<QuestOld> ListToUnlock = new List<QuestOld>();
 
     public bool itemSearching = false;
     public bool actionsCompliting = false;
@@ -59,7 +59,7 @@ public class Quest : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
 
         questManager = FindObjectOfType<QuestManager>();
-        LanguageManager.QuestTranslation(gameObject.GetComponent<Quest>());
+        LanguageManager.QuestTranslation(gameObject.GetComponent<QuestOld>());
 
         questOwnersType = gameObject.GetComponent<DropDown>().GetType();
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -97,7 +97,7 @@ public class Quest : MonoBehaviour
     void UnlockCheck()
     {
         unlocked = true;
-        foreach (Quest quest in ListToUnlock)
+        foreach (QuestOld quest in ListToUnlock)
         {
             if (!quest.isComplited())
             {
@@ -168,7 +168,7 @@ public class Quest : MonoBehaviour
         }
 
         isDone = true;
-        questManager.EndQuest(gameObject.GetComponent<Quest>());
+        questManager.EndQuest(gameObject.GetComponent<QuestOld>());
         InventoryOLD.instance.Remove(placeForItem);
         gameObject.active = false;
 

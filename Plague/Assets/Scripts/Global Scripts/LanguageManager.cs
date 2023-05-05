@@ -24,7 +24,7 @@ public class LanguageManager : MonoBehaviour
         Debug.Log("LanguageManager - Start");
     }
 
-    public static void QuestTranslation(Quest obj)
+    public static void QuestTranslation(QuestOld obj)
     {
         Debug.Log(path);
         string savedData = File.ReadAllText(path + obj.key + ".txt");

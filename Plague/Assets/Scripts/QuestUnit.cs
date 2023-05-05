@@ -12,7 +12,7 @@ public class QuestUnit : MonoBehaviour
     public GameObject applyBtn;
     public GameObject returnBtn;
 
-    Quest quest;
+    QuestOld quest;
 
     private void Start()
     {
@@ -41,7 +41,7 @@ public class QuestUnit : MonoBehaviour
 
     // -------- setters ----------
 
-    public void setQuest(Quest quest)
+    public void setQuest(QuestOld quest)
     {
         Debug.Log(quest.name);
         this.quest = quest;
