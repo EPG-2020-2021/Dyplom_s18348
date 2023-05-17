@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class QuestMaster : MonoBehaviour
 {
-    public List<Quest> quests;
+    public static List<Quest> quests;
 
 
     void Start()
     {
-        
+        InitTestQuests();
     }
 
     // Update is called once per frame
@@ -20,7 +20,14 @@ public class QuestMaster : MonoBehaviour
 
     private void InitTestQuests()
     {
-        var quest = new Quest<StatKey>(QuestType.BringSpecial, StatKey.Health, 5);
+        quests = new List<Quest>();
+
+        var quest = new Quest<StatKey>(QuestType.FindSpecial, StatKey.Health, 5);
         quests.Add(quest);
+    }
+
+    public static void ReleaseQuest(Quest quest)
+    {
+        //quests.Remove(quest);
     }
 }

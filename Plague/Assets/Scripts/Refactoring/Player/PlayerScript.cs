@@ -29,6 +29,8 @@ public class PlayerScript : MonoBehaviour
     internal ShopCustomer shopCustomer;
     [SerializeField]
     internal Givable givable;
+    [SerializeField]
+    internal QuestMaster questMaster;
 
     private void Awake()
     {

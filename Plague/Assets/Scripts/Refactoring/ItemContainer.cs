@@ -12,13 +12,15 @@ public class ItemContainer : MonoBehaviour
 
     public ContainerFiller containerFiller;
 
+    public delegate void OnNewItem(Object item);
+    public OnNewItem onNewItemCallback;
+
     public ItemContainer()
     {
     }
 
     public virtual void Add(Object item, int? place = null)
     {
-        MonoBehaviour.print(String.Concat("Added ", item.name));
         if (!this.EnoughSpace())
         {
             MonoBehaviour.print("Not enough space");
@@ -26,6 +28,8 @@ public class ItemContainer : MonoBehaviour
         }
         this.container.Add(item);
         this.containerController.Add(item, place);
+        print(String.Concat("Added ", item.name));
+        onNewItemCallback.Invoke(item);
         if (base.gameObject.CompareTag("Player"))
         {
             SaveSystem.SaveContainer(this);
