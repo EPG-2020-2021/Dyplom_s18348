@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -17,11 +18,15 @@ public class Quest<T> : Quest
     public delegate void OnComplete();
     public OnComplete onCompleteCallback;
 
+    private bool completed = false;
+
 
     public void Complete()
     {
         onCompleteCallback?.Invoke();
         QuestMaster.ReleaseQuest(this);
+        PlayerScript.instance.inventory.onNewItemCallback -= CheckForItem;
+        completed = true;
     }
 
     public Quest(QuestType type, T specialParam, int specialParamCount)
@@ -39,8 +44,18 @@ public class Quest<T> : Quest
 
     private void CheckForItem(Object item)
     {
-        var stat = item.gameObject.GetComponentsInChildren<Stat>().First(x => x.statKey.Equals(specialParam) && x.value >= specialParamCount); //Find needed stat if exist
-        Debug.Log(stat.statKey + " " + stat.value);
+        if (completed) return;
+
+        Stat stat = new Stat();
+
+        try
+        {
+            stat = item.gameObject?.GetComponentsInChildren<Stat>()?.First(x => x.statKey.Equals(specialParam) && x.value >= specialParamCount); //Find needed stat if exist
+        }catch(Exception e)
+        {
+
+        };
+            Debug.Log(stat.statKey + " " + stat.value);
         if (type.Equals(QuestType.Find) && item.name.Equals(this.itemName))
         {
             PlayerScript.instance.inventory.Remove(item);

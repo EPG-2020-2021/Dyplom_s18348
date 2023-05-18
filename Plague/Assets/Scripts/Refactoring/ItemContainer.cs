@@ -29,7 +29,7 @@ public class ItemContainer : MonoBehaviour
         this.container.Add(item);
         this.containerController.Add(item, place);
         print(String.Concat("Added ", item.name));
-        onNewItemCallback.Invoke(item);
+        onNewItemCallback?.Invoke(item);
         if (base.gameObject.CompareTag("Player"))
         {
             SaveSystem.SaveContainer(this);
