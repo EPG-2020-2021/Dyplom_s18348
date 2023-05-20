@@ -58,13 +58,13 @@ public class Quest<T> : Quest
             Debug.Log(stat.statKey + " " + stat.value);
         if (type.Equals(QuestType.Find) && item.name.Equals(this.itemName))
         {
-            PlayerScript.instance.inventory.Remove(item);
+            PlayerScript.instance.inventory.containerController.GetSlotWithItem(item).Remove();
             Complete();
         }
         else if (type.Equals(QuestType.FindSpecial) && stat)
         {
             Debug.Log("Complete");
-            PlayerScript.instance.inventory.Remove(item);
+            PlayerScript.instance.inventory.containerController.GetSlotWithItem(item).Remove();
             Complete();
         }
     }

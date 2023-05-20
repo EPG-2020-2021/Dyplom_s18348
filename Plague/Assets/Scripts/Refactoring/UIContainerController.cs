@@ -34,6 +34,11 @@ public class UIContainerController : MonoBehaviour
         return true;
     }
 
+    public ItemSlot GetSlotWithItem(Object item)
+    {
+        return slots.Find(x => x.item.Equals(item));
+    }
+
     private ItemSlot GetFreeSlot(int? number = null)
     {
         ItemSlot itemSlot;
