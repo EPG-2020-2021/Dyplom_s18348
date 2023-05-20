@@ -11,6 +11,10 @@ public static class SaveSystem
 
     private static string containersPath;
 
+    private static string moneyPath;
+
+    private static string questsPath;
+
     private static string fileType;
 
     private static bool loaded;
@@ -20,6 +24,8 @@ public static class SaveSystem
         SaveSystem.savePath = "/Saves";
         SaveSystem.statsPath = "/Stats/";
         SaveSystem.containersPath = "/Containers/";
+        SaveSystem.moneyPath = "/Money/";
+        SaveSystem.questsPath = "/Quests/";
         SaveSystem.fileType = ".rims";
         SaveSystem.loaded = false;
     }
@@ -46,7 +52,7 @@ public static class SaveSystem
 
     private static void LoadMoney()
     {
-        string str = String.Concat(new String[] { Application.persistentDataPath, SaveSystem.savePath, SaveSystem.statsPath, "PlayersMoney", SaveSystem.fileType });
+        string str = String.Concat(new String[] { Application.persistentDataPath, SaveSystem.savePath, SaveSystem.moneyPath, "PlayersMoney", SaveSystem.fileType });
         if (!File.Exists(str))
         {
             Debug.LogError("Save file not found");
@@ -57,6 +63,21 @@ public static class SaveSystem
         MoneyData moneyDatum = binaryFormatter.Deserialize(fileStream) as MoneyData;
         fileStream.Close();
         PlayerScript.instance.moneyController.Set(moneyDatum.GetMoney());
+    }
+    public static bool LoadQuest(string name)
+    {
+        string str = String.Concat(new String[] { Application.persistentDataPath, SaveSystem.savePath, SaveSystem.questsPath, name, SaveSystem.fileType });
+        if (!File.Exists(str))
+        {
+            Debug.LogError("Save file not found");
+            return false;
+        }
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+        FileStream fileStream = new FileStream(str, FileMode.Open);
+        QuestData questDatum = binaryFormatter.Deserialize(fileStream) as QuestData;
+        fileStream.Close();
+
+        return questDatum.IsComplete();
     }
 
     public static void LoadStats(CharacterStats character)
@@ -105,7 +126,7 @@ public static class SaveSystem
     public static void SaveMoney()
     {
         BinaryFormatter binaryFormatter = new BinaryFormatter();
-        string str = String.Concat(Application.persistentDataPath, SaveSystem.savePath, SaveSystem.statsPath);
+        string str = String.Concat(Application.persistentDataPath, SaveSystem.savePath, SaveSystem.moneyPath);
         if (!Directory.Exists(str))
         {
             Directory.CreateDirectory(str);
@@ -118,6 +139,24 @@ public static class SaveSystem
         FileStream fileStream = new FileStream(str, FileMode.Create);
         MoneyData moneyDatum = new MoneyData(PlayerScript.instance.moneyController.GetMoneyAmount());
         binaryFormatter.Serialize(fileStream, moneyDatum);
+        fileStream.Close();
+    }
+    public static void SaveQuest(string name, bool complete)
+    {
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+        string str = String.Concat(Application.persistentDataPath, SaveSystem.savePath, SaveSystem.questsPath);
+        if (!Directory.Exists(str))
+        {
+            Directory.CreateDirectory(str);
+        }
+        if (File.Exists(str))
+        {
+            File.Delete(str);
+        }
+        str = String.Concat(str, name, SaveSystem.fileType);
+        FileStream fileStream = new FileStream(str, FileMode.Create);
+        QuestData questDatum = new QuestData(name, complete);
+        binaryFormatter.Serialize(fileStream, questDatum);
         fileStream.Close();
     }
 

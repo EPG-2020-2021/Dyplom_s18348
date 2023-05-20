@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class Quest<T> : Quest
 {
-    public string QuestName;
-    public string QuestDescription;
+    public string questName;
+    public string questDescription;
 
     public QuestType type;
     
@@ -27,13 +27,21 @@ public class Quest<T> : Quest
         QuestMaster.ReleaseQuest(this);
         PlayerScript.instance.inventory.onNewItemCallback -= CheckForItem;
         completed = true;
+
+        SaveSystem.SaveQuest(questName, completed);
     }
 
-    public Quest(QuestType type, T specialParam, int specialParamCount)
+    public Quest(string name, string description, QuestType type, T specialParam, int specialParamCount)
     {
+        this.questName = name;
+        this.questDescription = description;
         this.type = type;
         this.specialParam = specialParam;
         this.specialParamCount = specialParamCount;
+
+        completed = SaveSystem.LoadQuest(name);
+
+        if (completed) return;
 
         if (type.Equals(QuestType.Find) || type.Equals(QuestType.FindSpecial))
         {

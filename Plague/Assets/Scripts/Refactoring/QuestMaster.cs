@@ -22,7 +22,7 @@ public class QuestMaster : MonoBehaviour
     {
         quests = new List<Quest>();
 
-        var quest = new Quest<StatKey>(QuestType.FindSpecial, StatKey.Health, 5);
+        var quest = new Quest<StatKey>("Test_Health2", "Find item which heals at least 5 hp", QuestType.FindSpecial, StatKey.Health, 5);
         quests.Add(quest);
     }
 
