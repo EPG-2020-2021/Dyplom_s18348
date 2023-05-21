@@ -23,6 +23,8 @@ public class Quest<T> : Quest
 
     public void Complete()
     {
+        Debug.Log("Complete");
+
         onCompleteCallback?.Invoke();
         QuestMaster.ReleaseQuest(this);
         PlayerScript.instance.inventory.onNewItemCallback -= CheckForItem;
@@ -43,7 +45,24 @@ public class Quest<T> : Quest
 
         if (completed) return;
 
-        if (type.Equals(QuestType.Find) || type.Equals(QuestType.FindSpecial))
+        if (type.Equals(QuestType.FindSpecial))
+        {
+            CheckForAll();
+            PlayerScript.instance.inventory.onNewItemCallback += CheckForItem;
+        }
+    }
+    public Quest(string name, string description, QuestType type, string itemName)
+    {
+        this.questName = name;
+        this.questDescription = description;
+        this.type = type;
+        this.itemName = itemName;
+
+        completed = SaveSystem.LoadQuest(name);
+
+        if (completed) return;
+
+        if (type.Equals(QuestType.Find))
         {
             CheckForAll();
             PlayerScript.instance.inventory.onNewItemCallback += CheckForItem;
@@ -52,6 +71,7 @@ public class Quest<T> : Quest
 
     private void CheckForItem(Object item)
     {
+
         if (completed) return;
 
         Stat stat = new Stat();
@@ -63,15 +83,14 @@ public class Quest<T> : Quest
         {
 
         };
-            Debug.Log(stat.statKey + " " + stat.value);
+
         if (type.Equals(QuestType.Find) && item.name.Equals(this.itemName))
         {
             PlayerScript.instance.inventory.containerController.GetSlotWithItem(item).Remove();
             Complete();
         }
-        else if (type.Equals(QuestType.FindSpecial) && stat)
+        if (type.Equals(QuestType.FindSpecial) && stat)
         {
-            Debug.Log("Complete");
             PlayerScript.instance.inventory.containerController.GetSlotWithItem(item).Remove();
             Complete();
         }

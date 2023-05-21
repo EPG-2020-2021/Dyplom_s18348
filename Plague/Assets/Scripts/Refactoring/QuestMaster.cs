@@ -22,8 +22,11 @@ public class QuestMaster : MonoBehaviour
     {
         quests = new List<Quest>();
 
-        var quest = new Quest<StatKey>("Test_Health2", "Find item which heals at least 5 hp", QuestType.FindSpecial, StatKey.Health, 5);
+        var quest = new Quest<StatKey>("Test_Health_5", "Find item which heals at least 5 hp", QuestType.FindSpecial, StatKey.Health, 5);
         quests.Add(quest);
+
+        var quest2 = new Quest<StatKey>("Test_Rosemary", "Find clover", QuestType.Find, "Rosemary");
+        quests.Add(quest2);
     }
 
     public static void ReleaseQuest(Quest quest)
