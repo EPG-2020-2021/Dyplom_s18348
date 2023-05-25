@@ -18,8 +18,17 @@ public class Quest<T> : Quest
     public delegate void OnComplete();
     public OnComplete onCompleteCallback;
 
-    private bool completed = false;
+    public delegate void OnCompleted(GameObject obj);
+    public OnComplete onCompletedCallback;
 
+    public bool completed = false;
+
+    public GameObject uiUnit;
+
+    //reward
+
+    private StatKey statKey = StatKey.Decription; //Default value
+    private float rewardAmount = 2; //Default value
 
     public void Complete()
     {
@@ -28,6 +37,8 @@ public class Quest<T> : Quest
         onCompleteCallback?.Invoke();
         QuestMaster.ReleaseQuest(this);
         PlayerScript.instance.inventory.onNewItemCallback -= CheckForItem;
+        StatsApplier.RewardStat(statKey, rewardAmount);
+        
         completed = true;
 
         SaveSystem.SaveQuest(questName, completed);
@@ -51,6 +62,13 @@ public class Quest<T> : Quest
             PlayerScript.instance.inventory.onNewItemCallback += CheckForItem;
         }
     }
+
+    internal void DestroySelf()
+    {
+        Debug.Log("Destroy");
+        GameObject.Destroy(uiUnit);
+    }
+
     public Quest(string name, string description, QuestType type, string itemName)
     {
         this.questName = name;
@@ -89,7 +107,7 @@ public class Quest<T> : Quest
             PlayerScript.instance.inventory.containerController.GetSlotWithItem(item).Remove();
             Complete();
         }
-        if (type.Equals(QuestType.FindSpecial) && stat)
+        else if (type.Equals(QuestType.FindSpecial) && stat)
         {
             PlayerScript.instance.inventory.containerController.GetSlotWithItem(item).Remove();
             Complete();

@@ -58,4 +58,17 @@ public class StatsApplier : MonoBehaviour
             componentsInChildren[i].SetRandomValue();
         }
     }
+
+    public static void RewardStat(StatKey key, float amount)
+    {
+        CharacterStats component = PlayerScript.instance.playerStats;
+
+        Stat stat = component.GetStat(key);
+        if (stat != null)
+        {
+            stat.Change(amount);
+        }
+       
+    }
+
 }
