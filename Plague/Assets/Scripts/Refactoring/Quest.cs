@@ -32,7 +32,7 @@ public class Quest<T> : Quest
 
     public void Complete()
     {
-        Debug.Log("Complete");
+        Debug.Log("Complete " + questName);
 
         onCompleteCallback?.Invoke();
         QuestMaster.ReleaseQuest(this);
@@ -104,21 +104,32 @@ public class Quest<T> : Quest
 
         if (type.Equals(QuestType.Find) && item.name.Equals(this.itemName))
         {
-            PlayerScript.instance.inventory.containerController.GetSlotWithItem(item).Remove();
             Complete();
+            PlayerScript.instance.inventory.containerController.GetSlotWithItem(item).Remove();
+            return;
         }
         else if (type.Equals(QuestType.FindSpecial) && stat)
         {
-            PlayerScript.instance.inventory.containerController.GetSlotWithItem(item).Remove();
             Complete();
+            PlayerScript.instance.inventory.containerController.GetSlotWithItem(item).Remove();
+            return;
         }
+
+    }
+
+    public void SetReward(int reward)
+    {
+        if (reward <= 0) return;
+        else rewardAmount = reward;
     }
 
     private void CheckForAll()
     {
         foreach (var item in PlayerScript.instance.inventory.container)
         {
-            CheckForItem(item);
+            CheckForItem(item); 
+                if(completed) return;
+
         }
     }
 
@@ -127,6 +138,7 @@ public class Quest<T> : Quest
 
 public abstract class Quest
 {
+
 }
 
 public enum QuestType

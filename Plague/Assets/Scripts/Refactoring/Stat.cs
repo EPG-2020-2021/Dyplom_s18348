@@ -31,6 +31,7 @@ public class Stat : MonoBehaviour
     public void Change(float delta)
     {
         this.@value += delta;
+        print(statKey + " " + value);
         Stat.OnValueChange onValueChange = this.onValueChange;
         if (onValueChange == null)
         {

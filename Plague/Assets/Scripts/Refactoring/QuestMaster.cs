@@ -25,7 +25,7 @@ public class QuestMaster : MonoBehaviour
     private void InitTestQuests()
     {
         quests = new List<Quest>();
-
+        
         AddQuest("Test_Health_5", "Find item which heals at least 5 hp", QuestType.FindSpecial, StatKey.Health, 5);
         AddQuest("Test_Health_100", "Find item which heals at least 100 hp", QuestType.FindSpecial, StatKey.Health, 100);
         AddQuest("Test_Health_60", "Find item which heals at least 60 hp", QuestType.FindSpecial, StatKey.Health, 60);
@@ -34,7 +34,8 @@ public class QuestMaster : MonoBehaviour
         AddQuest("Test_Rosemary", "Find rosemary", QuestType.Find, "Rosemary");
         AddQuest("Test_Rosemary2", "Find rosemary2", QuestType.Find, "Rosemary2");
         AddQuest("Test_Rosemary3", "Find rosemary3", QuestType.Find, "Rosemary3");
-        
+
+        AddQuest("Booster", "Find soil", QuestType.Find, "Soil", 100);
     }
 
     public static void ReleaseQuest(Quest quest)
@@ -61,15 +62,17 @@ public class QuestMaster : MonoBehaviour
         quest.onCompleteCallback += quest.DestroySelf;
     }
 
-    private void AddQuest(string name, string description, QuestType type, StatKey specialParam, int specialParamCount)
+    private void AddQuest(string name, string description, QuestType type, StatKey specialParam, int specialParamCount, int exp = 0)
     {
         var quest = new Quest<StatKey>(name, description, type, specialParam, specialParamCount);
+        quest.SetReward(exp);
         AddUIQuest(quest);
         quests.Add(quest);
     }
-    private void AddQuest(string name, string description, QuestType type, string itemName)
+    private void AddQuest(string name, string description, QuestType type, string itemName, int exp = 0)
     {
         var quest = new Quest<StatKey>(name, description, type, itemName);
+        quest.SetReward(exp);
         AddUIQuest(quest);
         quests.Add(quest);
     }

@@ -64,11 +64,14 @@ public class StatsApplier : MonoBehaviour
         CharacterStats component = PlayerScript.instance.playerStats;
 
         Stat stat = component.GetStat(key);
+
+        print(key + " " + stat.name + " " + amount);
         if (stat != null)
         {
             stat.Change(amount);
         }
-       
+
+        component.UpdateStatsText();
     }
 
 }
