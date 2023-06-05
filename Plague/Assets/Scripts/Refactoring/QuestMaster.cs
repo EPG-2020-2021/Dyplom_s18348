@@ -26,16 +26,13 @@ public class QuestMaster : MonoBehaviour
     {
         quests = new List<Quest>();
         
-        AddQuest("Test_Health_5", "Find item which heals at least 5 hp", QuestType.FindSpecial, StatKey.Health, 5);
-        AddQuest("Test_Health_100", "Find item which heals at least 100 hp", QuestType.FindSpecial, StatKey.Health, 100);
-        AddQuest("Test_Health_60", "Find item which heals at least 60 hp", QuestType.FindSpecial, StatKey.Health, 60);
-        AddQuest("Test_Health_50", "Find item which heals at least 50 hp", QuestType.FindSpecial, StatKey.Health, 50);
-        AddQuest("Test_Health_55", "Find item which heals at least 55 hp", QuestType.FindSpecial, StatKey.Health, 55);
-        AddQuest("Test_Rosemary", "Find rosemary", QuestType.Find, "Rosemary");
-        AddQuest("Test_Rosemary2", "Find rosemary2", QuestType.Find, "Rosemary2");
-        AddQuest("Test_Rosemary3", "Find rosemary3", QuestType.Find, "Rosemary3");
+        AddQuest("Find health 10", "Find item which heals at least 10 hp", QuestType.FindSpecial, StatKey.Health, 5);
 
-        AddQuest("Booster", "Find soil", QuestType.Find, "Soil", 100);
+        AddQuest("Find rosemary", "Find rosemary", QuestType.Find, "Rosemary");
+
+        AddQuest("Find streptomycin", "Find the cure for plague", QuestType.Find, "Streptomycin");
+
+        AddQuest("Find soil", "It will help you with the plague someday", QuestType.Find, "Soil");
     }
 
     public static void ReleaseQuest(Quest quest)

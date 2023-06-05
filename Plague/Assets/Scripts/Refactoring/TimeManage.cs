@@ -5,7 +5,7 @@ using UnityEngine;
 public class TimeManage : MonoBehaviour
 {
     public GameObject daynnightCircle;
-    private float dayinmins = 1f;
+    private float dayinmins = 10f;
 
     public static string time = "12:00";
 

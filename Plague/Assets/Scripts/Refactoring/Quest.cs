@@ -96,7 +96,7 @@ public class Quest<T> : Quest
 
         try
         {
-            stat = item.gameObject?.GetComponentsInChildren<Stat>()?.First(x => x.statKey.Equals(specialParam) && x.value >= specialParamCount); //Find needed stat if exist
+            stat = item.gameObject?.GetComponentsInChildren<Stat>()?.First(x => x.statKey.Equals(specialParam) && x.value >= specialParamCount && x.value <= 1000); //Find needed stat if exist
         }catch(Exception e)
         {
 
@@ -105,13 +105,13 @@ public class Quest<T> : Quest
         if (type.Equals(QuestType.Find) && item.name.Equals(this.itemName))
         {
             Complete();
-            PlayerScript.instance.inventory.containerController.GetSlotWithItem(item)?.Remove();
+            PlayerScript.instance.inventory.containerController?.GetSlotWithItem(item).Remove();
             return;
         }
         else if (type.Equals(QuestType.FindSpecial) && stat)
         {
             Complete();
-            PlayerScript.instance.inventory.containerController.GetSlotWithItem(item)?.Remove();
+            PlayerScript.instance.inventory.containerController?.GetSlotWithItem(item).Remove();
             return;
         }
 
