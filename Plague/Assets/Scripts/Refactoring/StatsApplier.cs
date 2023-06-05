@@ -9,16 +9,20 @@ public class StatsApplier : MonoBehaviour
 
     public static void ApplyStats(GameObject fromObject, GameObject toCharacter, bool overwrite = false)
     {
-        Stat[] componentsInChildren = fromObject.GetComponentsInChildren<Stat>();
-        CharacterStats component = toCharacter.GetComponent<CharacterStats>();
-        for (int i = 0; i < (int)componentsInChildren.Length; i++)
+
+        Stat[] statsFromItem = fromObject.GetComponentsInChildren<Stat>();
+        CharacterStats characterStats = toCharacter.GetComponent<CharacterStats>();
+        for (int i = 0; i < (int)statsFromItem.Length; i++)
         {
             if (!overwrite)
             {
-                Stat stat = component.GetStat(componentsInChildren[i].statKey);
+                Stat stat = characterStats.GetStat(statsFromItem[i].statKey);
+
+                
+
                 if (stat != null)
                 {
-                    stat.Change(componentsInChildren[i].@value);
+                    stat.Change(statsFromItem[i].value);
                 }
                 else
                 {
@@ -26,17 +30,17 @@ public class StatsApplier : MonoBehaviour
             }
             else
             {
-                Stat stat1 = component.GetStat(componentsInChildren[i].statKey);
+                Stat stat1 = characterStats.GetStat(statsFromItem[i].statKey);
                 if (stat1 != null)
                 {
-                    stat1.Set(componentsInChildren[i].@value);
+                    stat1.Set(statsFromItem[i].@value);
                 }
                 else
                 {
                 }
             }
         }
-        component.UpdateStatsText();
+        characterStats.UpdateStatsText();
     }
 
     public static void CancelStats(GameObject fromObject, GameObject toCharacter)

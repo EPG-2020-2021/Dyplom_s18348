@@ -33,10 +33,9 @@ public class NPCScript : MonoBehaviour, IGivable
 
     public void PutObject(Object obj)
     {
-        if (this.slot == null)
-        {
-            this.slot = obj;
-        }
+        
+        this.slot = obj;
+        
         this.npcController.Use();
         if (this.characterStats.Cured())
         {
@@ -53,5 +52,13 @@ public class NPCScript : MonoBehaviour, IGivable
         Object obj = this.slot;
         this.slot = null;
         return obj;
+    }
+
+    public void CleanSlot()
+    {
+        if (this.slot == null)
+        {
+            this.slot = null;
+        }
     }
 }

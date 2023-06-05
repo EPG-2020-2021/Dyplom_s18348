@@ -27,5 +27,6 @@ internal class NPCController : MonoBehaviour
             return;
         }
         obj.GetComponent<IUsable>().Use(base.gameObject);
+        this.npc.CleanSlot();
     }
 }

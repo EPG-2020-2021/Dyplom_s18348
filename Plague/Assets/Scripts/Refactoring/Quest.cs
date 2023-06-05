@@ -105,13 +105,13 @@ public class Quest<T> : Quest
         if (type.Equals(QuestType.Find) && item.name.Equals(this.itemName))
         {
             Complete();
-            PlayerScript.instance.inventory.containerController.GetSlotWithItem(item).Remove();
+            PlayerScript.instance.inventory.containerController.GetSlotWithItem(item)?.Remove();
             return;
         }
         else if (type.Equals(QuestType.FindSpecial) && stat)
         {
             Complete();
-            PlayerScript.instance.inventory.containerController.GetSlotWithItem(item).Remove();
+            PlayerScript.instance.inventory.containerController.GetSlotWithItem(item)?.Remove();
             return;
         }
 

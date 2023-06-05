@@ -26,7 +26,7 @@ public class UIShop : UIContainerController
 
     public void Close()
     {
-        base.gameObject.SetActive(false);
+        base.gameObject?.SetActive(false);
     }
 
     public void Fill()
