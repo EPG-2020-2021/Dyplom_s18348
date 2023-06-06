@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
     public static PlayerScript instance; //single instance
-    public GameObject target = null;
+    public List<GameObject> targets = null;
 
     [SerializeField] 
     internal PlayerCollisionController collisionController;

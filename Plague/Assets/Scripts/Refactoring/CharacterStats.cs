@@ -39,19 +39,18 @@ public class CharacterStats : MonoBehaviour
 
     public bool Cured()
     {
-        bool flag;
         List<Stat>.Enumerator enumerator = this.stats.GetEnumerator();
         try
         {
             while (enumerator.MoveNext())
             {
                 Stat current = enumerator.Current;
+
                 if (current.statKey.Equals(StatKey.Health) || current.statKey.Equals(StatKey.Speed) || current.statKey.Equals(StatKey.Decription) || current.statKey.Equals(StatKey.Quality) || current.@value <= 0f)
                 {
                     continue;
                 }
-                flag = false;
-                return flag;
+                return false;
             }
             return true;
         }
@@ -59,7 +58,6 @@ public class CharacterStats : MonoBehaviour
         {
             ((IDisposable)enumerator).Dispose();
         }
-        return flag;
     }
 
     public Stat GetStat(StatKey key)

@@ -12,7 +12,7 @@ public class PlayerCollisionController : MonoBehaviour
     {
         if (other.GetComponent<IInteractable>() != null)
         {
-            PlayerScript.instance.target = other.gameObject;
+            PlayerScript.instance.targets.Add(other.gameObject);
         }
 
         if (other.GetComponent<Shop>() != null)
@@ -24,9 +24,9 @@ public class PlayerCollisionController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (PlayerScript.instance.target && PlayerScript.instance.target.Equals(other.gameObject))
+        if (PlayerScript.instance.targets != null && PlayerScript.instance.targets.Contains(other.gameObject))
         {
-            PlayerScript.instance.target = null;
+            PlayerScript.instance.targets.Remove(other.gameObject);
         }
 
         if (other.GetComponent<Shop>() != null)
@@ -37,9 +37,10 @@ public class PlayerCollisionController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (PlayerScript.instance.target && !PlayerScript.instance.target.activeSelf)
+        if (PlayerScript.instance.targets.Count >= 1)
         {
-            PlayerScript.instance.target = null;
+                if (!PlayerScript.instance.targets[0].activeSelf) PlayerScript.instance.targets.Remove(PlayerScript.instance.targets[0]);
+            
         }
     }
 }

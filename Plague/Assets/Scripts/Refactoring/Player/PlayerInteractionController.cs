@@ -7,7 +7,10 @@ public class PlayerInteractionController : MonoBehaviour
     public void Interact()
     {
         print("Interacting");
-        var temp = PlayerScript.instance.target;
+
+        if (PlayerScript.instance.targets.Count < 1) return;
+
+        var temp = PlayerScript.instance.targets[0];
         if (!temp || temp.GetComponent<IInteractable>() == null)
         {
             return;
@@ -21,7 +24,9 @@ public class PlayerInteractionController : MonoBehaviour
 
     public void Use()
     {
-        var temp = PlayerScript.instance.target;
+        if (PlayerScript.instance.targets.Count < 1) return;
+
+        var temp = PlayerScript.instance.targets[0];
         if (!temp || temp.GetComponent<IUsable>() == null)
         {
             return;

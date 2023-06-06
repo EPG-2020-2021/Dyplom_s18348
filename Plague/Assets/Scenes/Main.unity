@@ -440,11 +440,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7291501907118938257, guid: 896c96bcb8ca5be45bf1077acbe28657, type: 3}
       propertyPath: delaymin
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7291501907118938257, guid: 896c96bcb8ca5be45bf1077acbe28657, type: 3}
       propertyPath: delaymax
-      value: 2
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7291501907118938257, guid: 896c96bcb8ca5be45bf1077acbe28657, type: 3}
       propertyPath: prefabToSpawn
@@ -696,10 +696,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1014788033, guid: f756621986d91784ab3c3579efb1b826, type: 3}
-      propertyPath: m_Name
-      value: Decription
-      objectReference: {fileID: 0}
     - target: {fileID: 5282260429415383156, guid: f756621986d91784ab3c3579efb1b826, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
