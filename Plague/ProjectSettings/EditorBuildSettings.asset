@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/shit/Outside.unity
     guid: dace905b6c7c46a478885bd273dfc830
   - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: b6f7076ab72afa144ba146f97d93ad40
+  - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 37a774ffad381984c85b74ae37c82756
   - enabled: 1
