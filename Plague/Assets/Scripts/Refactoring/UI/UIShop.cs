@@ -26,6 +26,7 @@ public class UIShop : UIContainerController
 
     public void Close()
     {
+        if (base.gameObject == null) return;
         base.gameObject?.SetActive(false);
     }
 
